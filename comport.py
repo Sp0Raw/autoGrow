@@ -336,11 +336,11 @@ while 1 :
                 #GPIO.cleanup()
                 #exit
 
-        mylcd.lcd_display_string(str(home_temp)+'C '+str(home_hum)+'%    ', 1)
-        mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
-        conn.commit()
-        cur.close();
-        time.sleep(45)
+            mylcd.lcd_display_string(str(home_temp)+'C '+str(home_hum)+'%    ', 1)
+            mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
+            conn.commit()
+            cur.close();
+            time.sleep(45)
 
     else:
         ser.write(input + '\r\n')
