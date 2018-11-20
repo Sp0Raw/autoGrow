@@ -352,5 +352,5 @@ while 1 :
             out += ser.read(1)
             
         if out != '':
-        print out
+            print out
 
