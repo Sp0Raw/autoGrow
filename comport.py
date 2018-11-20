@@ -173,167 +173,170 @@ def add_term(value, id_val, comment):
     print (id_val)
     print (comment)
 try:
-  parser = createParser()
-  namespace = parser.parse_args(sys.argv[1:])
-  if namespace.name:
-     #print ("++/dev/ttyACM"+format(namespace.name) )
-     s_port='/dev/ttyACM'+format(namespace.name)
-     print (s_port )
-  else:
-     print ("/dev/ttyACM0")
-     s_port='/dev/ttyACM0'
+    parser = createParser()
+    namespace = parser.parse_args(sys.argv[1:])
+    if namespace.name:
+        #print ("++/dev/ttyACM"+format(namespace.name) )
+        s_port='/dev/ttyACM'+format(namespace.name)
+        print (s_port )
+    else:
+        print ("/dev/ttyACM0")
+        s_port='/dev/ttyACM0'
 
-  ser = serial.Serial(
-    #port='/dev/ttyACM0',
-    port=s_port,
-    baudrate=9600,
-    timeout=10,
-    parity=serial.PARITY_NONE,
-    stopbits=serial.STOPBITS_ONE,
-    bytesize=serial.EIGHTBITS
-  )
+    ser = serial.Serial(
+        #port='/dev/ttyACM0',
+        port=s_port,
+        baudrate=9600,
+        timeout=10,
+        parity=serial.PARITY_NONE,
+        stopbits=serial.STOPBITS_ONE,
+        bytesize=serial.EIGHTBITS
+    )
 
-  ser.open()
-  ser.isOpen()
+    ser.open()
+    ser.isOpen()
 except IOError: # if port is already opened, close it and open it again and print message
-  ser.close()
-  ser.open()
-  print ("port was already open, was closed and opened again!")
+    ser.close()
+    ser.open()
+    print ("port was already open, was closed and opened again!")
 
 print 'Enter your commands below.\r\nInsert "exit" to leave the application.'
 
 input=1
 while 1 :
-    #mylcd.lcd_display_string("Time: %s" %time.strftime("%H:%M:%S"), 1)
+    # mylcd.lcd_display_string("Time: %s" %time.strftime("%H:%M:%S"), 1)
     mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
 
     # get keyboard input
+    #####################################################
     input = raw_input(">> ")
     if input == 'exit':
         ser.close()
         exit()
 
+    #####################################################
     elif input == 'home':
-	time.sleep(0.001) 
+        time.sleep(0.001)
         am2320 = AM2320(1)
-	(t,h) = am2320.readSensor()
-	print('{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}')
+        (t,h) = am2320.readSensor()
+        print('{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}')
 
+    #####################################################
     elif input == 'a_term':
         print ('{[')
-	for i in (0,1,2,3,4):
-		out = ''
-		ser.write('R' + str(i) + '\r\n')
+        for i in (0,1,2,3,4):
+            out = ''
+            ser.write('R' + str(i) + '\r\n')
 
-	        time.sleep(1)
-	        while ser.inWaiting() > 0:
-	            out += ser.read(1)
-    	        if out != '':
-	            print out
-        	    if (i!=4):
-	            	sys.stdout.write(',')
-			#print (',')
-	print (']}')
+            time.sleep(1)
+            while ser.inWaiting() > 0:
+                out += ser.read(1)
+                if out != '':
+                    print out
+                if (i!=4):
+                    sys.stdout.write(',')
+            #print (',')
+	    print (']}')
+
+    #####################################################
     elif input == 'pg':
-	#
-	while 1==1 :
-
-          cur = conn.cursor()
-          tmp_val='{['
-          try:
-            for i in (0,1,2,3,4):
+        while 1==1 :
+            cur = conn.cursor()
+            tmp_val='{['
+            try:
+                for i in (0,1,2,3,4):
                     out = ''
                     ser.write('R' + str(i) + '\r\n')
                     time.sleep(1)
                     while ser.inWaiting() > 0:
                         out += ser.read(1)
                     if out != '':
-                      print out
-  		    tmp_val+=out
+                        print out
+                        tmp_val+=out
                     if (i!=4):
-                      tmp_val+=','
-  	  except Exception:
-            tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-            add_term(tmp_val,-100,'from orangepi > home')
+                        tmp_val+=','
+            except Exception:
+                tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+                add_term(tmp_val,-100,'from orangepi > home')
 
-	  tmp_val+=']}'
-  	  add_term(tmp_val,100,'from orangepi > a_term')
-	  out = ''
+            tmp_val+=']}'
+            add_term(tmp_val,100,'from orangepi > a_term')
+            out = ''
 
-          try:
-            ser.write('G\r\n')
-	    time.sleep(1)
-            while ser.inWaiting() > 0:
-              out += ser.read(1)
-	    add_term(out,200,'from orangepi > G')
-          except Exception:
-	    tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-            add_term(out,-200,'from orangepi > G')
+            try:
+                ser.write('G\r\n')
+                time.sleep(1)
+                while ser.inWaiting() > 0:
+                    out += ser.read(1)
+                add_term(out,200,'from orangepi > G')
+            except Exception:
+                tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+                add_term(out,-200,'from orangepi > G')
 
 
-          time.sleep(1)
-          try:
-            am2320 = AM2320(1)
-            (t,h) = am2320.readSensor()
-            tmp_val='{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}'
-            home_hum = h
-            home_temp = t
-            add_term(tmp_val,300,'from orangepi > home')
-          except Exception:
-            tmp_val='{"num_sens": 0,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-            add_term(tmp_val,-100,'from orangepi > home')
-
-          out=''
-          try:
-            ser.write('W\r\n')
             time.sleep(1)
-            while ser.inWaiting() > 0:
-              out += ser.read(1)
-            add_term(out,400,'from orangepi > W')
-          except Exception:
-            tmp_val='{"num_sens": 1,"sens_type" : "WaterGrnd", "sens_id" : "none","sens_Val": { "volt": "N/A"}}'
-            add_term(tmp_val,-400,'from orangepi > W')
+            try:
+                am2320 = AM2320(1)
+                (t,h) = am2320.readSensor()
+                tmp_val='{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}'
+                home_hum = h
+                home_temp = t
+                add_term(tmp_val,300,'from orangepi > home')
+            except Exception:
+                tmp_val='{"num_sens": 0,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+                add_term(tmp_val,-100,'from orangepi > home')
+
+            out=''
+            try:
+                ser.write('W\r\n')
+                time.sleep(1)
+                while ser.inWaiting() > 0:
+                    out += ser.read(1)
+                add_term(out,400,'from orangepi > W')
+            except Exception:
+                tmp_val='{"num_sens": 1,"sens_type" : "WaterGrnd", "sens_id" : "none","sens_Val": { "volt": "N/A"}}'
+                add_term(tmp_val,-400,'from orangepi > W')
 
 #
-          if gpio.input(port.PG7) != 1:
-            tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 1 }'
-            add_term(tmp_val,500,'from orangepi > magnetic_switch')
-          else:
-            tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 0 }'
-            add_term(tmp_val,500,'from orangepi > magnetic_switch')
+            if gpio.input(port.PG7) != 1:
+                tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 1 }'
+                add_term(tmp_val,500,'from orangepi > magnetic_switch')
+            else:
+                tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 0 }'
+                add_term(tmp_val,500,'from orangepi > magnetic_switch')
 #/
 
-          try:
-            tFile = open("/sys/class/thermal/thermal_zone0/temp","r")
-            temp = float(tFile.readline())
-            tempC = temp/1000
-#            print ('{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":'+str(tempC)+'}}')
-            tFile.close()
+            try:
+                tFile = open("/sys/class/thermal/thermal_zone0/temp","r")
+                temp = float(tFile.readline())
+                tempC = temp/1000
+                #print ('{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":'+str(tempC)+'}}')
+                tFile.close()
 
-            tmp_val='{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":'+str(tempC)+'}}'
-            add_term(tmp_val,600,'from orangepi > CPU_TEMPERATURE')
+                tmp_val='{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":'+str(tempC)+'}}'
+                add_term(tmp_val,600,'from orangepi > CPU_TEMPERATURE')
 
-            if tempC > 30:
-              gpio.output(port.PG8, gpio.HIGH)
-              #GPIO.output(17, 1)
-              print "HOT"
-            else:
-              gpio.output(port.PG8, gpio.LOW)
-              #GPIO.output(17, 0)
-              print "COLD"
+                if tempC > 30:
+                    gpio.output(port.PG8, gpio.HIGH)
+                    #GPIO.output(17, 1)
+                    print "HOT"
+                else:
+                    gpio.output(port.PG8, gpio.LOW)
+                    #GPIO.output(17, 0)
+                    print "COLD"
 
-          except:
-            tFile.close()
-            tmp_val='{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":"N/A"}}'
-            add_term(tmp_val,-600,'from orangepi > CPU_TEMPERATURE')
-            #GPIO.cleanup()
-            #exit
+            except:
+                tFile.close()
+                tmp_val='{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":"N/A"}}'
+                add_term(tmp_val,-600,'from orangepi > CPU_TEMPERATURE')
+                #GPIO.cleanup()
+                #exit
 
-          mylcd.lcd_display_string(str(home_temp)+'C '+str(home_hum)+'%    ', 1)
-          mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
-          conn.commit()
-  	  cur.close();
-	  time.sleep(45)
+        mylcd.lcd_display_string(str(home_temp)+'C '+str(home_hum)+'%    ', 1)
+        mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
+        conn.commit()
+        cur.close();
+        time.sleep(45)
 
     else:
         ser.write(input + '\r\n')
@@ -345,5 +348,5 @@ while 1 :
             out += ser.read(1)
             
         if out != '':
-	    print out
+        print out
 
