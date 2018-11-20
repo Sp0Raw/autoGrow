@@ -16,15 +16,18 @@ gpio.init()
 
 
 # Relay module K1
-gpio.setcfg(port.PA20, gpio.OUTPUT)
-#gpio.output(port.PA20, gpio.LOW)
+gpio.setcfg(port.PA20, gpio.OUTPUT)  ## Init  port 
+#gpio.output(port.PA20, gpio.LOW)     # Turn RELAY => ON 
+
+gpio.setcfg(port.PA10, gpio.OUTPUT)  ## Init  port
+
 #sleep(2)
-gpio.output(port.PA20, gpio.HIGH)
+gpio.output(port.PA20, gpio.HIGH)    # Turn RELAY => OFF
 
 
 # Relay module K2
-gpio.setcfg(port.PA10, gpio.OUTPUT)
-gpio.output(port.PA10, gpio.LOW)
+#gpio.setcfg(port.PA10, gpio.OUTPUT)
+gpio.output(port.PA10, gpio.LOW)    # Turn RELAY => ON
 #sleep(2)
-#gpio.output(port.PA10, gpio.HIGH)
+gpio.output(port.PA10, gpio.HIGH)   # Turn RALAY => OFF
 

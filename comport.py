@@ -37,8 +37,16 @@ mylcd = RPi_I2C_driver.lcd()
 mylcd.lcd_display_string("=== My GROW ===", 1)
 mylcd.lcd_display_string(" Custom chars", 2)
 
-
+# DB Connect
 conn = psycopg2.connect('host=192.168.88.10 user=postgres password=pgsql dbname=postgres')
+
+## Init home sensor val
+home_hum = 0.0
+home_temp = 0.0
+
+## Init box sensor val
+box_hum = 0.0
+box_temp = 0.0
 
 ###  Init  Smal Relay module pins
 # Relay module LK1
@@ -257,10 +265,10 @@ while 1 :
 	    time.sleep(1)
             while ser.inWaiting() > 0:
               out += ser.read(1)
-	    add_term(tmp_val,200,'from orangepi > G')
+	    add_term(out,200,'from orangepi > G')
           except Exception:
 	    tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-            add_term(tmp_val,-200,'from orangepi > G')
+            add_term(out,-200,'from orangepi > G')
 
 
           time.sleep(1)
@@ -268,6 +276,8 @@ while 1 :
             am2320 = AM2320(1)
             (t,h) = am2320.readSensor()
             tmp_val='{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}'
+            home_hum = h
+            home_temp = t
             add_term(tmp_val,300,'from orangepi > home')
           except Exception:
             tmp_val='{"num_sens": 0,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
@@ -319,7 +329,7 @@ while 1 :
             #GPIO.cleanup()
             #exit
 
-          mylcd.lcd_display_string("=== My GROW ===", 1)
+          mylcd.lcd_display_string(str(home_temp)+'C '+str(home_hum)+'%    ', 1)
           mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
           conn.commit()
   	  cur.close();
