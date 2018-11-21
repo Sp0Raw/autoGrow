@@ -29,5 +29,5 @@ gpio.output(port.PA20, gpio.HIGH)    # Turn RELAY => OFF
 #gpio.setcfg(port.PA10, gpio.OUTPUT)
 gpio.output(port.PA10, gpio.LOW)    # Turn RELAY => ON
 #sleep(2)
-gpio.output(port.PA10, gpio.HIGH)   # Turn RALAY => OFF
+#gpio.output(port.PA10, gpio.HIGH)   # Turn RALAY => OFF
 
