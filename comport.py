@@ -1,28 +1,28 @@
 #! /usr/bin/env python
 import posix
 import datetime
-from fcntl import ioctl
 import time
 import serial
 import sys
 import psycopg2
 import argparse
+from fcntl import ioctl
+
+## for CPU temp
+import io
+
 ## LCD
 # requires RPi_I2C_driver.py
 import RPi_I2C_driver
-#from time import *
 
 #import the library
 from pyA20.gpio import gpio
 from pyA20.gpio import port
 
-## for CPU temp
-import io
 
 #############################################
 ##   GIT
 #############################################
-
 
 #initialize the gpio module
 gpio.init()
@@ -204,13 +204,16 @@ except IOError: # if port is already opened, close it and open it again and prin
     ser.open()
     print ("port was already open, was closed and opened again!")
 
+## END OF DECLARE
 print 'Enter your commands below.\r\nInsert "exit" to leave the application.'
 
+## BEGIN PROGRAM
 input=1
 while 1 :
     # mylcd.lcd_display_string("Time: %s" %time.strftime("%H:%M:%S"), 1)
     mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
 
+    print()
     # get keyboard input
     #####################################################
     input = raw_input(">> ")
