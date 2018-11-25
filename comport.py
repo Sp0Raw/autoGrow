@@ -28,7 +28,6 @@ from pyA20.gpio import gpio
 from pyA20.gpio import port
 
 
-
 print colored('hello', 'red'), colored('world', 'green')
 
 #############################################
@@ -86,7 +85,10 @@ gpio.output(port.PG6, gpio.HIGH)
 last_time_update = datetime.datetime.now()
 
 # LCD info switch
-lcdInf = 0
+lcdInf = -1
+
+# HaveData
+haveData = -1
 
 ###
 
@@ -187,7 +189,7 @@ def add_term(value, id_val, comment):
     VALUES
         (%s,%s,%s)
     """
-    
+
     values = (value, id_val, comment)
     cur.execute(query, values)
     print (value)
@@ -228,7 +230,7 @@ print 'Enter your commands below.\r\nInsert "exit" to leave the application.'
 input=1
 while 1 :
     # mylcd.lcd_display_string("Time: %s" %time.strftime("%H:%M:%S"), 1)
-    mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
+    mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"), 2)
 
     print()
     # get keyboard input
@@ -265,7 +267,54 @@ while 1 :
     #####################################################
     elif input == 'pg':
         while 1 :
-            if datetime.datetime.now()-last_time_update>60:
+            mylcd.lcd_display_string(" M"+datetime.datetime.now().strftime("%m")+"D"+datetime.datetime.now().strftime("%d %H:%M:%S"), 2)
+#            mylcd.lcd_display_string("D"+datetime.datetime.now().strftime("%m/%d %H:%M:%S"), 2)
+            delta = datetime.datetime.now()-last_time_update
+            #print(int(delta.seconds))
+            #print( datetime.datetime.now())
+            #print( last_time_update )
+
+            #print('press space for abort')
+
+            try:  # used try so that if user pressed other than the given key error will not be shown
+                if keyboard.is_pressed('x'):  # if key 'a' is pressed
+                    print('execution aborted')
+                    break  # finishing the loop
+                else:
+                    pass
+            except:
+                break  # if user pressed other than the given key the loop will break
+
+#            mylcd.lcd_display_string(datetime.datetime.now().strftime("%m/%d %H:%M:%s"), 2)
+
+            if (lcdInf == 0) and((delta.seconds %5)==0):
+                mylcd.lcd_display_string('H-> '+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
+                lcdInf = 1
+                time.sleep(1)
+            elif lcdInf == 1 and((delta.seconds %5)==0) :
+#                try:
+#                out = ''
+#                ser.write('G\r\n')
+#                time.sleep(1)
+#                while ser.inWaiting() > 0:
+#                    out += ser.read(1)
+#                json_string = out
+#                gdata = json.loads(json_string)
+#                out = ''
+#                except Exception:
+#                    pass
+#                    out = ''
+
+                mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
+                lcdInf =2
+                time.sleep(1)
+            elif lcdInf == 2 and((delta.seconds %5)==0):
+                mylcd.lcd_display_string('*-> ' + str(home_temp) + 'C ' + str(home_hum) + '%    ', 1)
+                lcdInf = 0
+                time.sleep(1)
+
+
+            if delta.seconds>50 :
                 cur = conn.cursor()
                 tmp_val='{['
                 try:
@@ -299,7 +348,6 @@ while 1 :
                 except Exception:
                     tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
                     add_term(out,-200,'from orangepi > G')
-
 
                 time.sleep(1)
                 try:
@@ -348,12 +396,14 @@ while 1 :
                     if tempC > 30:
                         gpio.output(port.PG8, gpio.HIGH)
                         #GPIO.output(17, 1)
+                        gpio.output(port.PA7, gpio.LOW)
                         print "HOT"
                     else:
                         gpio.output(port.PG8, gpio.LOW)
                         #GPIO.output(17, 0)
+                        gpio.output(port.PA7, gpio.HIGH)
                         print "COLD"
-
+                    lcdInf = 0
                 except:
                     tFile.close()
                     tmp_val='{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":"N/A"}}'
@@ -361,28 +411,21 @@ while 1 :
                     #GPIO.cleanup()
                     #exit
 
-                if lcdInf == 0:
-                    mylcd.lcd_display_string('H ->'+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
-
-                elif lcdInf == 1:
-                    mylcd.lcd_display_string('G ->'+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
-                elif lcdInf == 2:
-                    mylcd.lcd_display_string('* ->' + str(home_temp) + 'C ' + str(home_hum) + '%    ', 1)
-
-                mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2)
+#                if lcdInf == 0:
+#                    mylcd.lcd_display_string('H-> '+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
+#                    lcdInf = 1
+#                elif lcdInf == 1:
+#                    mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
+#                    lcdInf =2
+#                elif lcdInf == 2:
+#                    mylcd.lcd_display_string('*-> ' + str(home_temp) + 'C ' + str(home_hum) + '%    ', 1)
+#                    lcdInf = 0
+                time.sleep(1)
+#                mylcd.lcd_display_string(datetime.datetime.now().strftime("%m/%d %H:%M:%S"), 2)
                 conn.commit()
                 cur.close();
                 #time.sleep(45)
                 last_time_update = datetime.datetime.now()
-                print('press space for abort')
-            try:  # used try so that if user pressed other than the given key error will not be shown
-                if keyboard.is_pressed('space'):  # if key 'a' is pressed
-                    print('execution aborted')
-                    break  # finishing the loop
-                else:
-                    pass
-            except:
-                break  # if user pressed other than the given key the loop will break
 
     else:
         ser.write(input + '\r\n')
