@@ -81,6 +81,13 @@ gpio.output(port.PG6, gpio.HIGH)
 #sleep(2)
 #gpio.output(port.PG6, gpio.LOW)
 
+
+###  Init  BIG Relay module pins
+# Relay module LP1
+gpio.setcfg(port.PA7, gpio.OUTPUT)
+gpio.output(port.PA7, gpio.HIGH)
+
+
 ###
 last_time_update = datetime.datetime.now()
 
@@ -89,6 +96,9 @@ lcdInf = -1
 
 # HaveData
 haveData = -1
+
+# run loop with Out Delay
+withOutDelay = 1
 
 ###
 
@@ -101,7 +111,7 @@ def get_cpu_temperature():
 def createParser ():
     parser = argparse.ArgumentParser()
     parser.add_argument ('name', nargs='?')
- 
+
     return parser
 
 class AM2320:
@@ -266,6 +276,7 @@ while 1 :
 
     #####################################################
     elif input == 'pg':
+        withOutDelay = 1
         while 1 :
             mylcd.lcd_display_string(" M"+datetime.datetime.now().strftime("%m")+"D"+datetime.datetime.now().strftime("%d %H:%M:%S"), 2)
 #            mylcd.lcd_display_string("D"+datetime.datetime.now().strftime("%m/%d %H:%M:%S"), 2)
@@ -290,7 +301,7 @@ while 1 :
             if (lcdInf == 0) and((delta.seconds %5)==0):
                 mylcd.lcd_display_string('H-> '+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
                 lcdInf = 1
-                time.sleep(1)
+                time.sleep(0.5)
             elif lcdInf == 1 and((delta.seconds %5)==0) :
 #                try:
 #                out = ''
@@ -306,7 +317,7 @@ while 1 :
 #                    out = ''
 
                 mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
-                lcdInf =2
+                lcdInf =0
                 time.sleep(1)
             elif lcdInf == 2 and((delta.seconds %5)==0):
                 mylcd.lcd_display_string('*-> ' + str(home_temp) + 'C ' + str(home_hum) + '%    ', 1)
@@ -314,11 +325,12 @@ while 1 :
                 time.sleep(1)
 
 
-            if delta.seconds>50 :
+            if delta.seconds>50 or withOutDelay == 1 :
+                withOutDelay = 0
                 cur = conn.cursor()
                 tmp_val='{['
-                try:
-                    for i in (0,1,2,3,4):
+#                try:
+                for i in (0,1,2,3,4):
                         out = ''
                         ser.write('R' + str(i) + '\r\n')
                         time.sleep(1)
@@ -329,25 +341,27 @@ while 1 :
                             tmp_val+=out
                         if (i!=4):
                             tmp_val+=','
-                except Exception:
-                    tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-                    add_term(tmp_val,-100,'from orangepi > home')
-
                 tmp_val+=']}'
                 add_term(tmp_val,100,'from orangepi > a_term')
                 out = ''
 
-                try:
-                    ser.write('G\r\n')
-                    time.sleep(1)
-                    while ser.inWaiting() > 0:
+#                except Exception:
+#                    tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+#                    add_term(tmp_val,-100,'from orangepi > home')
+#                    out = ''
+
+
+#                try:
+                ser.write('G\r\n')
+                time.sleep(1)
+                while ser.inWaiting() > 0:
                         out += ser.read(1)
-                    json_string = out
-                    gdata = json.loads(json_string)
-                    add_term(out,200,'from orangepi > G')
-                except Exception:
-                    tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-                    add_term(out,-200,'from orangepi > G')
+                json_string = out
+                gdata = json.loads(json_string)
+                add_term(out,200,'from orangepi > G')
+#                except Exception:
+#                    tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+#                    add_term(out,-200,'from orangepi > G')
 
                 time.sleep(1)
                 try:
@@ -359,7 +373,7 @@ while 1 :
                     add_term(tmp_val,300,'from orangepi > home')
                 except Exception:
                     tmp_val='{"num_sens": 0,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-                    add_term(tmp_val,-100,'from orangepi > home')
+                    add_term(tmp_val,-300,'from orangepi > home')
 
                 out=''
                 try:
