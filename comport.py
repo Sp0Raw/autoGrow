@@ -248,7 +248,7 @@ while 1 :
     # mylcd.lcd_display_string("Time: %s" %time.strftime("%H:%M:%S"), 1)
     mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"), 2)
 
-    print()
+    print('=============================================')
     # get keyboard input
     #####################################################
     input = raw_input(">> ")
@@ -331,7 +331,9 @@ while 1 :
 
             time.sleep(1)
 
-            if ( delta.seconds>50 or withOutDelay == 1 ) and  ser.isOpen():
+            # and  ser.isOpen()
+            if ( delta.seconds>50 or withOutDelay == 1 ) :
+                ser.open()
                 withOutDelay = 0
                 cur = conn.cursor()
                 tmp_val='{['
@@ -359,7 +361,7 @@ while 1 :
 
                 try:
                     ser.write('G\r\n')
-                    time.sleep(1)
+                    # time.sleep(1)
                     while ser.inWaiting() > 0:
                         out += ser.read(1)
                     json_string = out
@@ -411,7 +413,7 @@ while 1 :
                     #print ('{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":'+str(tempC)+'}}')
                     tFile.close()
 
-                    tmp_val='{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none", "sens_Val": { "temp":'+str(tempC)+'}}'
+                    tmp_val='{"num_sens":0, "sens_type":"CPU_temperature", "sens_id":"none",', ' "sens_Val": { "temp":'+str(tempC)+'}}'
                     add_term(tmp_val,600,'from orangepi > CPU_TEMPERATURE')
 
                     if tempC > 30:
@@ -447,6 +449,7 @@ while 1 :
                 cur.close()
                 #time.sleep(45)
                 last_time_update = datetime.datetime.now()
+                ser.close()
             else:
                 time.sleep(0.5)
                 # ser.open()
