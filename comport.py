@@ -347,17 +347,19 @@ while 1 :
                 cur = conn.cursor()
                 tmp_val='{['
                 try:
-                    for i in (0,1,2,3,4):
+                    nums = ["0","1","2","3","4"]
+                    for i in nums:
                         out = ''
                         ser.write('R' + str(i) + '\r\n')
                         time.sleep(1)
                         while ser.inWaiting() > 0:
                             out += ser.read(1)
                         if out != '':
-                            print out
+                            # print out
                             tmp_val+=out
                         if (i!=4):
                             tmp_val+=','
+                    time.sleep(1)
                     tmp_val+=']}'
                     add_term(tmp_val,100,'from orangepi > a_term')
                     out = ''
