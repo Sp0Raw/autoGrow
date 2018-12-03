@@ -447,7 +447,7 @@ while 1 :
                 cur.close()
                 #time.sleep(45)
                 last_time_update = datetime.datetime.now()
-            else
+            else:
                 ser.open()
 
     else:
