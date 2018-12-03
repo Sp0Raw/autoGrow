@@ -337,8 +337,7 @@ while 1 :
                 mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + 'VOLT ', 1)
                 lcdInf = 0
                 # time.sleep(1)
-
-            #time.sleep(1)
+            time.sleep(0.5)
 
             # and  ser.isOpen()
             if ( delta.seconds>50 or withOutDelay == 1 ) :
