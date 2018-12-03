@@ -359,10 +359,10 @@ while 1 :
                             tmp_val+=out
                         if (i!=4):
                             tmp_val+=','
-                    time.sleep(1)
+                    # time.sleep(1)
                     tmp_val+=']}'
                     add_term(tmp_val,100,'from orangepi > a_term')
-                    out = ''
+
 
                 except Exception:
                     tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
@@ -371,12 +371,13 @@ while 1 :
 
 
                 try:
+                    out = ''
                     ser.write('G\r\n')
                     # time.sleep(1)
                     while ser.inWaiting() > 0:
                         out += ser.read(1)
-                    json_string = out
-                    gdata = json.loads(json_string)
+                    #json_string = out
+                    gdata = json.loads(out) #json_string)
                     add_term(out,200,'from orangepi > G')
                 except Exception:
                     tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
