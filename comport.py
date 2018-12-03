@@ -343,6 +343,7 @@ while 1 :
             # and  ser.isOpen()
             if ( delta.seconds>50 or withOutDelay == 1 ) :
                 # ser.open()
+                mylcd.lcd_display_string(" UPDATE ...     ", 2)
                 withOutDelay = 0
                 cur = conn.cursor()
                 tmp_val='{['
