@@ -316,7 +316,7 @@ while 1 :
             if (lcdInf == 0) and((delta.seconds %5)==0):
                 mylcd.lcd_display_string('H-> '+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
                 lcdInf = 1
-                # time.sleep(0.5)
+                time.sleep(1)
             elif lcdInf == 1 and((delta.seconds %5)==0) :
 #                try:
 #                out = ''
@@ -332,12 +332,11 @@ while 1 :
 #                    out = ''
                 mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
                 lcdInf =2
-                # time.sleep(1)
+                time.sleep(1)
             elif lcdInf == 2 and((delta.seconds %5)==0):
-                mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + 'VOLT ', 1)
+                mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + 'VOLT        ', 1)
                 lcdInf = 0
-                # time.sleep(1)
-            time.sleep(0.5)
+                time.sleep(1)
 
             # and  ser.isOpen()
             if ( delta.seconds>50 or withOutDelay == 1 ) :
