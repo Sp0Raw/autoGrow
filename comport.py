@@ -342,7 +342,7 @@ while 1 :
 
             # and  ser.isOpen()
             if ( delta.seconds>50 or withOutDelay == 1 ) :
-                ser.open()
+                # ser.open()
                 withOutDelay = 0
                 cur = conn.cursor()
                 tmp_val='{['
@@ -458,7 +458,7 @@ while 1 :
                 cur.close()
                 #time.sleep(45)
                 last_time_update = datetime.datetime.now()
-                ser.close()
+                # ser.close()
             else:
                 time.sleep(0.5)
                 # ser.open()
