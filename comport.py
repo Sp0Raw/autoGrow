@@ -329,8 +329,8 @@ while 1 :
                 withOutDelay = 0
                 cur = conn.cursor()
                 tmp_val='{['
-#                try:
-                for i in (0,1,2,3,4):
+                try:
+                    for i in (0,1,2,3,4):
                         out = ''
                         ser.write('R' + str(i) + '\r\n')
                         time.sleep(1)
@@ -341,31 +341,32 @@ while 1 :
                             tmp_val+=out
                         if (i!=4):
                             tmp_val+=','
-                tmp_val+=']}'
-                add_term(tmp_val,100,'from orangepi > a_term')
-                out = ''
+                    tmp_val+=']}'
+                    add_term(tmp_val,100,'from orangepi > a_term')
+                    out = ''
 
-#                except Exception:
-#                    tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-#                    add_term(tmp_val,-100,'from orangepi > home')
-#                    out = ''
+                except Exception:
+                    tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+                    add_term(tmp_val,-100,'from orangepi > home')
+                    out = ''
 
 
-#                try:
-                ser.write('G\r\n')
-                time.sleep(1)
-                while ser.inWaiting() > 0:
+                try:
+                    ser.write('G\r\n')
+                    time.sleep(1)
+                    while ser.inWaiting() > 0:
                         out += ser.read(1)
-                json_string = out
-                gdata = json.loads(json_string)
-                add_term(out,200,'from orangepi > G')
-#                except Exception:
-#                    tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-#                    add_term(out,-200,'from orangepi > G')
+                    json_string = out
+                    gdata = json.loads(json_string)
+                    add_term(out,200,'from orangepi > G')
+                except Exception:
+                    tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+                    add_term(out,-200,'from orangepi > G')
 
                 time.sleep(1)
                 try:
                     am2320 = AM2320(1)
+                    time.sleep(0.5)
                     (t,h) = am2320.readSensor()
                     tmp_val='{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}'
                     home_hum = h
