@@ -269,9 +269,11 @@ while 1 :
         try:
             print ('{[')
             out = ''
-            for i in ('0','1','2','3','4'):
+            nums = ["0","1","2","3","4"]
+            for i in nums: # ('0','1','2','3','4'):
                 ser.write('R' + i + '\r\n')
-                time.sleep(1)
+
+                #time.sleep(1)
                 while ser.inWaiting() > 0:
                     out += ser.read(1)
                     if out != '':
