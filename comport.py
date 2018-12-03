@@ -273,7 +273,7 @@ while 1 :
                 ser.write('R' + str(i) + '\n')
 
                 while ser.inWaiting() > 0:
-                    out = ser.read(1)
+                    out += ser.read(1)
                     if out != '':
                         print out
                     if (i!=4):
