@@ -377,7 +377,7 @@ while 1 :
                     out += ser.read(1)
                 #json_string = out
                 print(out)
-                #gdata = json.loads(out) #json_string)
+                gdata = json.loads(out) #json_string)
                 add_term(out,200,'from orangepi > G')
                 # except Exception:
                 #     tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
