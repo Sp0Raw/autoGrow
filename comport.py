@@ -357,7 +357,7 @@ while 1 :
                         if out != '':
                             # print out
                             tmp_val+=out
-                        if (i!=4):
+                        if (i!="4"):
                             tmp_val+=','
                     # time.sleep(1)
                     tmp_val+=']}'
