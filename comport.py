@@ -209,7 +209,8 @@ def add_term(value, id_val, comment):
     print (comment)
 
 ########################################################################################################################
-
+## COM PORT SELECTER
+########################################################################################################################
 try:
     parser = createParser()
     namespace = parser.parse_args(sys.argv[1:])
@@ -263,7 +264,7 @@ while 1 :
         print('{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}')
 
     #####################################################
-    elif input == 'a_term':
+    elif input == 'a_term' :
         print ('{[')
         for i in (0,1,2,3,4):
             out = ''
@@ -306,7 +307,7 @@ while 1 :
             if (lcdInf == 0) and((delta.seconds %5)==0):
                 mylcd.lcd_display_string('H-> '+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
                 lcdInf = 1
-                time.sleep(0.5)
+                # time.sleep(0.5)
             elif lcdInf == 1 and((delta.seconds %5)==0) :
 #                try:
 #                out = ''
@@ -320,17 +321,17 @@ while 1 :
 #                except Exception:
 #                    pass
 #                    out = ''
-
                 mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
                 lcdInf =0
-                time.sleep(1)
+                # time.sleep(1)
             elif lcdInf == 2 and((delta.seconds %5)==0):
                 mylcd.lcd_display_string('*-> ' + str(home_temp) + 'C ' + str(home_hum) + '%    ', 1)
                 lcdInf = 0
-                time.sleep(1)
+                # time.sleep(1)
 
+            time.sleep(1)
 
-            if delta.seconds>50 or withOutDelay == 1 :
+            if ( delta.seconds>50 or withOutDelay == 1 ) and  ser.isOpen():
                 withOutDelay = 0
                 cur = conn.cursor()
                 tmp_val='{['
@@ -443,9 +444,11 @@ while 1 :
                 time.sleep(1)
 #                mylcd.lcd_display_string(datetime.datetime.now().strftime("%m/%d %H:%M:%S"), 2)
                 conn.commit()
-                cur.close();
+                cur.close()
                 #time.sleep(45)
                 last_time_update = datetime.datetime.now()
+            else
+                ser.open()
 
     else:
         ser.write(input + '\r\n')
