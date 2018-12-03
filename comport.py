@@ -232,8 +232,8 @@ try:
         bytesize=serial.EIGHTBITS
     )
 
-    ser.open()
-    ser.isOpen()
+    #ser.open()
+    #ser.isOpen()
 except IOError: # if port is already opened, close it and open it again and print message
     ser.close()
     ser.open()
@@ -266,17 +266,17 @@ while 1 :
     #####################################################
     elif input == 'a_term' :
         print ('{[')
+        out = ''
         for i in (0,1,2,3,4):
-            out = ''
-            ser.write('R' + str(i) + '\r\n')
+            ser.write('R' + str(i) + '\n')
             # time.sleep(1)
             while ser.inWaiting() > 0:
                 out += ser.read(1)
                 if out != '':
                     print out
                 if (i!=4):
-                    sys.stdout.write(',')
-            #print (',')
+                    # sys.stdout.write(',')
+                    print (',')
 	    print (']}')
 
     #####################################################
