@@ -28,7 +28,7 @@ from pyA20.gpio import gpio
 from pyA20.gpio import port
 
 
-print colored('hello', 'red'), colored('world', 'green')
+print colored('hello', 'green'), colored('world', 'red')
 
 #############################################
 ##   GIT
@@ -192,6 +192,8 @@ class AM2320:
 
     return (temp, humi)
 
+########################################################################################################################
+
 def add_term(value, id_val, comment):
     query = """
     INSERT INTO
@@ -205,6 +207,9 @@ def add_term(value, id_val, comment):
     print (value)
     print (id_val)
     print (comment)
+
+########################################################################################################################
+
 try:
     parser = createParser()
     namespace = parser.parse_args(sys.argv[1:])
