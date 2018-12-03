@@ -232,8 +232,9 @@ try:
         bytesize=serial.EIGHTBITS
     )
 
-    #ser.open()
-    #ser.isOpen()
+    ser.open()
+    ser.isOpen()
+    ser.close()
 except IOError: # if port is already opened, close it and open it again and print message
     ser.close()
     ser.open()
