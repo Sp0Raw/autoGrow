@@ -448,7 +448,8 @@ while 1 :
                 #time.sleep(45)
                 last_time_update = datetime.datetime.now()
             else:
-                ser.open()
+                time.sleep(0.5)
+                # ser.open()
 
     else:
         ser.write(input + '\r\n')
