@@ -372,7 +372,7 @@ while 1 :
                 ser.isOpen()
                 out = ''
                 ser.write('G\r\n')
-                # time.sleep(1)
+                time.sleep(1)
                 while ser.inWaiting() > 0:
                     out += ser.read(1)
                 #json_string = out
