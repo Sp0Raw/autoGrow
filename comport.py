@@ -269,8 +269,7 @@ while 1 :
         for i in (0,1,2,3,4):
             out = ''
             ser.write('R' + str(i) + '\r\n')
-
-            time.sleep(1)
+            # time.sleep(1)
             while ser.inWaiting() > 0:
                 out += ser.read(1)
                 if out != '':
