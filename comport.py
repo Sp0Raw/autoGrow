@@ -271,7 +271,7 @@ while 1 :
             out = ''
             for i in (0,1,2,3,4):
                 ser.write('R' + str(i) + '\n')
-                # time.sleep(1)
+
                 while ser.inWaiting() > 0:
                     out = ser.read(1)
                     if out != '':
@@ -279,6 +279,7 @@ while 1 :
                     if (i!=4):
                         # sys.stdout.write(',')
                         print (',')
+                time.sleep(1)
             print (']}')
 
         except IOError:  # if port is already opened, close it and open it again and print message
