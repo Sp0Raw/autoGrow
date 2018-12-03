@@ -269,8 +269,8 @@ while 1 :
         try:
             print ('{[')
             out = ''
-            for i in (0,1,2,3,4):
-                ser.write('R' + str(i) + '\n')
+            for i in ('0','1','2','3','4'):
+                ser.write('R' + i + '\r\n')
 
                 while ser.inWaiting() > 0:
                     out += ser.read(1)
