@@ -234,7 +234,7 @@ try:
 
     ser.open()
     ser.isOpen()
-    ser.close()
+    # ser.close()
 except IOError: # if port is already opened, close it and open it again and print message
     ser.close()
     ser.open()
@@ -265,20 +265,25 @@ while 1 :
         print('{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}')
 
     #####################################################
-    elif input == 'a_term' :
-        print ('{[')
-        out = ''
-        for i in (0,1,2,3,4):
-            ser.write('R' + str(i) + '\n')
-            # time.sleep(1)
-            while ser.inWaiting() > 0:
-                out += ser.read(1)
-                if out != '':
-                    print out
-                if (i!=4):
-                    # sys.stdout.write(',')
-                    print (',')
-	    print (']}')
+    elif input == 'a_term' and ser.isOpen():
+        try:
+            print ('{[')
+            out = ''
+            for i in (0,1,2,3,4):
+                ser.write('R' + str(i) + '\n')
+                # time.sleep(1)
+                while ser.inWaiting() > 0:
+                    out += ser.read(1)
+                    if out != '':
+                        print out
+                    if (i!=4):
+                        # sys.stdout.write(',')
+                        print (',')
+            print (']}')
+
+        except IOError:  # if port is already opened, close it and open it again and print message
+            ser.open()
+            print("port was already open, was closed and opened again!")
 
     #####################################################
     elif input == 'pg':
