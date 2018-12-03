@@ -362,8 +362,6 @@ while 1 :
                     # time.sleep(1)
                     tmp_val+=']}'
                     add_term(tmp_val,100,'from orangepi > a_term')
-
-
                 except Exception:
                     tmp_val='{"num_sens": 0,"sens_type" : "DS18B20", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
                     add_term(tmp_val,-100,'from orangepi > home')
@@ -371,6 +369,7 @@ while 1 :
 
 
                 try:
+                    ser.isOpen()
                     out = ''
                     ser.write('G\r\n')
                     # time.sleep(1)
