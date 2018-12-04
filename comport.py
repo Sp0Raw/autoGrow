@@ -581,6 +581,7 @@ while 1 :
     else:
         while ser.inWaiting() > 0:
             out += ser.read(1)
+        time.sleep(1)
         ser.write(input + '\r\n')
         out = ''
 
