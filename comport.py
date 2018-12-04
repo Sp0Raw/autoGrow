@@ -417,6 +417,7 @@ while 1 :
                         #ser.close()
                         out =''
                         ser.write('H\r\n')
+                        time.sleep(1.5)
                         while ser.inWaiting() > 0:
                             out += ser.read(1)
                         print(out)
@@ -469,7 +470,7 @@ while 1 :
                         try:
                             out = ''
                             ser.write('G\r\n')
-                            time.sleep(1)
+                            time.sleep(1.5)
                             while ser.inWaiting() > 0:
                                 out += ser.read(1)
                             #json_string = out
@@ -504,7 +505,7 @@ while 1 :
                 out=''
                 try:
                     ser.write('W\r\n')
-                    time.sleep(1)
+                    time.sleep(1.5)
                     while ser.inWaiting() > 0:
                         out += ser.read(1)
                     json_string = out
