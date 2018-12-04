@@ -477,8 +477,8 @@ while 1 :
                             gdata = json.loads(out) #json_string)
                             add_term(out,200,'from orangepi > G')
                         except Exception:
-                            tmp_val='{"num_sens": 0,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-                            add_term(tmp_val,-300,'from orangepi > home')
+                            tmp_val='{"num_sens": 1,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+                            add_term(tmp_val,-200,'from orangepi > G')
                 except IOError:
                     #ser.open()
                     tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
