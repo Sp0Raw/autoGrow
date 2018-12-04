@@ -217,7 +217,7 @@ try:
     parser = createParser()
     numComPort = parser.parse_args(sys.argv[1:])
     numPort = format(numComPort.name)
-    if numPort:
+    if numPort!=None:
         #print ("++/dev/ttyACM"+format(namespace.name) )
         s_port='/dev/ttyACM'+numPort #format(numComPort.name)
         print (s_port )
