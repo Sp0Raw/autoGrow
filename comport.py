@@ -397,7 +397,11 @@ while 1 :
                 lcdInf =2
                 time.sleep(1)
             elif lcdInf == 2 and((delta.seconds %5)==0):
-                mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + ' VOLT        ', 1)
+                try:
+                    mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + ' VOLT        ', 1)
+                except:
+                    mylcd.lcd_display_string('W->  N/A  VOLT          ',1)
+
                 lcdInf = 0
                 time.sleep(1)
                 #
