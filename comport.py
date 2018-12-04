@@ -238,6 +238,11 @@ try:
 
     ser.open()
     ser.isOpen()
+    ser.write('F\r\n')
+    out =""
+    while ser.inWaiting() > 0:
+        out += ser.read(1)
+    print(out)
     if ser.isOpen():
         print("ebaniy port is OPEN")
     else:
