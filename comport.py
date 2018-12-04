@@ -211,16 +211,20 @@ def add_term(value, id_val, comment):
 ########################################################################################################################
 ## COM PORT SELECTER
 ########################################################################################################################
+
+# Start COM-Port Seting
 try:
     parser = createParser()
-    namespace = parser.parse_args(sys.argv[1:])
-    if namespace.name:
+    numComPort = parser.parse_args(sys.argv[1:])
+    numPort = format(numComPort.name)
+    if numPort:
         #print ("++/dev/ttyACM"+format(namespace.name) )
-        s_port='/dev/ttyACM'+format(namespace.name)
+        s_port='/dev/ttyACM'+numPort #format(numComPort.name)
         print (s_port )
     else:
-        print ("/dev/ttyACM0")
-        s_port='/dev/ttyACM0'
+        numPort = 0
+        s_port='/dev/ttyACM'+numPort #format(numComPort.name)
+        print (s_port )
 
     ser = serial.Serial(
         #port='/dev/ttyACM0',
@@ -239,6 +243,40 @@ except IOError: # if port is already opened, close it and open it again and prin
     ser.close()
     ser.open()
     print ("port was already open, was closed and opened again!")
+
+
+def openComPort(numPort):
+    try:
+        if numPort==0
+        parser = createParser()
+        namespace = parser.parse_args(sys.argv[1:])
+        if namespace.name:
+            # print ("++/dev/ttyACM"+format(namespace.name) )
+            s_port = '/dev/ttyACM' + format(namespace.name)
+            print(s_port)
+        else:
+            print("/dev/ttyACM0")
+            s_port = '/dev/ttyACM0'
+
+        ser = serial.Serial(
+            # port='/dev/ttyACM0',
+            port=s_port,
+            baudrate=9600,
+            timeout=10,
+            parity=serial.PARITY_NONE,
+            stopbits=serial.STOPBITS_ONE,
+            bytesize=serial.EIGHTBITS
+        )
+
+        ser.open()
+        ser.isOpen()
+        # ser.close()
+    except IOError:  # if port is already opened, close it and open it again and print message
+        ser.close()
+        ser.open()
+        print("port was already open, was closed and opened again!")
+
+
 
 ## END OF DECLARE
 print 'Enter your commands below.\r\nInsert "exit" to leave the application.'
@@ -334,9 +372,13 @@ while 1 :
                 lcdInf =2
                 time.sleep(1)
             elif lcdInf == 2 and((delta.seconds %5)==0):
-                mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + 'VOLT        ', 1)
+                mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + ' VOLT        ', 1)
                 lcdInf = 0
                 time.sleep(1)
+                ser.write('F\r\n')
+                while ser.inWaiting() > 0:
+                    out += ser.read(1)
+
 
             # and  ser.isOpen()
             if ( delta.seconds>50 or withOutDelay == 1 ) :
