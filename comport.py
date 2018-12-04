@@ -407,14 +407,15 @@ while 1 :
                         print("port is CLOSED   do OPEN port")
                         ser.open()
                     print(']}')
+
+                    ser.write('F\r\n')
+                    while ser.inWaiting() > 0:
+                        out += ser.read(1)
+
                 except IOError:  # if port is already opened, close it and open it again and print message
-                    # ser.open()
+                    ser.close()
+                    ser.open()
                     print("port was already open, was closed and opened again!")
-
-                ser.write('F\r\n')
-                while ser.inWaiting() > 0:
-                    out += ser.read(1)
-
 
             # and  ser.isOpen()
             if ( delta.seconds>50 or withOutDelay == 1 ) :
