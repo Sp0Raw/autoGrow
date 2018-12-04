@@ -226,22 +226,22 @@ try:
         s_port='/dev/ttyACM'+numPort #format(numComPort.name)
         print (s_port )
 
-    ser = serial.Serial(
-        #port='/dev/ttyACM0',
-        port=s_port,
-        baudrate=9600,
-        timeout=10,
-        parity=serial.PARITY_NONE,
-        stopbits=serial.STOPBITS_ONE,
-        bytesize=serial.EIGHTBITS
-    )
-
-    ser.open()
-    ser.isOpen()
+    # ser = serial.Serial(
+    #     #port='/dev/ttyACM0',
+    #     port=s_port,
+    #     baudrate=9600,
+    #     timeout=10,
+    #     parity=serial.PARITY_NONE,
+    #     stopbits=serial.STOPBITS_ONE,
+    #     bytesize=serial.EIGHTBITS
+    # )
+    #
+    # ser.open()
+    # ser.isOpen()
     # ser.close()
 except IOError: # if port is already opened, close it and open it again and print message
-    ser.close()
-    ser.open()
+    # ser.close()
+    # ser.open()
     print ("port was already open, was closed and opened again!")
 
 
