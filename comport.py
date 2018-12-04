@@ -579,11 +579,11 @@ while 1 :
                 # ser.open()
 
     else:
+        out = ''
         while ser.inWaiting() > 0:
             out += ser.read(1)
         time.sleep(1)
         ser.write(input + '\r\n')
-        out = ''
 
         # let's wait one second before reading output (let's give device time to answer)
         #time.sleep(1)
