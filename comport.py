@@ -238,10 +238,14 @@ try:
 
     ser.open()
     ser.isOpen()
+    if ser.isOpen():
+        print("ebaniy port is OPEN")
+    else:
+        print("ebaniy port is CLOSE")
     # ser.close()
 except IOError: # if port is already opened, close it and open it again and print message
-    ser.close()
-    # ser.open()
+    # ser.close()
+    ser.open()
     print(s_port)
     print ("port was already open, was closed and opened again!")
 
