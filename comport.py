@@ -448,20 +448,23 @@ while 1 :
 
 
                 try:
-                    ser.isOpen()
-                    out = ''
-                    ser.write('G\r\n')
-                    time.sleep(0.5)
-                    while ser.inWaiting() > 0:
-                        out += ser.read(1)
-                    #json_string = out
-                    print(out)
-                    gdata = json.loads(out) #json_string)
-                    add_term(out,200,'from orangepi > G')
+                    if ser.isOpen():
+                        out = ''
+                        ser.write('G\r\n')
+                        time.sleep(0.5)
+                        while ser.inWaiting() > 0:
+                            out += ser.read(1)
+                        #json_string = out
+                        print(out)
+                        gdata = json.loads(out) #json_string)
+                        add_term(out,200,'from orangepi > G')
                 except IOError:
                     #ser.open()
                     tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
                     add_term(out,-200,'from orangepi > G')
+                except Exception:
+                    tmp_val='{"num_sens": 0,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
+                    add_term(tmp_val,-300,'from orangepi > home')
 
                 time.sleep(1)
                 try:
