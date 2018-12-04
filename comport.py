@@ -238,13 +238,13 @@ try:
 
     ser.open()
     ser.isOpen()
-    ser.write('F\r\n')
-    out =""
-    while ser.inWaiting() > 0:
-        out += ser.read(1)
-    print(out)
+    out =''
     if ser.isOpen():
         print("ebaniy port is OPEN")
+        ser.write('F\r\n')
+        while ser.inWaiting() > 0:
+            out += ser.read(1)
+        print(out)
     else:
         print("ebaniy port is CLOSE")
     # ser.close()
