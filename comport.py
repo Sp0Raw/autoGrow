@@ -334,6 +334,22 @@ while 1 :
             print("port was already open, was closed and opened again!")
 
     #####################################################
+    elif input == 'close':
+        try:
+            print ('{[')
+            if ser.isOpen():
+                print("Kakogo xuya port is OPEN")
+                ser.close()
+            else:
+                print("port is CLOSED   do OPEN port")
+                ser.open()
+            print (']}')
+
+        except IOError:  # if port is already opened, close it and open it again and print message
+            #ser.open()
+            print("port was already open, was closed and opened again!")
+
+    #####################################################
     elif input == 'pg':
         withOutDelay = 1
         while 1 :
