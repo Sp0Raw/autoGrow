@@ -390,7 +390,10 @@ while 1 :
 #                except Exception:
 #                    pass
 #                    out = ''
-                mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
+                try:
+                    mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
+                except:
+                    mylcd.lcd_display_string('G-> N/A C   N/A %   ',1)
                 lcdInf =2
                 time.sleep(1)
             elif lcdInf == 2 and((delta.seconds %5)==0):
