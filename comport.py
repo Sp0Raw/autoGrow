@@ -398,6 +398,19 @@ while 1 :
                 lcdInf = 0
                 time.sleep(1)
                 #
+                try:
+                    print('{[')
+                    if ser.isOpen():
+                        print("!COM PORT IS OPEN!")
+                        #ser.close()
+                    else:
+                        print("port is CLOSED   do OPEN port")
+                        ser.open()
+                    print(']}')
+                except IOError:  # if port is already opened, close it and open it again and print message
+                    # ser.open()
+                    print("port was already open, was closed and opened again!")
+
                 ser.write('F\r\n')
                 while ser.inWaiting() > 0:
                     out += ser.read(1)
