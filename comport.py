@@ -263,8 +263,10 @@ def openComPort(numPort):
     try:
         if numPort=="0":
             lnumPort = "1"
+            numPort = "1"
         else:
             lnumPort = "0"
+            numPort = "0"
 
         s_port = '/dev/ttyACM' + lnumPort
         print(s_port)
