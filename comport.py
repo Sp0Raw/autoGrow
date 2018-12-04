@@ -416,7 +416,7 @@ while 1 :
                         print("!COM PORT IS OPEN!")
                         #ser.close()
                         out =''
-                        ser.write('F\r\n')
+                        ser.write('H\r\n')
                         while ser.inWaiting() > 0:
                             out += ser.read(1)
                         print(out)
