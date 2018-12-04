@@ -256,10 +256,10 @@ except IOError: # if port is already opened, close it and open it again and prin
 
 def openComPort(numPort):
     try:
-        if numPort==0:
-            lnumPort = 1
+        if numPort=="0":
+            lnumPort = "1"
         else:
-            lnumPort = 0
+            lnumPort = "0"
 
         s_port = '/dev/ttyACM' + lnumPort
         print(s_port)
@@ -414,7 +414,8 @@ while 1 :
 
                 except IOError:  # if port is already opened, close it and open it again and print message
                     ser.close()
-                    ser.open()
+                    openComPort(numPort)
+                    # ser.open()
                     print("port was already open, was closed and opened again!")
 
             # and  ser.isOpen()
