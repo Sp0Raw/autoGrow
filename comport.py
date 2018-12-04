@@ -451,7 +451,7 @@ while 1 :
                     ser.isOpen()
                     out = ''
                     ser.write('G\r\n')
-                    #time.sleep(1)
+                    time.sleep(0.5)
                     while ser.inWaiting() > 0:
                         out += ser.read(1)
                     #json_string = out
@@ -459,12 +459,13 @@ while 1 :
                     gdata = json.loads(out) #json_string)
                     add_term(out,200,'from orangepi > G')
                 except IOError:
-                    ser.open()
+                    #ser.open()
                     tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
                     add_term(out,-200,'from orangepi > G')
 
                 time.sleep(1)
                 try:
+                    time.sleep(0.5)
                     am2320 = AM2320(1)
                     time.sleep(0.5)
                     (t,h) = am2320.readSensor()
