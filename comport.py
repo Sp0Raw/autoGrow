@@ -415,6 +415,11 @@ while 1 :
                     if ser.isOpen():
                         print("!COM PORT IS OPEN!")
                         #ser.close()
+                        out =''
+                        ser.write('F\r\n')
+                        while ser.inWaiting() > 0:
+                            out += ser.read(1)
+                        print(out)
                     else:
                         print("port is CLOSED   do OPEN port")
                         ser.open()
