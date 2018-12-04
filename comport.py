@@ -414,7 +414,7 @@ while 1 :
                     print('{[')
                     if ser.isOpen():
                         print("!COM PORT IS OPEN!")
-                        print(datetime.now())
+                        print(datetime.strftime(datetime.now(), "%Y.%m.%d %H:%M:%S"))
                         #ser.close()
                         out =''
                         ser.write('H\r\n')
