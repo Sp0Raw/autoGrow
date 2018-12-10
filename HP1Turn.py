@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 #import the library
 from pyA20.gpio import gpio
@@ -11,13 +12,13 @@ def createParser ():
 
     return parser
 
-#initialize the gpio module
 gpio.init()
+parser = createParser()
+numComPort = parser.parse_args(sys.argv[1:])
+turnVal = format(numComPort.name)
 
-
-# Relay module K4
-gpio.setcfg(port.PA9, gpio.OUTPUT)  ## Init  port 
-gpio.output(port.PA9, gpio.LOW)     # Turn RELAY => ON 
-#sleep(60)
-#gpio.output(port.PA9, gpio.HIGH)    # Turn RELAY => OFF
-
+gpio.setcfg(port.PA9, gpio.OUTPUT)  ## Init  PIN an set is ON
+if turnVal == "on" or turnVal=="1" or turnVal =="on+" or  turnVal =="11":
+    gpio.output(port.PA9, gpio.LOW)     # Turn RELAY => OFF
+elif ((turnVal == "off" or turnVal == "0") or (turnVal == "off+" or turnVal == "00")):
+    gpio.output(port.PA9, gpio.HIGH)     # Turn RELAY => ON

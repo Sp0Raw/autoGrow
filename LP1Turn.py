@@ -17,8 +17,8 @@ parser = createParser()
 numComPort = parser.parse_args(sys.argv[1:])
 turnVal = format(numComPort.name)
 
-gpio.setcfg(port.PA21, gpio.OUTPUT)  ## Init  PIN an set is ON
+gpio.setcfg(port.PA7, gpio.OUTPUT)  ## Init  PIN an set is ON
 if turnVal == "on" or turnVal=="1" or turnVal =="on+" or  turnVal =="11":
-    gpio.output(port.PA21, gpio.LOW)     # Turn RELAY => OFF
+    gpio.output(port.PA7, gpio.LOW)     # Turn RELAY => OFF
 elif ((turnVal == "off" or turnVal == "0") or (turnVal == "off+" or turnVal == "00")):
-    gpio.output(port.PA21, gpio.HIGH)     # Turn RELAY => ON
+    gpio.output(port.PA7, gpio.HIGH)     # Turn RELAY => ON

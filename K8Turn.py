@@ -1,6 +1,7 @@
 import argparse
 import sys
 
+
 #import the library
 from pyA20.gpio import gpio
 from pyA20.gpio import port
@@ -17,8 +18,8 @@ parser = createParser()
 numComPort = parser.parse_args(sys.argv[1:])
 turnVal = format(numComPort.name)
 
-gpio.setcfg(port.PA21, gpio.OUTPUT)  ## Init  PIN an set is ON
+gpio.setcfg(port.PG6, gpio.OUTPUT)  ## Init  PIN an set is ON
 if turnVal == "on" or turnVal=="1" or turnVal =="on+" or  turnVal =="11":
-    gpio.output(port.PA21, gpio.LOW)     # Turn RELAY => OFF
+    gpio.output(port.PG6, gpio.HIGH)     # Turn RELAY => OFF
 elif ((turnVal == "off" or turnVal == "0") or (turnVal == "off+" or turnVal == "00")):
-    gpio.output(port.PA21, gpio.HIGH)     # Turn RELAY => ON
+    gpio.output(port.PG6, gpio.LOW)     # Turn RELAY => ON
