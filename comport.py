@@ -454,7 +454,7 @@ while 1 :
                     for i in nums:
                         out = ''
                         ser.write('R' + str(i) + '\r\n')
-                        time.sleep(1)
+                        time.sleep(1.5)
                         while ser.inWaiting() > 0:
                             out += ser.read(1)
                         if out != '':
@@ -476,7 +476,7 @@ while 1 :
                         try:
                             out = ''
                             ser.write('G\r\n')
-                            time.sleep(1.5)
+                            time.sleep(2)
                             while ser.inWaiting() > 0:
                                 out += ser.read(1)
                             #json_string = out
@@ -498,7 +498,7 @@ while 1 :
                 try:
                     time.sleep(0.5)
                     am2320 = AM2320(1)
-                    time.sleep(0.5)
+                    time.sleep(1)
                     (t,h) = am2320.readSensor()
                     tmp_val='{"num_sens": 0,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":'+str(t)+', "hum":'+str(h)+'}}'
                     home_hum = h
@@ -511,7 +511,7 @@ while 1 :
                 out=''
                 try:
                     ser.write('W\r\n')
-                    time.sleep(1.5)
+                    time.sleep(2)
                     while ser.inWaiting() > 0:
                         out += ser.read(1)
                     json_string = out
@@ -567,7 +567,7 @@ while 1 :
 #                elif lcdInf == 2:
 #                    mylcd.lcd_display_string('*-> ' + str(home_temp) + 'C ' + str(home_hum) + '%    ', 1)
 #                    lcdInf = 0
-                time.sleep(1)
+                time.sleep(1.5)
 #                mylcd.lcd_display_string(datetime.datetime.now().strftime("%m/%d %H:%M:%S"), 2)
                 conn.commit()
                 cur.close()
@@ -575,7 +575,7 @@ while 1 :
                 last_time_update = datetime.datetime.now()
                 # ser.close()
             else:
-                time.sleep(0.5)
+                time.sleep(1)
                 # ser.open()
 
     else:
