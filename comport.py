@@ -541,12 +541,12 @@ while 1 :
                     add_term(tmp_val,600,'from orangepi > CPU_TEMPERATURE')
 
                     if tempC > 30:
-                        gpio.output(port.PG8, gpio.HIGH)
+                        gpio.output(port.PG8, gpio.HIGH) ## always on
                         #GPIO.output(17, 1)
                         gpio.output(port.PA7, gpio.LOW)
                         print "HOT"
                     else:
-                        gpio.output(port.PG8, gpio.LOW)
+                        gpio.output(port.PG8, gpio.HIGH) ## always on
                         #GPIO.output(17, 0)
                         gpio.output(port.PA7, gpio.HIGH)
                         print "COLD"
