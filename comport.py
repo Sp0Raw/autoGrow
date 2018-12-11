@@ -543,12 +543,12 @@ while 1 :
                     if tempC > 30:
                         gpio.output(port.PG8, gpio.HIGH) ## always on
                         #GPIO.output(17, 1)
-                        gpio.output(port.PA7, gpio.LOW)
+                        gpio.output(port.PA7, gpio.LOW) ## always on
                         print "HOT"
                     else:
                         gpio.output(port.PG8, gpio.HIGH) ## always on
                         #GPIO.output(17, 0)
-                        gpio.output(port.PA7, gpio.HIGH)
+                        gpio.output(port.PA7, gpio.LOW) ## always on
                         print "COLD"
                     lcdInf = 0
                 except:
