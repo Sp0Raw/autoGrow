@@ -13,7 +13,7 @@ import io
 
 ## LCD
 # requires RPi_I2C_driver.py
-import RPi_I2C_driver
+#!import RPi_I2C_driver
 
 # For key press detect
 import keyboard #Using module keyboard
@@ -24,8 +24,8 @@ import json
 from termcolor import colored
 
 #import the library
-from pyA20.gpio import gpio
-from pyA20.gpio import port
+#!from pyA20.gpio import gpio
+#!from pyA20.gpio import port
 
 
 print colored('hello', 'green'), colored('world', 'red')
@@ -35,21 +35,21 @@ print colored('hello', 'green'), colored('world', 'red')
 #############################################
 
 #initialize the gpio module
-gpio.init()
+#!gpio.init()
 
 # Read pin 40
-gpio.setcfg(port.PG7, gpio.INPUT)   #Configure PE11 as input
-gpio.setcfg(port.PG7, 0)   #Same as above
+#!gpio.setcfg(port.PG7, gpio.INPUT)   #Configure PE11 as input
+#!gpio.setcfg(port.PG7, 0)   #Same as above
 
-gpio.pullup(port.PG7, 0)   #Clear pullups
-gpio.pullup(port.PG7, gpio.PULLDOWN)    #Enable pull-down
-gpio.pullup(port.PG7, gpio.PULLUP)      #Enable pull-up
+#!gpio.pullup(port.PG7, 0)   #Clear pullups
+#!gpio.pullup(port.PG7, gpio.PULLDOWN)    #Enable pull-down
+#!gpio.pullup(port.PG7, gpio.PULLUP)      #Enable pull-up
 
 
-mylcd = RPi_I2C_driver.lcd()
+#!mylcd = RPi_I2C_driver.lcd()
 # test 2
-mylcd.lcd_display_string("=== My GROW ===", 1)
-mylcd.lcd_display_string(" Custom chars", 2)
+#!mylcd.lcd_display_string("=== My GROW ===", 1)
+#!mylcd.lcd_display_string(" Custom chars", 2)
 
 # DB Connect
 conn = psycopg2.connect('host=192.168.88.10 user=postgres password=pgsql dbname=postgres')
@@ -64,28 +64,28 @@ box_temp = 0.0
 
 ###  Init  Smal Relay module pins
 # Relay module LK1
-gpio.setcfg(port.PG8, gpio.OUTPUT)
-gpio.output(port.PG8, gpio.HIGH)
+#!gpio.setcfg(port.PG8, gpio.OUTPUT)
+#!gpio.output(port.PG8, gpio.HIGH)
 #sleep(2)
 #gpio.output(port.PG8, gpio.LOW)
 
 # Relay module LK2
-gpio.setcfg(port.PG9, gpio.OUTPUT)
-gpio.output(port.PG9, gpio.HIGH)
+#!gpio.setcfg(port.PG9, gpio.OUTPUT)
+#!gpio.output(port.PG9, gpio.HIGH)
 #sleep(2)
 #gpio.output(port.PG9, gpio.LOW)
 
 # Relay module LK3
-gpio.setcfg(port.PG6, gpio.OUTPUT)
-gpio.output(port.PG6, gpio.HIGH)
+#!gpio.setcfg(port.PG6, gpio.OUTPUT)
+#!gpio.output(port.PG6, gpio.HIGH)
 #sleep(2)
 #gpio.output(port.PG6, gpio.LOW)
 
 
 ###  Init  BIG Relay module pins
 # Relay module LP1
-gpio.setcfg(port.PA7, gpio.OUTPUT)
-gpio.output(port.PA7, gpio.HIGH)
+#!gpio.setcfg(port.PA7, gpio.OUTPUT)
+#!gpio.output(port.PA7, gpio.HIGH)
 
 
 ###
@@ -297,7 +297,7 @@ print 'Enter your commands below.\r\nInsert "exit" to leave the application.'
 input=1
 while 1 :
     # mylcd.lcd_display_string("Time: %s" %time.strftime("%H:%M:%S"), 1)
-    mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"), 2)
+#!    mylcd.lcd_display_string(datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"), 2)
 
     print('=============================================')
     # get keyboard input
@@ -317,21 +317,22 @@ while 1 :
     #####################################################
     elif input == 'a_term' and ser.isOpen():
         try:
-            print ('{[')
+            print ('{"sensors":[')
             out = ''
             nums = ["0","1","2","3","4"]
             for i in nums: # ('0','1','2','3','4'):
+                #ser.flush
+                out = ''
                 ser.write('R' + i + '\r\n')
 
-                #time.sleep(1)
+                time.sleep(1)
                 while ser.inWaiting() > 0:
                     out += ser.read(1)
 
-                if out != '':
+                if out != '' and (i!="4"):
+                    print out+','
+                if out != '' and (i=="4"):
                     print out
-                if (i!=4):
-                    # sys.stdout.write(',')
-                    print (',')
 
             print (']}')
 
@@ -359,7 +360,7 @@ while 1 :
     elif input == 'pg':
         withOutDelay = 1
         while 1 :
-            mylcd.lcd_display_string(" M"+datetime.datetime.now().strftime("%m")+"D"+datetime.datetime.now().strftime("%d %H:%M:%S"), 2)
+#!            mylcd.lcd_display_string(" M"+datetime.datetime.now().strftime("%m")+"D"+datetime.datetime.now().strftime("%d %H:%M:%S"), 2)
 #            mylcd.lcd_display_string("D"+datetime.datetime.now().strftime("%m/%d %H:%M:%S"), 2)
             delta = datetime.datetime.now()-last_time_update
             #print(int(delta.seconds))
@@ -368,22 +369,24 @@ while 1 :
 
             #print('press space for abort')
 
-            try:  # used try so that if user pressed other than the given key error will not be shown
-                if keyboard.is_pressed('x'):  # if key 'a' is pressed
-                    print('execution aborted')
-                    break  # finishing the loop
-                else:
-                    pass
-            except:
-                break  # if user pressed other than the given key the loop will break
+#!            try:  # used try so that if user pressed other than the given key error will not be shown
+#!            if keyboard.is_pressed('x'):  # if key 'a' is pressed
+#!                            print('execution aborted')
+#!                            break  # finishing the loop
+#!            else:
+#!                            pass
+#!            except:
+#!                break  # if user pressed other than the given key the loop will break
 
 #            mylcd.lcd_display_string(datetime.datetime.now().strftime("%m/%d %H:%M:%s"), 2)
 
             if (lcdInf == 0) and((delta.seconds %5)==0):
-                mylcd.lcd_display_string('H-> '+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
+		print(" lcd 0 ")
+#!                mylcd.lcd_display_string('H-> '+str(home_temp)+'C '+str(home_hum)+'%    ', 1)
                 lcdInf = 1
                 time.sleep(1)
             elif lcdInf == 1 and((delta.seconds %5)==0) :
+                print(" lcd 1 ")
 #                try:
 #                out = ''
 #                ser.write('G\r\n')
@@ -396,17 +399,18 @@ while 1 :
 #                except Exception:
 #                    pass
 #                    out = ''
-                try:
-                    mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
-                except:
-                    mylcd.lcd_display_string('G-> N/A C   N/A %   ',1)
+#!                try:
+#!                    mylcd.lcd_display_string('G-> '+str(gdata['sens_Val']['temp']) + 'C ' + str(gdata['sens_Val']['hum']) + '%    ', 1)
+#!                except:
+#!                    mylcd.lcd_display_string('G-> N/A C   N/A %   ',1)
                 lcdInf =2
                 time.sleep(1)
             elif lcdInf == 2 and((delta.seconds %5)==0):
-                try:
-                    mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + ' VOLT        ', 1)
-                except:
-                    mylcd.lcd_display_string('W->  N/A  VOLT          ',1)
+                print(" lcd 2 ")
+#!                try:
+#!                    mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + ' VOLT        ', 1)
+#!                except:
+#!                    mylcd.lcd_display_string('W->  N/A  VOLT          ',1)
 
                 lcdInf = 0
                 time.sleep(1)
@@ -444,11 +448,12 @@ while 1 :
 
             # and  ser.isOpen()
             if ( delta.seconds>50 or withOutDelay == 1 ) :
+		print(" lcd mani 50 sec ")
                 # ser.open()
-                mylcd.lcd_display_string(" UPDATE ...     ", 2)
+#!                mylcd.lcd_display_string(" UPDATE ...     ", 2)
                 withOutDelay = 0
                 cur = conn.cursor()
-                tmp_val='{['
+                tmp_val='{"sensors": [ \n'
                 try:
                     nums = ["0","1","2","3","4"]
                     for i in nums:
@@ -461,7 +466,7 @@ while 1 :
                             # print out
                             tmp_val+=out
                         if (i!="4"):
-                            tmp_val+=','
+                            tmp_val+=',\n'
                     # time.sleep(1)
                     tmp_val+=']}'
                     add_term(tmp_val,100,'from orangepi > a_term')
@@ -522,12 +527,12 @@ while 1 :
                     add_term(tmp_val,-400,'from orangepi > W')
 
                 #
-                if gpio.input(port.PG7) != 1:
-                    tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 1 }'
-                    add_term(tmp_val,500,'from orangepi > magnetic_switch')
-                else:
-                    tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 0 }'
-                    add_term(tmp_val,500,'from orangepi > magnetic_switch')
+#!                if gpio.input(port.PG7) != 1:
+#!                    tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 1 }'
+#!                    add_term(tmp_val,500,'from orangepi > magnetic_switch')
+#!                else:
+#!                    tmp_val='{"num_sens": 0,"sens_type" : "magnetic_switch", "sens_id" : "none","sens_Val": 0 }'
+#!                    add_term(tmp_val,500,'from orangepi > magnetic_switch')
                 #/
 
                 try:
@@ -541,14 +546,14 @@ while 1 :
                     add_term(tmp_val,600,'from orangepi > CPU_TEMPERATURE')
 
                     if tempC > 30:
-                        gpio.output(port.PG8, gpio.HIGH) ## always on
+#!                        gpio.output(port.PG8, gpio.HIGH) ## always on
                         #GPIO.output(17, 1)
-                        gpio.output(port.PA7, gpio.LOW) ## always on
+#!                        gpio.output(port.PA7, gpio.LOW) ## always on
                         print "HOT"
                     else:
-                        gpio.output(port.PG8, gpio.HIGH) ## always on
+#!                        gpio.output(port.PG8, gpio.HIGH) ## always on
                         #GPIO.output(17, 0)
-                        gpio.output(port.PA7, gpio.LOW) ## always on
+#!                        gpio.output(port.PA7, gpio.LOW) ## always on
                         print "COLD"
                     lcdInf = 0
                 except:
@@ -577,7 +582,7 @@ while 1 :
             else:
                 time.sleep(1)
                 # ser.open()
-
+        print "Fail exit"
     else:
         out = ''
         while ser.inWaiting() > 0:
@@ -586,7 +591,7 @@ while 1 :
         ser.write(input + '\r\n')
 
         # let's wait one second before reading output (let's give device time to answer)
-        #time.sleep(1)
+        time.sleep(1)
         while ser.inWaiting() > 0:
             out += ser.read(1)
             
