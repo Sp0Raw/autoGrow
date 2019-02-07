@@ -314,18 +314,20 @@ class TemperatureSensor:
   lastUpdate = datetime.now()
   prLastUpdate = datetime.now()
   lastJson = ""
+  numSens = 0
 
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
-    print("install sensor " + str(numSens))
-    self.name = "DS18B20__" + str(numSens)
+    self.numSens = numSens
+    print("install sensor " + str(self.numSens))
+    self.name = "DS18B20__" + str(self.numSens)
     self.sensor_addres = sensor_addres
     self.temperatureC = temperatureC
     self.temperatureF = temperatureF
     self.lastUpdate = datetime.now()
     if temperatureC < 0 or temperatureF < 0 :
-      self.setValue(numSens,self.name)
+      self.setValue(self.numSens,self.name)
 
-  def setValue(self, numSens, name, comPort = 0):
+  def setValue(self, numSens = self.numSens, name=self.name, comPort = 0):
     self.lastJson = openComPort(comPort, command="R"+str(numSens))
     ##print (self.sensArray)
 
@@ -344,6 +346,10 @@ class TemperatureSensor:
       lastUpdate = datetime.now()
     except:
       print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
+
+  def updateValue(self):
+    self.setValue()
+
 
   def __repr__(self):
     return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={})>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres)
@@ -366,7 +372,9 @@ class BoxClimate:
       self.updateSensor(x)
 
   def updateSensor(self, sensNumber):
-    self.sensArrayXXX[sensNumber]=TemperatureSensor(sensNumber)
+    obj = self.sensArrayXXX[sensNumber]
+    obj.updateValue()
+    self.sensArrayXXX[sensNumber]=obj
 
 
   def initSensors(self):
