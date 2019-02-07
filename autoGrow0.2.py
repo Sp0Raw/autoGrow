@@ -358,9 +358,9 @@ class BoxClimate:
   countSensor = 0  ## type: Any
   
   def searchSensor(self, comPort = 0):
-      self.sensArray = openComPort(comPort, command="R")
+    self.sensArray = openComPort(comPort, command="R")
     
-    # try:
+    try:
       data = json.loads(self.sensArray)
       self.countSensor = data["sens_count"]-1
       # print (self.countSensor)
@@ -369,7 +369,8 @@ class BoxClimate:
         obj = TemperatureSensor(int(x))
         print obj
         self.sensArrayXXX.append(obj)
-    # except:
+        print ("instal sensor ok ")
+    except:
       print("Error on parsing json" + self.sensArray)
 
   def getSensor(self):
@@ -378,7 +379,7 @@ class BoxClimate:
     try:
       for x in range(0, self.countSensor):
         print (  str(x)+ " / "+str(self.countSensor))
-        print self.sensArrayXXX(int(x))
+        print self.sensArrayXXX(x)
       time.sleep(1)
     except:
       print("object array list error 387 ")
