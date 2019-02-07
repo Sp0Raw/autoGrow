@@ -672,7 +672,7 @@ def main():
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
-    mainBox.searchSensor()
+    # mainBox.searchSensor()
     mainBox.getSensor()
     time.sleep(5)
 
