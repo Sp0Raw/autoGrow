@@ -329,8 +329,8 @@ class TemperatureSensor:
 
   def setValue(self, comPort = 0):
     self.lastJson = openComPort(comPort, command="R"+str(self.numSens))
-    print ("***************************   R"+str(self.numSens))
-    print (self.lastJson)
+    # print ("***************************   R"+str(self.numSens))
+    # print (self.lastJson)
 
     # try:
     data = json.loads(self.lastJson)
@@ -366,7 +366,7 @@ class BoxClimate:
   countSensor = 0  ## type: Any
   
 
-  def updateSensArrayValue(self):
+  def updateSensors(self):
     if self.countSensor == 0:
       self.setCountSensors()
     for x in range(0,self.countSensor):
@@ -702,18 +702,15 @@ def main():
     mainBox.sensBox.printfc()
     print("###################################")
     #
-    mainBox.updateSensArrayValue()
+    mainBox.updateSensors()
     mainBox.getSensor(0)
     mainBox.getSensor(1)
     mainBox.getSensor(2)
     mainBox.getSensor(3)
+    mainBox.getSensor(4)
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    mainBox.updateSensor(2)
-    mainBox.updateSensor(3)
-    mainBox.getSensor(0)
-    mainBox.getSensor(1)
-    mainBox.getSensor(2)
-    mainBox.getSensor(3)
+    mainBox.updateSensors()
+    mainBox.getSensors()
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     mainBox.getSensors()
     time.sleep(5)
