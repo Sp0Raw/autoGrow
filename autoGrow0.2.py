@@ -368,6 +368,7 @@ class BoxClimate:
   def updateSensor(self, sensNumber):
     self.sensArrayXXX[sensNumber]=TemperatureSensor(sensNumber)
 
+
   def getSensor(self, c = 0):
     try:
       data = json.loads(self.sensArray)
