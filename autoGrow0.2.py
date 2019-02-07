@@ -686,7 +686,7 @@ def main():
   mylcd = RPi_I2C_driver.lcd()
 
 
-  mainBox.searchSensor()
+  #mainBox.searchSensor()
   while True:
     
     now = datetime.now()
