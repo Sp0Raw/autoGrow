@@ -379,7 +379,7 @@ class BoxClimate:
     try:
       self.sensArray = openComPort(comPort, command="R")
       data = json.loads(self.sensArray)
-      self.countSensor = data["sens_count"]
+      self.countSensor = data["sens_count"]-1
       ##return self.countSensor
     except:
       print("Error on parsing json" + self.sensArray)
@@ -389,7 +389,7 @@ class BoxClimate:
       self.getSensor(x)
 
   def getSensor(self, sensNumber=0):
-    print (sensNumber+"/"+str(self.countSensor))
+    print (str(sensNumber)+"/"+str(self.countSensor))
     obj = self.sensArrayXXX[x]
     print obj
 
@@ -554,6 +554,7 @@ def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
 def main():
+  print ("==========    START MAIN    ===============")
   fontdata1 = [
     [0b00000,
      0b00111,
@@ -682,7 +683,7 @@ def main():
   mainBox.initSensors()
 
   while True:
-    
+    print ("==========    START While    ===============")
     now = datetime.now()
     ## if pora to update
     mainBox.sensBox.update()
