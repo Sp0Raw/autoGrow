@@ -342,7 +342,7 @@ class TemperatureSensor:
     self.temperatureC = data["sensors"][0]["temperatuteC"]
     self.temperatureF = data["sensors"][0]["temperatuteF"]
     self.sensor_addres = data["sensors"][0]["sensor_addres"]
-    self.name = name
+    #self.name = name
     prLastUpdate = self.lastUpdate
     lastUpdate = datetime.now()
     # except:
