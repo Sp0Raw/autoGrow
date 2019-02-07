@@ -702,14 +702,14 @@ def main():
     mainBox.sensBox.printfc()
     print("###################################")
     #
-    mainBox.updateSensors()
-    mainBox.getSensor(0)
-    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    mainBox.updateSensors()
-    mainBox.getSensors()
+    # mainBox.updateSensors()
+    # mainBox.getSensor(0)
+    # print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    # mainBox.updateSensors()
+    # mainBox.getSensors()
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     time.sleep(5)
-
+    print(mainBox.sensBox.humidity)
 
 
 if __name__ == '__main__':
