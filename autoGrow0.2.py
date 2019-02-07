@@ -699,8 +699,14 @@ def main():
     mainBox.getSensor(2)
     mainBox.getSensor(3)
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    mainBox.getSensors()
+    mainBox.updateSensor(2)
+    mainBox.updateSensor(3)
+    mainBox.getSensor(0)
+    mainBox.getSensor(1)
+    mainBox.getSensor(2)
+    mainBox.getSensor(3)
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    mainBox.getSensors()
     time.sleep(5)
 
 
