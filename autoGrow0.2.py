@@ -362,7 +362,7 @@ class BoxClimate:
     
     try:
       data = json.loads(self.sensArray)
-      self.countSensor = data["sens_count"]-1
+      self.countSensor = data["sens_count"]
       # print (self.countSensor)
       # time.sleep(1)
       for x in range(0, self.countSensor):
