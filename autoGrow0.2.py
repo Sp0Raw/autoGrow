@@ -709,6 +709,11 @@ def main():
     # mainBox.getSensors()
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     print(mainBox.sensBox.humidity)
+    if mainBox.sensBox.humidity<40:
+        GPIO.output(6, False)
+    elif mainBox.sensBox.humidity>60:
+        GPIO.output(6, True)
+
     time.sleep(5)
 
 
