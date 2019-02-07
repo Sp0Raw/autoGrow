@@ -354,7 +354,7 @@ class BoxClimate:
   sensBox = BoxAM2320("Box")
   obj = TemperatureSensor(0)
   print(obj)
-  sensArrayXXX = list()
+  sensArrayXXX = []  # type: Any
   countSensor = 0  ## type: Any
   
   def searchSensor(self, comPort = 0):
