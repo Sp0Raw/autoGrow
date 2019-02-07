@@ -289,7 +289,7 @@ class BoxAM2320(SensorAM2320):
     try:
       self.boxSensValue = openComPort(0, command="G")
       data = json.loads(self.boxSensValue)
-      self.setValue(data["sens_Val"]['temp'],data["sens_Val"]['temp'])
+      self.setValue(data["sens_Val"]['temp'],data["sens_Val"]['hum'])
     except:
       print("Error parsignj JSON  = ")
       print(self.boxSensValue)
