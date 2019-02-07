@@ -715,6 +715,9 @@ def main():
     elif mainBox.sensBox.humidity>60:
         print(" Filter, cerculation fat is OFF  is wet, more 60%")
         GPIO.output(6, True)
+        time.sleep(2)
+        GPIO.output(6, False)
+        time.sleep(2)
 
     time.sleep(5)
 
