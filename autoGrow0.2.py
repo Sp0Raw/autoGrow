@@ -322,7 +322,7 @@ class TemperatureSensor:
     #self.temperatureC = temperatureC
     #self.temperatureF = temperatureF
     #self.lastUpdate = datetime.now()
-    if temperatureC < 0 or temperatureF < 0 o :
+    if temperatureC < 0 or temperatureF < 0 :
       self.setValue(numSens,self.name)
 
   def setValue(self, numSens, name):
