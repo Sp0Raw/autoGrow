@@ -325,7 +325,7 @@ class TemperatureSensor:
     self.temperatureF = temperatureF
     self.lastUpdate = datetime.now()
     if temperatureC < 0 or temperatureF < 0 :
-      self.setValue(self.numSens,self.name)
+      self.setValue()
 
   def setValue(self, comPort = 0):
     self.lastJson = openComPort(comPort, command="R"+str(self.numSens))
