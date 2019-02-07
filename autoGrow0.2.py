@@ -327,8 +327,8 @@ class TemperatureSensor:
     if temperatureC < 0 or temperatureF < 0 :
       self.setValue(self.numSens,self.name)
 
-  def setValue(self, numSens = self.numSens, name=self.name, comPort = 0):
-    self.lastJson = openComPort(comPort, command="R"+str(numSens))
+  def setValue(self, comPort = 0):
+    self.lastJson = openComPort(comPort, command="R"+str(self.numSens))
     ##print (self.sensArray)
 
     try:
