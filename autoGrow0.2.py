@@ -390,7 +390,7 @@ class BoxClimate:
 
   def getSensor(self, sensNumber=0):
     print (str(sensNumber)+"/"+str(self.countSensor))
-    obj = self.sensArrayXXX[x]
+    obj = self.sensArrayXXX[sensNumber]
     print obj
 
 
@@ -683,11 +683,12 @@ def main():
   mainBox.initSensors()
 
   while True:
+    cls()
     print ("==========    START While    ===============")
     now = datetime.now()
     ## if pora to update
     mainBox.sensBox.update()
-    cls()
+
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
