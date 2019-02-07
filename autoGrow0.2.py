@@ -146,7 +146,7 @@ class AM2320:
 def openComPort(numPort, command="H"):
   lnumPort = numPort
   s_port = '/dev/ttyACM' + str(lnumPort)
-  #print(s_port)
+  ##print(s_port)
   ser = serial.Serial(
               port=s_port,
               baudrate=9600,
@@ -155,35 +155,31 @@ def openComPort(numPort, command="H"):
               stopbits=serial.STOPBITS_ONE,
               bytesize=serial.EIGHTBITS
           )
-  #try:
-  if ser.isOpen()== True :
-     ser.close()
-     ser.open()
+  try:
+    if ser.isOpen()== True :
+       ser.close()
+       ser.open()
       
-  #try:
-  if ser.isOpen():
-    ser.write('?\r\n')
-    time.sleep(1)
-    out = ''
-    while ser.inWaiting() > 0:
-      out += ser.read(1)
-
-    ser.write(command+'\r\n')
-    time.sleep(1)
-    out = ''
-    while ser.inWaiting() > 0:
-      out += ser.read(1)            
-  if ser.isOpen()== True :
-     ser.close()
-  return out 
-
-
-
-
-     
-
+    if ser.isOpen():
+      ser.write('?\r\n')
+      time.sleep(2)
+      out = ''
+      while ser.inWaiting() > 0:
+        out += ser.read(1)
   
-  
+      ser.write(command+'\r\n')
+      time.sleep(3)
+      out = ''
+      while ser.inWaiting() > 0:
+        out += ser.read(1)            
+    if ser.isOpen()== True :
+       ser.close()
+    return out 
+  except:
+    return "{\"Error\":\"Com-port Error\"}"
+##  finally:
+##    return "{\"Error\":\"Com-port Error\"}"  
+ 
 #### Variable need replace it in cfg
 lampCooling=1
 
@@ -191,7 +187,10 @@ class SensorAM2320:
   name = 'sensor am2320'
   temperature = -85.5
   humidity = - 99.9
+  prTemperature = -85.5
+  ptHumidity = - 99.9  
   lastUpdate = datetime.now()
+  lastUpdateSec = -1
 
   def __init__(self, arg0="sensor am2320", arg1=-85.5, agr2=-99.9):
     self.name=arg0
@@ -199,9 +198,12 @@ class SensorAM2320:
     self.humidity = agr2
 
   def setValue(self, arg0, arg1):
+    self.prTemperature = self.temperature
+    self.prHumidity = self.humidity
     self.temperature = arg0
     self.humidity = arg1
     self.lastUpdate = datetime.now()
+    self.lastUpdateSec =  datetime.now() - self.lastUpdate
 
   def setName(self, arg0):
     self.name=arg0
@@ -216,22 +218,60 @@ class SensorAM2320:
 
   def printf(self): 
     delta = datetime.now() - self.lastUpdate 
-    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(delta.seconds))
+    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(self.lastUpdateSec))
     print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ "C   Humidity: " + str(self.humidity)+ "%")
 
+  def printfc(self):
+    termColor = 'white'
+    humColor = 'white'
+    if self.temperature <= 18:
+      termColor = 'blue'
+    elif self.temperature > 18 and self.temperature <= 24:
+      termColor = 'cyan'
+    elif self.temperature > 24 and self.temperature <= 29:
+      termColor = 'green'
+    elif self.temperature > 29 and self.temperature <= 33:
+      termColor = 'yellow'
+    elif self.temperature > 33 :
+      termColor = 'red'
+    else:
+      termColor = 'red'
+
+    if self.humidity <= 40:
+      humColor = 'red'
+    elif self.humidity > 40 and self.humidity <= 60:
+      humColor = 'green'
+    elif self.humidity > 60 :
+      humColor = 'yellow'
+    else:
+      humColor = 'red'
+
+    delta = datetime.now() - self.lastUpdate
+    if delta.seconds<60:
+      timeColor = 'green'
+    elif delta.seconds>=60 and delta.seconds<120:
+      timeColor = 'yellow'
+    elif delta.seconds>=60 and delta.seconds<16:
+      timeColor = 'green'
+    else:
+      timeColor = 'red'      
+    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ colored(str(delta.seconds),timeColor))
+    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.temperature),termColor)+ "C   Humidity: " + colored(str(self.humidity),humColor)+ "%")
+    
+##    print("Time update temperature & humidity: " + str(self.sensHome.lastUpdate) )
+##    print (colored("HOME TEMPERATURE :" ,'white')+ colored(str(self.sensHome.temperature)+'C ', termColor) +  colored("HOME HUMIDITY :", 'white') + colored(str(self.sensHome.humidity)+'%', humColor))
+    
 
 
 
 class HomeAM2320(SensorAM2320):
-  def readValue(self):
+  def readValue(self):      ## Read sensor value
     #try:
       am2320 = AM2320(1)
       (t,h) = am2320.readSensor()
       print(datetime.strftime(datetime.now(), "%Y.%m.%d %H:%M:%S"))
-      self.temperature= t
-      self.humidity= h
-      self.lastUpdate = datetime.now()
-      #self.getTermHumHome()    
+      self.setValue(t,h)
+      self.lastUpdate = datetime.now()  
 
   def __init__(self, arg0="sensor am2320", arg1=-85.5, agr2=-99.9):
     self.name=arg0
@@ -240,7 +280,6 @@ class HomeAM2320(SensorAM2320):
     else:
       self.temperature = arg1
       self.humidity = agr2
-  
 
   def update(self):
     self.readValue() 
@@ -249,32 +288,104 @@ class HomeAM2320(SensorAM2320):
 class BoxAM2320(SensorAM2320):
   boxSensValue = "{}"
   def readValue(self):
-    #try:
-      boxSensValue = openComPort(0, command="G")
-      print(datetime.strftime(datetime.now(), "%Y.%m.%d %H:%M:%S"))
-      print(boxSensValue)
-      #self.t = json.boxSensValue['sens_Val']['temp']
-      #self.h = json.boxSensValue['sens_Val']['hum']
-##      self.temperature= t
-##      self.humidity= h
-      self.lastUpdate = datetime.now()
-      #self.getTermHumHome()    
+    try:
+      self.boxSensValue = openComPort(0, command="G")
+      data = json.loads(self.boxSensValue)
+      self.setValue(data["sens_Val"]['temp'],data["sens_Val"]['temp'])
+    except:
+      print("Error parsignj JSON  = ")
+      print(self.boxSensValue)
 
   def __init__(self, arg0="sensor am2320", arg1=-85.5, agr2=-99.9):
+    self.name = arg0
     if arg1<0 or arg2<0 :
       self.readValue()
 
   def update(self):
     self.readValue()       
 
+class TemperatureSensor:
+  name = 'sensor am2320'
+  sensor_addres = "FFFFFFFFFFFF"
+  comment = "comment about this sensor"
+  temperatureC = -85.5
+  temperatureF = -85.5
+  prTemperatureC = -85.5
+  prTemperatureF = -85.5
+  lastUpdate = datetime.now()
+  prLastUpdate = datetime.now()
+
+  def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
+    print("install sensor" + str(numSens))
+    self.name = "DS18B20__" + str(numSens)
+    #self.sensor_addres = sensor_addres
+    #self.temperatureC = temperatureC
+    #self.temperatureF = temperatureF
+    #self.lastUpdate = datetime.now()
+    if temperatureC < 0 :
+      self.setValue(numSens,self.name)
+
+  def setValue(self, numSens, name):
+    self.sensArray = openComPort(0, command="R"+str(numSens))
+    print (self.sensArray)
+
+    try:
+      data = json.loads(self.sensArray)
+    
+      self.prTemperatureC=self.temperatureC
+      self.prTemperatureF=self.temperatureF
+      print("======================================")
+      print(data["sensors"][0])
+      self.temperatureC = data["sensors"][0]["temperatuteC"]
+      self.temperatureF = data["sensors"][0]["temperatuteF"]
+      self.sensor_addres = data["sensors"][0]["sensor_addres"]
+      self.name = name
+      prLastUpdate = self.lastUpdate
+      lastUpdate = datetime.now()
+    except:
+      print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
+
+  def __repr__(self):
+    return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={})>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres)
+
+
 class BoxClimate:
   name = "MainBox"
   sensHome = HomeAM2320("Home")
   sensBox = BoxAM2320("Box")
-  #sensHome = SensorAM2320("Home")
-  #sensHome.printValue()
-  #temperatureBox = -85.5
-  #humidityBox = 99.9
+  obj = TemperatureSensor(0)
+  print(obj)
+  sensArrayXXX = list()
+  countSensor = 0
+  
+  def searchSensor(self, comPort = 0):
+    self.sensArray = openComPort(comPort, command="R")
+    
+    try:
+      data = json.loads(self.sensArray)
+      self.countSensor = data["sens_count"] -1
+      print (countSensor)
+      time.sleep(1)
+      #simpleList = []
+      for x in range(0, data["sens_count"]):
+        #simpleList.append(TemperatureSensor(x))
+        obj = TemperatureSensor(int(x))
+        print obj
+        self.sensArrayXXX.append(obj)
+    except:
+      print("Error on parsing json" + self.sensArray)
+
+  def getSensor(self):
+    print ("asdfasdfasdfasdf")
+    print ("0/"+str(self.countSensor))
+    try:
+      for x in range(0, self.countSensor):
+        print (  str(x)+ " / "+str(self.countSensor))
+        print self.sensArrayXXX(int(x))
+      time.sleep(1)
+    except:
+      print("object array list error 387 ")
+    
   
   magneticSwitchStatus = 0
   lastState = 0
@@ -422,63 +533,7 @@ class BoxClimate:
     print("Time update temperature & humidity: " + str(self.sensHome.lastUpdate) )
     print (colored("HOME TEMPERATURE :" ,'white')+ colored(str(self.sensHome.temperature)+'C ', termColor) +  colored("HOME HUMIDITY :", 'white') + colored(str(self.sensHome.humidity)+'%', humColor))
 
-  #def set
-  def openComPort(self, numPort, command="S"):
-      lnumPort = numPort
-      s_port = '/dev/ttyACM' + str(lnumPort)
-      #print(s_port)
-      ser = serial.Serial(
-              port=s_port,
-              baudrate=9600,
-              timeout=10,
-              parity=serial.PARITY_NONE,
-              stopbits=serial.STOPBITS_ONE,
-              bytesize=serial.EIGHTBITS
-          )
-    #try:
-      if ser.isOpen()== True :
-         ser.close()
-         ser.open()
-      
-      #try:
-      if ser.isOpen():
-          ser.write('?\r\n')
-          time.sleep(1)
-          out = ''
-          while ser.inWaiting() > 0:
-            out += ser.read(1)
-          ser.write(command+'\r\n')
-          time.sleep(1)
-          out = ''
-          while ser.inWaiting() > 0:
-            out += ser.read(1)            
-          print(out)
-##              gdata = json.loads(out) #json_string)
-##                #add_term(out,200,'from orangepi > G')
-##              try:
-##                    mylcd.lcd_display_string('W-> ' + str(wdata['sens_Val']['volt']) + ' VOLT        ', 1)
-###!                 except:
-###!                    mylcd.lcd_display_string('W->  N/A  VOLT          ',1)
-##              except Exception:
-##                tmp_val='{"num_sens": 1,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-##                #add_term(tmp_val,-201,'from orangepi > G')
-          
-            #ser.open()
-          #tmp_val='{"num_sens": 1,"sens_type" : "AM2320", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-            #add_term(out,-202,'from orangepi > G')
-      #except Exception:
-        #tmp_val='{"num_sens": 0,"sens_type" : "", "sens_id" : "none","sens_Val": { "temp":"N/A", "hum":"N/A"}}'
-        #add_term(tmp_val,-203,'from orangepi > home')   
 
-        # ser.close()
-        #ser.close()
-    
-        #return out
-      ser.close()
-    #except IOError:  # if port is already opened, close it and open it again and print message
-      #ser.close()
-      #ser.open()
-      #print("port was already open, was closed and opened again!")
 
       
 print(now) # 38
@@ -488,27 +543,8 @@ def cls():
 
 def main():
   mainBox = BoxClimate("mainBox")
-##  input_state = GPIO.input(25)      
-##  print("Test lamp  H0 ... ")
-##  if input_state == False:
-####          lastTimeLampOn = datetime.datetime.now()
-##          print colored('LAMP IS ON', 'green')
-##          time.sleep(7)
-##          ## It's Ok !
-##          ##
-##        else:
-##          print colored('LAMP IS OFF', 'red')
-##          time.sleep(2)
-##          lNow = datetime.datetime.now()
-##          deltaTime = lNow - lastTimeLampOn
-##          print (deltaTime)
-##          duration_in_s = deltaTime.total_seconds()
-##          minutes = divmod(duration_in_s, 60)[0] 
-##          print (minutes)
-##          if minutes>=lampCooling:
-##            GPIO.output(19, False)
-##            time.sleep(1)  
-  
+  mainBox.searchSensor()  ## INit sensors
+ 
   lastTimeLampOn = datetime.now()
   lastTimeLampOff = datetime.now()
   lastTurnOff = datetime.now()
@@ -526,7 +562,6 @@ def main():
           0b01000, 
           0b00111, 
           0b00000],
-
 
         [ 0b00100, 
           0b11111, 
@@ -633,194 +668,21 @@ def main():
       ] 
 
   while True:
+    
     now = datetime.now()
-    mainBox.sensHome.printf()
     mainBox.sensBox.update()
-    mainBox.sensBox.printf()
+    cls()
+    mainBox.sensHome.printfc()
+    mainBox.sensBox.printfc()
+    print("###################################")
+    
+    mainBox.getSensor()
     time.sleep(5)
-##    ## this is main loop
-##    if now > timeOn and now < timeOff: # DAY
-##      now = datetime.now()
-##      #
-##
-####      LampOn = now - lastTimeLampOn  
-####      deltaTime = now - lNow
-####      cls()
-####      print("DAY " + datetime.now().strftime("%Y/%m/%d %H:%M:%S")+ "    delta "+ str( 31- deltaTime.seconds))
-####      input_state = GPIO.input(25)
-####      if input_state == False:
-####        print colored('LAMP IS ON', 'green')
-####      else:
-####        print colored('LAMP IS OFF', 'red')
-####      print ("   "+str(LampOn))
-####      duration_in_s = deltaTime.total_seconds()
-####      minutes = divmod(duration_in_s, 60)[0] 
-####      print ("  LAMP IS ON " + str(minutes) + "minutes")
-####
-####      print("############" + mainBox.name + "############")
-####      mainBox.getInfo()
-## 
-##   
-##      if deltaTime.seconds >=5:
-##        
-##        print("OBJECT START")
-##        mainBox.setState()
-##        print("OBJECT END")
-##        print("Test lamp ... ")
-##        input_state = GPIO.input(25)           
-##        if input_state == False:
-####          lastTimeLampOn = datetime.now()
-##          print colored('LAMP IS ON', 'green')
-##          time.sleep(7)
-##          ## It's Ok !
-##          ##
-##        else:
-##          print colored('LAMP IS OFF', 'red')
-##          time.sleep(2)
-##          lNow = datetime.now()
-##          deltaTime = lNow - lastTimeLampOn
-##          print (deltaTime)
-##          duration_in_s = deltaTime.total_seconds()
-##          minutes = divmod(duration_in_s, 60)[0] 
-##          print (minutes)
-##          if minutes>=lampCooling:
-##            GPIO.output(19, False)
-##            time.sleep(1)
-##            GPIO.output(19, True)
-##            time.sleep(2)
-##          input_state = GPIO.input(25)
-##          if input_state == False:
-##            print colored("____TRY TURN ON HID LAMP____","green")
-##            lampStat = 1
-##            if timesOfDay <> 1 :
-##              mylcd.lcd_load_custom_chars(fontdata1)
-##              mylcd.lcd_write(0x8D)
-##              mylcd.lcd_write_char(0)
-##              mylcd.lcd_write_char(1)
-##              mylcd.lcd_write_char(2)    
-##              mylcd.lcd_write(0xCD)
-##              mylcd.lcd_write_char(3)
-##              mylcd.lcd_write_char(4)
-##              mylcd.lcd_write_char(5)
-##              timesOfDay = 1
-##            lastTimeLampOn = datetime.now()
-##          else:
-##            timesOfDay = 0
-##            lampStat = 0
-##            
-##          time.sleep(7)  
-##        lNow = datetime.now()            
-##    else:
-##      ## NIGHT
-##
-##      now = datetime.now()
-##      LampOff = now - lastTurnOff
-##      deltaTime = now - lNow      
-##      cls()
-##      print("NIGHT " + datetime.now().strftime("%Y/%m/%d %H:%M:%S") + "    delta "+ str( 30- deltaTime.seconds))
-##      input_state = GPIO.input(25)
-##      if input_state == False:
-##        print colored('LAMP IS ON', 'red')
-##      else:
-##        print colored('LAMP IS OFF', 'green')
-####      deltaTime = lNow - lastTimeLampOn
-##      print ("   "+str(LampOff))
-##      duration_in_s = deltaTime.total_seconds()
-##      minutes = divmod(duration_in_s, 60)[0] 
-##      print ("  LAMP IS OFF " + str(minutes) + "minutes")
-##
-##      if deltaTime.seconds >=10:
-##        print("Test lamp ... ")
-##        print("OBJECT START")
-####        mainBox.setNeedState()
-####        mainBox.setState()
-####        mainBox.printx()
-##        mainBox.getInfo()
-##        #mainBox.setTermHumHome()
-##        mainBox.openComPort(0)
-####        mainBox.setTermHumHome()
-##        #print (mainBox.lastState)
-##        print("OBJECT END")
-##        input_state = GPIO.input(25)
-##        if input_state == False:
-##          lastTimeLampOn = datetime.now()
-##          print colored('LAMP IS ON', 'yellow')
-##          print colored("____TRY TURN OFF HID LAMP____","yellow")        
-##          GPIO.output(19, True) 
-##          time.sleep(1)
-##          GPIO.output(26, False)
-##          time.sleep(1)
-##          GPIO.output(26, True)
-##          time.sleep(1)
-##          GPIO.output(19, True)
-##          time.sleep(1)
-##          input_state = GPIO.input(25)
-##          if input_state == True:
-##            lastTurnOff =  datetime.now()
-##            print colored('LAMP IS SHUTDOWN', 'green')
-##            mylcd.lcd_load_custom_chars(fontdata2)
-##            mylcd.lcd_write(0x8D)
-##            mylcd.lcd_write_char(0)
-##            mylcd.lcd_write_char(1)
-##            mylcd.lcd_write_char(2)    
-##            mylcd.lcd_write(0xCD)
-##            mylcd.lcd_write_char(3)
-##            mylcd.lcd_write_char(4)
-##            mylcd.lcd_write_char(5)             
-##            time.sleep(7)            
-##          else:
-##            print colored('ALARM!!! LAMP IS NOT POWER OFF', 'red')
-##            time.sleep(20)            
-##            #####################################################
-##            ##    TELEGRAM BOT !!!
-##            #####################################################
-##          lNow = datetime.now()
-####          deltaTime = lNow - lastTimeLampOn
-##          ##
-##        else:
-##          print colored('LAMP IS OFF', 'green')
-##          #time.sleep(30)
-##          lNow = datetime.now()
-####          deltaTime = lNow - lastTimeLampOn
-##          print ("   "+str(deltaTime))
-##          duration_in_s = deltaTime.total_seconds()
-##          minutes = divmod(duration_in_s, 60)[0] 
-##          print ("  LAMP IS OFF " + str(minutes) + "minutes")
-##          time.sleep(5)
-##
-####      now = datetime.now()
-####      LampOff = now - lastTurnOff
-####      deltaTime = now - lNow      
-##
-##    #NIGHT
-##
-##
-####    mylcd.lcd_load_custom_chars(fontdata1)
-####    mylcd.lcd_write(0x8D)
-####    mylcd.lcd_write_char(0)
-####    mylcd.lcd_write_char(1)
-####    mylcd.lcd_write_char(2)    
-####    mylcd.lcd_write(0xCD)
-####    mylcd.lcd_write_char(3)
-####    mylcd.lcd_write_char(4)
-####    mylcd.lcd_write_char(5)
-####    time.sleep(2)
-####    mylcd.lcd_write(0x8D)
-####    mylcd.lcd_write_char(6)
-####    mylcd.lcd_write_char(7)
-####    mylcd.lcd_write_char(8)
-##    time.sleep(1)
-##    # test 2
-##    #mylcd.lcd_display_string("RPi I2C test", 1)
-##    #mylcd.lcd_display_string(" Custom chars", 2)
-##
-##    #sleep(2) # 2 sec delay
-##
-##
-##    #lcd_string(datetime.now().strftime("%Y/%m/%d"),  LCD_LINE_1)
-##    #lcd_string(datetime.now().strftime("%H:%M:%S"),  LCD_LINE_2)
+
+
 
 if __name__ == '__main__':
+  cls()
   timeOn = now.replace(hour=8, minute=00, second=0, microsecond=0)
   timeOff = now.replace(hour=22, minute=00, second=0, microsecond=0)
 

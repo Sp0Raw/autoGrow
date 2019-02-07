@@ -3,6 +3,8 @@
 import posix
 from fcntl import ioctl
 import time
+from datetime import datetime
+
 
 class AM2320:
   I2C_ADDR = 0x5c
@@ -83,6 +85,8 @@ class AM2320:
     return (temp, humi)  
 
 am2320 = AM2320(1)
-(t,h) = am2320.readSensor()
-print t, h
-
+while 1==1 :
+    (t,h) = am2320.readSensor()
+    print(datetime.strftime(datetime.now(), "%Y.%m.%d %H:%M:%S"))
+    print t, h
+    time.sleep(10) 
