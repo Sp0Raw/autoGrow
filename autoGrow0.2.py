@@ -379,7 +379,9 @@ class BoxClimate:
     # try:
     for x in range(0, self.countSensor):
       print (  str(x)+ " / "+str(self.countSensor))
-      print (self.sensArrayXXX(x))
+      obj = self.sensArrayXXX(x)
+      print obj
+
     time.sleep(1)
     # except:
     #   print("object array list error 387 ")
