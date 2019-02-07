@@ -379,7 +379,7 @@ class BoxClimate:
     # try:
     for x in range(0, self.countSensor):
       print (  str(x)+ " / "+str(self.countSensor))
-      obj = self.sensArrayXXX(x)
+      obj = self.sensArrayXXX[x]
       print obj
 
     time.sleep(1)
