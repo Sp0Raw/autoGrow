@@ -329,7 +329,8 @@ class TemperatureSensor:
 
   def setValue(self, comPort = 0):
     self.lastJson = openComPort(comPort, command="R"+str(self.numSens))
-    ##print (self.sensArray)
+    print ("***************************   R"+str(self.numSens))
+    print (self.sensArray)
 
     try:
       data = json.loads(self.lastJson)
