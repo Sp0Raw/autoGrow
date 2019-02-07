@@ -366,7 +366,7 @@ class BoxClimate:
       self.updateSensor(x)
 
   def updateSensor(self, sensNumber):
-    sensArrayXXX[sensNumber]=TemperatureSensor(sensNumber)
+    self.sensArrayXXX[sensNumber]=TemperatureSensor(sensNumber)
 
   def getSensor(self, c = 0):
     try:
