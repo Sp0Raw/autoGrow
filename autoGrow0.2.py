@@ -674,7 +674,7 @@ def main():
 
   ]
   mainBox = BoxClimate("mainBox")
-  mainBox.searchSensor()  ## INit sensors
+  # mainBox.searchSensor()  ## INit sensors
  
   lastTimeLampOn = datetime.now()
   lastTimeLampOff = datetime.now()
@@ -686,7 +686,7 @@ def main():
   mylcd = RPi_I2C_driver.lcd()
 
 
-  #mainBox.searchSensor()
+
   while True:
     
     now = datetime.now()
