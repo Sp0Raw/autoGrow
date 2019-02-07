@@ -677,6 +677,7 @@ def main():
     print("###################################")
     # mainBox.searchSensor()
     mainBox.getSensor()
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     time.sleep(5)
 
 
