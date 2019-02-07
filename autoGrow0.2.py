@@ -376,13 +376,13 @@ class BoxClimate:
   def getSensor(self):
     print ("asdfasdfasdfasdf")
     print ("0/"+str(self.countSensor))
-    try:
-      for x in range(0, self.countSensor):
-        print (  str(x)+ " / "+str(self.countSensor))
-        print self.sensArrayXXX(x)
-      time.sleep(1)
-    except:
-      print("object array list error 387 ")
+    # try:
+    for x in range(0, self.countSensor):
+      print (  str(x)+ " / "+str(self.countSensor))
+      print self.sensArrayXXX(x)
+    time.sleep(1)
+    # except:
+    #   print("object array list error 387 ")
     
   
   magneticSwitchStatus = 0
