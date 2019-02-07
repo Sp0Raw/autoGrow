@@ -316,7 +316,7 @@ class TemperatureSensor:
   lastJson = ""
 
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
-    print("install sensor" + str(numSens))
+    print("install sensor " + str(numSens))
     self.name = "DS18B20__" + str(numSens)
     self.sensor_addres = sensor_addres
     self.temperatureC = temperatureC
@@ -379,7 +379,7 @@ class BoxClimate:
     try:
       self.sensArray = openComPort(comPort, command="R")
       data = json.loads(self.sensArray)
-      self.countSensor = data["sens_count"]-1
+      self.countSensor = data["sens_count"]
       ##return self.countSensor
     except:
       print("Error on parsing json" + self.sensArray)
@@ -695,6 +695,7 @@ def main():
     #
     mainBox.updateSensArrayValue()
     mainBox.getSensor(0)
+    mainBox.getSensor(1)
     mainBox.getSensor(2)
     mainBox.getSensor(3)
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
