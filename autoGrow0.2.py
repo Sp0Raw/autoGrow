@@ -708,8 +708,9 @@ def main():
     # mainBox.updateSensors()
     # mainBox.getSensors()
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    time.sleep(5)
     print(mainBox.sensBox.humidity)
+    time.sleep(5)
+
 
 
 if __name__ == '__main__':
