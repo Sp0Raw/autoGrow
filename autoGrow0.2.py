@@ -9,6 +9,8 @@ from termcolor import colored
 
 #GPIO
 import RPi.GPIO as GPIO
+from typing import Any
+
 import RPi_I2C_driver
 
 ## For clear consol
@@ -320,7 +322,7 @@ class TemperatureSensor:
     #self.temperatureC = temperatureC
     #self.temperatureF = temperatureF
     #self.lastUpdate = datetime.now()
-    if temperatureC < 0 :
+    if temperatureC < 0 or temperatureF < 0 o :
       self.setValue(numSens,self.name)
 
   def setValue(self, numSens, name):
@@ -354,7 +356,7 @@ class BoxClimate:
   obj = TemperatureSensor(0)
   print(obj)
   sensArrayXXX = list()
-  countSensor = 0
+  countSensor = 0  ## type: Any
   
   def searchSensor(self, comPort = 0):
     self.sensArray = openComPort(comPort, command="R")
@@ -365,11 +367,11 @@ class BoxClimate:
       print (countSensor)
       time.sleep(1)
       #simpleList = []
-      for x in range(0, data["sens_count"]):
-        #simpleList.append(TemperatureSensor(x))
-        obj = TemperatureSensor(int(x))
-        print obj
-        self.sensArrayXXX.append(obj)
+      # for x in range(0, self.countSensor):
+      #   #simpleList.append(TemperatureSensor(x))
+      #   obj = TemperatureSensor(int(x))
+      #   print obj
+      #   self.sensArrayXXX.append(obj)
     except:
       print("Error on parsing json" + self.sensArray)
 
