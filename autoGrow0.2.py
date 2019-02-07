@@ -9,7 +9,6 @@ from termcolor import colored
 
 #GPIO
 import RPi.GPIO as GPIO
-from typing import Any
 
 import RPi_I2C_driver
 
