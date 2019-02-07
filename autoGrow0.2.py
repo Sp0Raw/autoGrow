@@ -369,25 +369,18 @@ class BoxClimate:
     self.sensArrayXXX[sensNumber]=TemperatureSensor(sensNumber)
 
 
-  def getSensor(self, c = 0):
-    try:
-      data = json.loads(self.sensArray)
-      self.countSensor = data["sens_count"]
-      # print (self.countSensor)
-      # time.sleep(1)
-      for x in range(0, self.countSensor):
-        obj = TemperatureSensor(int(x))
-        print obj
-        self.sensArrayXXX.append(obj)
-        print ("instal sensor ok ")
-    except:
-      print("Error on parsing json" + self.sensArray)
+  def initSensors(self):
+    self.setCountSensors()
+    for x in range(0, self.countSensor):
+      obj = TemperatureSensor(int(x))
+      self.sensArrayXXX.append(obj)
 
   def setCountSensors(self, comPort = 0):
     try:
       self.sensArray = openComPort(comPort, command="R")
       data = json.loads(self.sensArray)
       self.countSensor = data["sens_count"]
+      ##return self.countSensor
     except:
       print("Error on parsing json" + self.sensArray)
 
@@ -686,7 +679,7 @@ def main():
   lampStat   =0
   mylcd = RPi_I2C_driver.lcd()
 
-
+  mainBox.initSensors()
 
   while True:
     
