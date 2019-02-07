@@ -262,8 +262,6 @@ class SensorAM2320:
 ##    print (colored("HOME TEMPERATURE :" ,'white')+ colored(str(self.sensHome.temperature)+'C ', termColor) +  colored("HOME HUMIDITY :", 'white') + colored(str(self.sensHome.humidity)+'%', humColor))
     
 
-
-
 class HomeAM2320(SensorAM2320):
   def readValue(self):      ## Read sensor value
     #try:
@@ -675,7 +673,7 @@ def main():
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
-    
+    mainBox.searchSensor()
     mainBox.getSensor()
     time.sleep(5)
 
