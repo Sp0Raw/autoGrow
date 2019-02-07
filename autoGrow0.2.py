@@ -313,28 +313,29 @@ class TemperatureSensor:
   prTemperatureF = -85.5
   lastUpdate = datetime.now()
   prLastUpdate = datetime.now()
+  lastJson = ""
 
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
     print("install sensor" + str(numSens))
     self.name = "DS18B20__" + str(numSens)
-    #self.sensor_addres = sensor_addres
-    #self.temperatureC = temperatureC
-    #self.temperatureF = temperatureF
-    #self.lastUpdate = datetime.now()
+    self.sensor_addres = sensor_addres
+    self.temperatureC = temperatureC
+    self.temperatureF = temperatureF
+    self.lastUpdate = datetime.now()
     if temperatureC < 0 or temperatureF < 0 :
       self.setValue(numSens,self.name)
 
-  def setValue(self, numSens, name):
-    self.sensArray = openComPort(0, command="R"+str(numSens))
-    print (self.sensArray)
+  def setValue(self, numSens, name, comPort = 0):
+    self.lastJson = openComPort(comPort, command="R"+str(numSens))
+    ##print (self.sensArray)
 
     try:
-      data = json.loads(self.sensArray)
+      data = json.loads(self.lastJson)
     
       self.prTemperatureC=self.temperatureC
       self.prTemperatureF=self.temperatureF
-      print("======================================")
-      print(data["sensors"][0])
+      #print("======================================")
+      #print(data["sensors"][0])
       self.temperatureC = data["sensors"][0]["temperatuteC"]
       self.temperatureF = data["sensors"][0]["temperatuteF"]
       self.sensor_addres = data["sensors"][0]["sensor_addres"]
@@ -357,9 +358,17 @@ class BoxClimate:
   sensArrayXXX = []  # type: Any
   countSensor = 0  ## type: Any
   
-  def searchSensor(self, comPort = 0):
-    self.sensArray = openComPort(comPort, command="R")
-    
+
+  def updateSensArrayValue(self):
+    if self.countSensor == 0:
+      self.setCountSensors()
+    for x in range(0,self.countSensor):
+      self.updateSensor(x)
+
+  def updateSensor(self, sensNumber):
+    sensArrayXXX[sensNumber]=TemperatureSensor(sensNumber)
+
+  def getSensor(self, c = 0):
     try:
       data = json.loads(self.sensArray)
       self.countSensor = data["sens_count"]
@@ -373,14 +382,23 @@ class BoxClimate:
     except:
       print("Error on parsing json" + self.sensArray)
 
-  def getSensor(self):
-    print ("asdfasdfasdfasdf")
-    print ("0/"+str(self.countSensor))
-    # try:
+  def setCountSensors(self, comPort = 0):
+    try:
+      self.sensArray = openComPort(comPort, command="R")
+      data = json.loads(self.sensArray)
+      self.countSensor = data["sens_count"]
+    except:
+      print("Error on parsing json" + self.sensArray)
+
+  def getSensors(self):
     for x in range(0, self.countSensor):
-      print (  str(x)+ " / "+str(self.countSensor))
-      obj = self.sensArrayXXX[x]
-      print obj
+      self.getSensor(x)
+
+  def getSensor(self, sensNumber=0):
+    print (sensNumber+"/"+str(self.countSensor))
+    obj = self.sensArrayXXX[x]
+    print obj
+
 
     time.sleep(1)
     # except:
@@ -542,6 +560,119 @@ def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
 def main():
+  fontdata1 = [
+    [0b00000,
+     0b00111,
+     0b01000,
+     0b11010,
+     0b10101,
+     0b01000,
+     0b00111,
+     0b00000],
+
+    [0b00100,
+     0b11111,
+     0b00000,
+     0b10101,
+     0b01010,
+     0b00000,
+     0b11111,
+     0b00000],
+
+    [0b01100,
+     0b11111,
+     0b00110,
+     0b11111,
+     0b11111,
+     0b00110,
+     0b11111,
+     0b01100],
+
+    [0b00110,
+     0b00110,
+     0b01100,
+     0b01100,
+     0b11000,
+     0b11000,
+     0b10000,
+     0b10000],
+
+    [0b10001,
+     0b10001,
+     0b10001,
+     0b10001,
+     0b10001,
+     0b10001,
+     0b10001,
+     0b10001],
+
+    [0b01100,
+     0b01100,
+     0b00110,
+     0b00110,
+     0b00011,
+     0b00011,
+     0b00001,
+     0b00001],
+
+  ]
+
+  fontdata2 = [
+    [0b11111,
+     0b11000,
+     0b10111,
+     0b00101,
+     0b01010,
+     0b10111,
+     0b11000,
+     0b11111],
+
+    [0b11111,
+     0b00000,
+     0b11111,
+     0b01010,
+     0b10101,
+     0b11111,
+     0b00000,
+     0b11111],
+
+    [0b11111,
+     0b01101,
+     0b00101,
+     0b10111,
+     0b01111,
+     0b00101,
+     0b01101,
+     0b11111],
+
+    [0b11101,
+     0b11111,
+     0b11111,
+     0b11111,
+     0b11111,
+     0b01111,
+     0b11111,
+     0b11111],
+
+    [0b11111,
+     0b01011,
+     0b10111,
+     0b01011,
+     0b11111,
+     0b11111,
+     0b11111,
+     0b11101],
+
+    [0b11111,
+     0b11111,
+     0b11101,
+     0b11111,
+     0b11111,
+     0b11111,
+     0b10111,
+     0b11111],
+
+  ]
   mainBox = BoxClimate("mainBox")
   mainBox.searchSensor()  ## INit sensors
  
@@ -553,130 +684,25 @@ def main():
   timesOfDay =0
   lampStat   =0
   mylcd = RPi_I2C_driver.lcd()
-  fontdata1 = [      
-        [ 0b00000, 
-          0b00111, 
-          0b01000,
-          0b11010,
-          0b10101, 
-          0b01000, 
-          0b00111, 
-          0b00000],
 
-        [ 0b00100, 
-          0b11111, 
-          0b00000,
-          0b10101,
-          0b01010, 
-          0b00000, 
-          0b11111, 
-          0b00000],
 
-        [ 0b01100, 
-          0b11111, 
-          0b00110,
-          0b11111,
-          0b11111, 
-          0b00110, 
-          0b11111, 
-          0b01100 ],
-        
-        [ 0b00110, 
-          0b00110, 
-          0b01100,
-          0b01100,
-          0b11000, 
-          0b11000, 
-          0b10000, 
-          0b10000],
-
-        [ 0b10001, 
-          0b10001, 
-          0b10001,
-          0b10001,
-          0b10001, 
-          0b10001, 
-          0b10001, 
-          0b10001],
-
-        [ 0b01100, 
-          0b01100, 
-          0b00110,
-          0b00110,
-          0b00011, 
-          0b00011, 
-          0b00001, 
-          0b00001],
-
-      ]
-
-  fontdata2 = [      
-        [ 0b11111, 
-          0b11000, 
-          0b10111,
-          0b00101,
-          0b01010, 
-          0b10111, 
-          0b11000, 
-          0b11111],
-
-        [ 0b11111, 
-          0b00000, 
-          0b11111,
-          0b01010,
-          0b10101, 
-          0b11111, 
-          0b00000, 
-          0b11111],
-
-        [ 0b11111, 
-          0b01101, 
-          0b00101,
-          0b10111,
-          0b01111, 
-          0b00101, 
-          0b01101, 
-          0b11111 ],
-        
-        [ 0b11101, 
-          0b11111, 
-          0b11111,
-          0b11111,
-          0b11111, 
-          0b01111, 
-          0b11111, 
-          0b11111],
-
-        [ 0b11111, 
-          0b01011, 
-          0b10111,
-          0b01011,
-          0b11111, 
-          0b11111, 
-          0b11111, 
-          0b11101],
-
-        [ 0b11111, 
-          0b11111, 
-          0b11101,
-          0b11111,
-          0b11111, 
-          0b11111, 
-          0b10111, 
-          0b11111],
-
-      ] 
-
+  mainBox.searchSensor()
   while True:
     
     now = datetime.now()
+    ## if pora to update
     mainBox.sensBox.update()
     cls()
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
-    # mainBox.searchSensor()
-    mainBox.getSensor()
+    #
+    mainBox.updateSensArrayValue()
+    mainBox.getSensor(4)
+    mainBox.getSensor(2)
+    mainBox.getSensor(3)
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    mainBox.getSensors()
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     time.sleep(5)
 
