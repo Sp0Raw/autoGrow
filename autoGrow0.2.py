@@ -694,7 +694,7 @@ def main():
     print("###################################")
     #
     mainBox.updateSensArrayValue()
-    mainBox.getSensor(4)
+    mainBox.getSensor(0)
     mainBox.getSensor(2)
     mainBox.getSensor(3)
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
