@@ -201,7 +201,7 @@ class SensorAM2320:
     self.humidity = agr2
 
   def setValue(self, arg0, arg1):
-    print("setValue   arg0:"+str(arg0)+" prTemperature:"+str(self.prTemperature)+"    arg1:"+str(arg0)+"prHumidity:"+str(self.prHumidity))
+    print("setValue   arg0:"+str(arg0)+" prTemperature:"+str(self.prTemperature)+"           arg1:"+str(arg1)+"    prHumidity:"+str(self.prHumidity))
     if arg0 > self.prTemperature:
       self.temperatureMove="UP"
     elif arg0 < self.prTemperature:
