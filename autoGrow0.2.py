@@ -359,8 +359,8 @@ class TemperatureSensor:
 
   def setValue(self, comPort = 0):
     self.lastJson = openComPort(comPort, command="R"+str(self.numSens))
-    # print ("***************************   R"+str(self.numSens))
-    # print (self.lastJson)
+    print ("***************************   R"+str(self.numSens))
+    print (self.lastJson)
 
     try:
       data = json.loads(self.lastJson)
@@ -373,8 +373,8 @@ class TemperatureSensor:
       self.temperatureF = data["sensors"][0]["temperatuteF"]
       self.sensor_addres = data["sensors"][0]["sensor_addres"]
       #self.name = name
-      prLastUpdate = self.lastUpdate
-      lastUpdate = datetime.now()
+      self.prLastUpdate = self.lastUpdate
+      self.lastUpdate = datetime.now()
     except:
       print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
       print("I get it :"+self.lastJson)
