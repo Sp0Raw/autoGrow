@@ -288,17 +288,18 @@ class SensorAM2320:
 
 class HomeAM2320(SensorAM2320):
   def readValue(self):      ## Read sensor value
-      print("home sensor readValue")
-    #try:
+    #print("home sensor readValue")
+    try:
       am2320 = AM2320(1)
       (t,h) = am2320.readSensor()
-      print(datetime.strftime(datetime.now(), "%Y.%m.%d %H:%M:%S"))
-      print("t="+str(t))
-      print("h=" + str(h))
+      #print(datetime.strftime(datetime.now(), "%Y.%m.%d %H:%M:%S"))
+      #print("t="+str(t))
+      #print("h=" + str(h))
       self.setValue(t,h)
       self.lastUpdate = datetime.now()
       time.sleep(5)
-
+    except:
+      self.setValue(-1,-1)
 
   def __init__(self, arg0="sensor am2320", arg1=-85.5, agr2=-99.9):
     self.name=arg0
@@ -309,7 +310,7 @@ class HomeAM2320(SensorAM2320):
       self.humidity = agr2
 
   def update(self):
-    print("start update Home sens")
+    #print("start update Home sens")
     self.readValue()
 
 
