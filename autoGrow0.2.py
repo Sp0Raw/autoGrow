@@ -379,12 +379,17 @@ class TemperatureSensor:
       print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
       print("I get it :"+self.lastJson)
 
+  def updateOld(self, seconds = 60):
+    delta = datetime.now() - self.lastUpdate
+    if delta.seconds > seconds:
+      self.setValue()
+
   def updateValue(self):
     self.setValue()
 
 
   def __repr__(self):
-    return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={})>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres)
+    return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={}), lastUpdate={}, lastSecondAgo={}>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres,self.lastUpdate, str(delta.seconds))
 
 
 class BoxClimate:
@@ -403,11 +408,21 @@ class BoxClimate:
     for x in range(0,self.countSensor):
       self.updateSensor(x)
 
+  def updateOldSensors(self, seconds):
+    if self.countSensor == 0:
+      self.setCountSensors()
+    for x in range(0,self.countSensor):
+      self.updateSensor(x)
+
   def updateSensor(self, sensNumber):
     obj = self.sensArrayXXX[sensNumber]
     obj.updateValue()
     self.sensArrayXXX[sensNumber]=obj
 
+  def updateOldSensor(self, sensNumber, seconds):
+    obj = self.sensArrayXXX[sensNumber]
+    obj.updateOld(seconds)
+    self.sensArrayXXX[sensNumber]=obj
 
   def initSensors(self):
     self.setCountSensors()
@@ -722,6 +737,8 @@ def main():
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
+    print (mainBox.sensArrayXXX[0].temperatureC)
+    mainBox.updateOldSensors(120) ## update older 120 seconds
     print (mainBox.sensArrayXXX[0].temperatureC)
     #
     # mainBox.updateSensors()
