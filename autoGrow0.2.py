@@ -374,11 +374,11 @@ class TemperatureSensor:
     try:
       self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
       data = json.loads(self.lastJson)
-      if data["sensors"][0]["temperatuteC"] > self.TemperatureC:
+      if data["sensors"][0]["temperatuteC"] > self.temperatureC:
         self.temperatureMove=  "UP     "
-      elif data["sensors"][0]["temperatuteC"] < self.TemperatureC:
+      elif data["sensors"][0]["temperatuteC"] < self.temperatureC:
         self.temperatureMove = "DOWN   "
-      elif data["sensors"][0]["temperatuteC"] == self.TemperatureC:
+      elif data["sensors"][0]["temperatuteC"] == self.temperatureC:
         self.temperatureMove = "STABIL "
       self.prTemperatureC=self.temperatureC
       self.prTemperatureF=self.temperatureF
