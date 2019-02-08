@@ -201,24 +201,24 @@ class SensorAM2320:
     self.humidity = agr2
 
   def setValue(self, arg0, arg1):
-    print("setValue   arg0:"+str(arg0)+" prTemperature:"+str(self.prTemperature)+"           arg1:"+str(arg1)+"    prHumidity:"+str(self.prHumidity))
+    # print("setValue   arg0:"+str(arg0)+" prTemperature:"+str(self.prTemperature)+"           arg1:"+str(arg1)+"    prHumidity:"+str(self.prHumidity))
     if arg0 > self.prTemperature:
-      self.temperatureMove="UP"
+      self.temperatureMove=  "UP     "
     elif arg0 < self.prTemperature:
-      self.temperatureMove = "DOWN"
+      self.temperatureMove = "DOWN   "
     elif arg0 == self.prTemperature:
-      self.temperatureMove = "STABIL"
+      self.temperatureMove = "STABIL "
 
-    print(self.temperatureMove)
+    # print(self.temperatureMove)
 
     if arg1 > self.prHumidity:
-      self.humidityMove="UP"
+      self.humidityMove=  "UP     "
     elif arg1 < self.prHumidity:
-      self.humidityMove = "DOWN"
+      self.humidityMove = "DOWN   "
     elif arg1 == self.prHumidity:
-      self.humidityMove = "STABIL"
+      self.humidityMove = "STABIL "
 
-    print(self.humidityMove)
+    # print(self.humidityMove)
 
     self.prTemperature = self.temperature
     self.prHumidity = self.humidity
@@ -388,7 +388,7 @@ class TemperatureSensor:
 class BoxClimate:
   name = "MainBox"
   sensHome = HomeAM2320("Home")
-  sensBox = BoxAM2320("Box")
+  sensBox = BoxAM2320("Box ")
   obj = TemperatureSensor(0)
   print(obj)
   sensArrayXXX = []  # type: Any
