@@ -382,8 +382,10 @@ class TemperatureSensor:
   def updateOld(self, seconds = 60):
     delta = datetime.now() - self.lastUpdate
     if delta.seconds > seconds:
+      print ("Object is olded - UPDATE HIM")
       self.setValue()
-
+    else:
+      print ("Yang Object GO Out!!!")
   def updateValue(self):
     self.setValue()
 
