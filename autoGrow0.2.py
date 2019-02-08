@@ -181,8 +181,6 @@ def openComPort(numPort, command="H"):
 ##  finally:
 ##    return "{\"Error\":\"Com-port Error\"}"  
  
-#### Variable need replace it in cfg
-lampCooling=1
 
 class SensorAM2320:
   name = 'sensor am2320'
@@ -240,7 +238,7 @@ class SensorAM2320:
 
   def printf(self): 
     delta = datetime.now() - self.lastUpdate 
-    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(self.lastUpdateSec) + "  move:"+ self.temperatureMove)
+    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(self.delta) + "  move:"+ self.temperatureMove)
     print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ "C   Humidity: " + str(self.humidity)+ "%")
 
   def printfc(self):
@@ -313,7 +311,6 @@ class HomeAM2320(SensorAM2320):
     #print("start update Home sens")
     self.readValue()
 
-
 class BoxAM2320(SensorAM2320):
   boxSensValue = "{}"
   def readValue(self):
@@ -345,6 +342,7 @@ class TemperatureSensor:
   prLastUpdate = datetime.now()
   lastJson = ""
   numSens = 0
+  temperatureMove ="none"
 
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
     self.numSens = numSens
@@ -357,13 +355,32 @@ class TemperatureSensor:
     if temperatureC < 0 or temperatureF < 0 :
       self.setValue()
 
+  def __repr__(self):
+    delta = datetime.now() - self.lastUpdate
+    return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={}), lastUpdate={}, lastSecondAgo={}>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres,self.lastUpdate, str(delta.seconds))
+
+
+  def setName(self, name):
+    self.name=name
+
+  def setComment(self, comment):
+    self.comment=comment
+
   def setValue(self, comPort = 0):
-    self.lastJson = openComPort(comPort, command="R"+str(self.numSens))
-    print ("***************************   R"+str(self.numSens))
-    print (self.lastJson)
+
+    # print ("***************************   R"+str(self.numSens))
+    # print (self.lastJson)
 
     try:
+      self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
       data = json.loads(self.lastJson)
+
+      if data["sensors"][0]["temperatuteC"] > self.prTemperatureC:
+        self.temperatureMove=  "UP     "
+      elif data["sensors"][0]["temperatuteC"] < self.prTemperatureC:
+        self.temperatureMove = "DOWN   "
+      elif data["sensors"][0]["temperatuteC"] == self.prTemperatureC:
+        self.temperatureMove = "STABIL "
 
       self.prTemperatureC=self.temperatureC
       self.prTemperatureF=self.temperatureF
@@ -375,6 +392,7 @@ class TemperatureSensor:
       #self.name = name
       self.prLastUpdate = self.lastUpdate
       self.lastUpdate = datetime.now()
+
     except:
       print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
       print("I get it :"+self.lastJson)
@@ -390,20 +408,75 @@ class TemperatureSensor:
     self.setValue()
 
 
-  def __repr__(self):
-    delta = datetime.now() - self.lastUpdate
-    return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={}), lastUpdate={}, lastSecondAgo={}>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres,self.lastUpdate, str(delta.seconds))
+  def getValueC(self):
+    return (self.temperatureC , self.prTemperatureC)
 
+  def getValueF(self):
+    return (self.temperatureF , self.prTemperatureF)
+
+  def printValue(self):
+    print (self.temperatureC)
+    # return (self.temperature, self.humidity)
+
+  def printf(self):
+    delta = datetime.now() - self.lastUpdate
+    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  " + str(delta.seconds) + "  move:" + self.temperatureMove)
+    print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperatureC) + "C    Temperature: " + str(self.temperature) + "F   Humidity: ")
+
+  def printfc(self):
+    termColor = 'white'
+    humColor = 'white'
+    if self.temperatureC <= 18:
+      termColor = 'blue'
+    elif self.temperatureC > 18 and self.temperature <= 24:
+      termColor = 'cyan'
+    elif self.temperatureC > 24 and self.temperature <= 29:
+      termColor = 'green'
+    elif self.temperatureC > 29 and self.temperature <= 33:
+      termColor = 'yellow'
+    elif self.temperatureC > 33:
+      termColor = 'red'
+    else:
+      termColor = 'red'
+
+    delta = datetime.now() - self.lastUpdate
+    if delta.seconds < 60:
+      timeColor = 'green'
+    elif delta.seconds >= 60 and delta.seconds < 120:
+      timeColor = 'yellow'
+    elif delta.seconds >= 60 and delta.seconds < 16:
+      timeColor = 'green'
+    else:
+      timeColor = 'red'
+
+    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  " + colored(str(delta.seconds), timeColor))
+    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.temperatureC),termColor) + "C " + "  move:" + self.temperatureMove )
 
 class BoxClimate:
   name = "MainBox"
   sensHome = HomeAM2320("Home")
   sensBox = BoxAM2320("Box ")
-  obj = TemperatureSensor(0)
-  print(obj)
-  sensArrayXXX = []  # type: Any
+  obj = TemperatureSensor()
+  ##print(obj)
+  sensArrayXXX = []
   countSensor = 0  ## type: Any
-  
+
+  magneticSwitchStatus = 0
+  lastState = 0
+  lastReadState = datetime.now()
+  timeStartDay = now.replace(hour=8, minute=00, second=0, microsecond=0)
+  timeEndDay = now.replace(hour=22, minute=00, second=0, microsecond=0)
+  lastTermHumHomeUpd = datetime.now()
+  needState = 0
+  colorText = 'green'
+
+  unitNeedState = {-1: "NEED NIGHT",
+                   0: "FAILURE ERROR is not avalible state",
+                   1: "NEED DAY"}
+
+  unitLampState = {-1: "LAMP IS OFF",
+                   0: "FAILURE ERROR is not avalible lamp status",
+                   1: "LAMP IS ON"}
 
   def updateSensors(self):
     if self.countSensor == 0:
@@ -448,31 +521,14 @@ class BoxClimate:
 
   def getSensor(self, sensNumber=0):
     print (str(sensNumber)+"/"+str(self.countSensor))
-    obj = self.sensArrayXXX[sensNumber]
-    print obj
-
+    self.sensArrayXXX[sensNumber].printfc()
+    # obj = self.sensArrayXXX[sensNumber]
+    # print obj
+    # obj.
     time.sleep(1)
     # except:
     #   print("object array list error 387 ")
     
-  
-  magneticSwitchStatus = 0
-  lastState = 0
-  lastReadState = datetime.now()
-  timeStartDay = now.replace(hour=8, minute=00, second=0, microsecond=0)
-  timeEndDay = now.replace(hour=22, minute=00, second=0, microsecond=0)
-  lastTermHumHomeUpd = datetime.now()
-  needState = 0
-  colorText = 'green'
-
-  unitNeedState = {-1 : "NEED NIGHT",
-                    0 : "FAILURE ERROR is not avalible state",
-                    1 : "NEED DAY"}
-
-  unitLampState = {-1 : "LAMP IS OFF",
-                    0 : "FAILURE ERROR is not avalible lamp status",
-                    1 : "LAMP IS ON"}  
-  
   def __init__(self, arg0):
     self.name=arg0
     print(" INIT OBJECT "+ self.name +"  => Class: "+ self.name +" Created")
@@ -744,6 +800,7 @@ def main():
     mainBox.updateOldSensors(120) ## update older 120 seconds
     print mainBox.sensArrayXXX[0]
     print (mainBox.sensArrayXXX[0].temperatureC)
+    mainBox.sensArray
     #
     # mainBox.updateSensors()
     # mainBox.getSensor(0)
