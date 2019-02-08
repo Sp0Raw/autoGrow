@@ -424,16 +424,28 @@ class TemperatureSensor:
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  " + str(delta.seconds) + "  move:" + self.temperatureMove)
     print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperatureC) + "C    Temperature: " + str(self.temperature) + "F   Humidity: ")
 
+  def getColor(self, value=1, arg0=1, arg1=1):
+      if value < arg0:
+        return "green"
+      elif value > arg0 and value < art1:
+        return "yellow"
+      elif value > arg1:
+        return "red"
+      else:
+        return "red"
+
+
   def printfc(self,colorWarning=35,colorAlarm=40):
     termColor = 'white'
-    if self.temperatureC <= colorWarning:
-      termColor = 'green'
-    elif self.temperatureC > colorWarning and self.temperatureC <= colorAlarm:
-      termColor = 'yellow'
-    elif self.temperatureC > colorAlarm:
-      termColor = 'red'
-    else:
-      termColor = 'red'
+    termColor = self.getColor(self.temperatureC,colorWarning,colorAlarm)
+    # if self.temperatureC <= colorWarning:
+    #   termColor = 'green'
+    # elif self.temperatureC > colorWarning and self.temperatureC <= colorAlarm:
+    #   termColor = 'yellow'
+    # elif self.temperatureC > colorAlarm:
+    #   termColor = 'red'
+    # else:
+    #   termColor = 'red'
 
     #  remove in other proc
     # def getColor(self, value=1, arg0=1, arg1=1):
@@ -445,14 +457,15 @@ class TemperatureSensor:
     #     return "red"
 
     prTermColor = 'white'
-    if self.prTemperatureC <= colorWarning:
-      prTermColor = 'green'
-    elif self.prTemperatureC > colorWarning and self.prTemperatureC <= colorAlarm:
-      prTermColor = 'yellow'
-    elif self.prTemperatureC > colorAlarm :
-      prTermColor = 'red'
-    else:
-      prTermColor = 'red'
+    prTermColor = self.getColor(self.prTemperatureC, colorWarning, colorAlarm)
+    # if self.prTemperatureC <= colorWarning:
+    #   prTermColor = 'green'
+    # elif self.prTemperatureC > colorWarning and self.prTemperatureC <= colorAlarm:
+    #   prTermColor = 'yellow'
+    # elif self.prTemperatureC > colorAlarm :
+    #   prTermColor = 'red'
+    # else:
+    #   prTermColor = 'red'
 
     delta = datetime.now() - self.lastUpdate
     if delta.seconds < 60:
@@ -821,9 +834,7 @@ def main():
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     mainBox.getSensors()
-    print("###################################")
-    # print (mainBox.sensArrayXXX[0].temperatureC)
-    mainBox.updateOldSensors(60) ## update older 120 seconds
+
     # print mainBox.sensArrayXXX[0]
 
     #
@@ -855,9 +866,10 @@ def main():
     print("                                                                          ")
     print("                                                                          ")
     print("                                                                          ")
-    print("                                                                          ")
-    color=mainBox.getColor(33.5, 40, 55)
-    print("                           "+color+"                                     ")
+    print("                                                                          "+mainBox.sensArrayXXX[0].)
+    print("###################################")
+    # print (mainBox.sensArrayXXX[0].temperatureC)
+    mainBox.updateOldSensors(60) ## update older 120 seconds
     time.sleep(5)
 
 
