@@ -794,13 +794,13 @@ def main():
     mainBox.sensBox.update()
     mainBox.sensHome.update()
     mainBox.sensHome.printfc()
-    mainBox.sensBox.printfc()
+    mainBox.getSensors()
     print("###################################")
     print (mainBox.sensArrayXXX[0].temperatureC)
     mainBox.updateOldSensors(120) ## update older 120 seconds
     print mainBox.sensArrayXXX[0]
     print (mainBox.sensArrayXXX[0].temperatureC)
-    mainBox.sensArray
+    mainBox.getSensors()
     #
     # mainBox.updateSensors()
     # mainBox.getSensor(0)
