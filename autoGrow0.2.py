@@ -389,6 +389,7 @@ class TemperatureSensor:
 
 
   def __repr__(self):
+    delta = datetime.now() - self.lastUpdate
     return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={}), lastUpdate={}, lastSecondAgo={}>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres,self.lastUpdate, str(delta.seconds))
 
 
