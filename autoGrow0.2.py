@@ -439,6 +439,20 @@ class TemperatureSensor:
     else:
       termColor = 'red'
 
+    prTermColor = 'white'
+    if self.temperatureC <= 18:
+      prTermColor = 'blue'
+    elif self.temperatureC > 18 and self.temperatureC <= 24:
+      prTermColor = 'cyan'
+    elif self.temperatureC > 24 and self.temperatureC <= 29:
+      prTermColor = 'green'
+    elif self.temperatureC > 29 and self.temperatureC <= 33:
+      prTermColor = 'yellow'
+    elif self.temperatureC > 33:
+      prTermColor = 'red'
+    else:
+      prTermColor = 'red'
+
     delta = datetime.now() - self.lastUpdate
     if delta.seconds < 60:
       timeColor = 'green'
@@ -450,7 +464,7 @@ class TemperatureSensor:
       timeColor = 'red'
 
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  " + colored(str(delta.seconds), timeColor))
-    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.prTemperatureC),termColor) + "C -> "  + colored(str(self.temperatureC),termColor) + "C "  +"  move:" + self.temperatureMove )
+    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.prTemperatureC),prTermColor) + "C -> "  + colored(str(self.temperatureC),termColor) + "C "  +"  move:" + self.temperatureMove )
 
 class BoxClimate:
   name = "MainBox"
@@ -800,7 +814,7 @@ def main():
     mainBox.getSensors()
     print("###################################")
     # print (mainBox.sensArrayXXX[0].temperatureC)
-    mainBox.updateOldSensors(120) ## update older 120 seconds
+    mainBox.updateOldSensors(60) ## update older 120 seconds
     # print mainBox.sensArrayXXX[0]
 
     #
