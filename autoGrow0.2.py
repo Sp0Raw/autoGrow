@@ -432,7 +432,6 @@ class BoxClimate:
     obj = self.sensArrayXXX[sensNumber]
     print obj
 
-
     time.sleep(1)
     # except:
     #   print("object array list error 387 ")
@@ -587,7 +586,7 @@ class BoxClimate:
 
 
       
-print(now) # 38
+#print(now) # 38
 
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
@@ -707,22 +706,13 @@ def main():
      0b11111],
 
   ]
+  print ("==========    Create main class    ===============")
   mainBox = BoxClimate("mainBox")
-  # mainBox.searchSensor()  ## INit sensors
- 
-  lastTimeLampOn = datetime.now()
-  lastTimeLampOff = datetime.now()
-  lastTurnOff = datetime.now()
-  lNow = datetime.now()
-  lastComRead = datetime.now()
-  timesOfDay =0
-  lampStat   =0
-  mylcd = RPi_I2C_driver.lcd()
-
+  print ("==========    Init Sensosrs    ===============")
   mainBox.initSensors()
 
   while True:
-    cls()
+    #cls()
     print ("==========    START While    ===============")
     now = datetime.now()
     ## if pora to update
@@ -739,13 +729,14 @@ def main():
     # mainBox.getSensors()
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     print(mainBox.sensBox.humidity)
-    if mainBox.sensBox.humidity<40:
-        print(" Filter, cerculation fat is OFF  is dry, less 40%")
+    if mainBox.sensBox.humidity<45:
+        print(" Filter, cerculation FAN is OFF  is dry, less 45% now humidity =" + (mainBox.sensBox.humidity))
         GPIO.output(6, True)
-    elif mainBox.sensBox.humidity>60:
-        print(" Filter, cerculation fat is ON  is wet, more 60%")
+    elif mainBox.sensBox.humidity>55:
+        print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + (mainBox.sensBox.humidity))
         GPIO.output(6, False)
-
+    else:
+        print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + (mainBox.sensBox.humidity))
 
     time.sleep(5)
 
