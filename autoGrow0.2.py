@@ -275,7 +275,7 @@ class SensorAM2320:
     else:
       timeColor = 'red'
 
-    serf.temperatureMove
+
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ colored(str(delta.seconds),timeColor))
     print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.temperature),termColor)+ "C "+ "  move:"+ self.temperatureMove+"  Humidity: " + colored(str(self.humidity),humColor)+ "%" + "  move:"+ self.humidityMove)
     
