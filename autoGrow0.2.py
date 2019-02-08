@@ -788,11 +788,13 @@ def main():
 
   while True:
     #cls()
+    mainBox.sensBox.update()
+    mainBox.sensHome.update()
+    cls()
     print ("==========    START While    ===============")
     now = datetime.now()
     ## if pora to update
-    mainBox.sensBox.update()
-    mainBox.sensHome.update()
+
     mainBox.sensHome.printfc()
     mainBox.getSensors()
     print("###################################")
