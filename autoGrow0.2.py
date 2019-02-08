@@ -722,7 +722,7 @@ def main():
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
-    print mainBox.sensArrayXXX[0]
+    print (mainBox.sensArrayXXX[0].temperatureC)
     #
     # mainBox.updateSensors()
     # mainBox.getSensor(0)
