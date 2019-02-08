@@ -849,7 +849,7 @@ def main():
     print("|#############\_________________________________________/###############|")
     print("|#############|                                         |###############|")
     print("|#############|        /\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"|-------\#######|")
-    print("|#############|  =>   |    @=#==========================| "+colored(mainBox.sensArrayXXX[0].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[0].temperatureC, 40, 55)) +"C |######|")
+    print("|#############|  =>   (   @=#======================@====| "+colored(mainBox.sensArrayXXX[0].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[0].temperatureC, 40, 55)) +"C |######|")
     print(" \############|        \________________________________|_______/#######/ ")
     print("  \EEEEEEEEEEE|_________________________________________|EEEEEEEEEEEEEE/  ")
     print("                                                                          ")
