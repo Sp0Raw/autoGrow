@@ -442,13 +442,13 @@ class TemperatureSensor:
     prTermColor = 'white'
     if self.temperatureC <= 18:
       prTermColor = 'blue'
-    elif self.temperatureC > 18 and self.temperatureC <= 24:
+    elif self.prTemperatureC > 18 and self.prTemperatureC <= 24:
       prTermColor = 'cyan'
-    elif self.temperatureC > 24 and self.temperatureC <= 29:
+    elif self.prTemperatureC > 24 and self.prTemperatureC <= 29:
       prTermColor = 'green'
-    elif self.temperatureC > 29 and self.temperatureC <= 33:
+    elif self.prTemperatureC > 29 and self.prTemperatureC <= 33:
       prTermColor = 'yellow'
-    elif self.temperatureC > 33:
+    elif self.prTemperatureC > 33:
       prTermColor = 'red'
     else:
       prTermColor = 'red'
