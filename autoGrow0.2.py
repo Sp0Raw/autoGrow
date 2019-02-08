@@ -362,21 +362,22 @@ class TemperatureSensor:
     # print ("***************************   R"+str(self.numSens))
     # print (self.lastJson)
 
-    # try:
-    data = json.loads(self.lastJson)
+    try:
+      data = json.loads(self.lastJson)
 
-    self.prTemperatureC=self.temperatureC
-    self.prTemperatureF=self.temperatureF
-    #print("======================================")
-    #print(data["sensors"][0])
-    self.temperatureC = data["sensors"][0]["temperatuteC"]
-    self.temperatureF = data["sensors"][0]["temperatuteF"]
-    self.sensor_addres = data["sensors"][0]["sensor_addres"]
-    #self.name = name
-    prLastUpdate = self.lastUpdate
-    lastUpdate = datetime.now()
-    # except:
-    #   print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
+      self.prTemperatureC=self.temperatureC
+      self.prTemperatureF=self.temperatureF
+      #print("======================================")
+      #print(data["sensors"][0])
+      self.temperatureC = data["sensors"][0]["temperatuteC"]
+      self.temperatureF = data["sensors"][0]["temperatuteF"]
+      self.sensor_addres = data["sensors"][0]["sensor_addres"]
+      #self.name = name
+      prLastUpdate = self.lastUpdate
+      lastUpdate = datetime.now()
+    except:
+      print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
+      print("I get it :"+self.lastJson)
 
   def updateValue(self):
     self.setValue()
