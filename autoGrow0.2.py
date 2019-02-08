@@ -413,7 +413,7 @@ class BoxClimate:
     if self.countSensor == 0:
       self.setCountSensors()
     for x in range(0,self.countSensor):
-      self.updateSensor(x)
+      self.updateOldSensor(x,seconds)
 
   def updateSensor(self, sensNumber):
     obj = self.sensArrayXXX[sensNumber]
