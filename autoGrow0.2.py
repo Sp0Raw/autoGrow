@@ -209,12 +209,16 @@ class SensorAM2320:
     elif arg0 == self.prTemperature:
       self.temperatureMove = "STABIL"
 
+    print(self.temperatureMove)
+
     if arg1 > self.prHumidity:
       self.humidityMove="UP"
     elif arg1 < self.prHumidity:
       self.humidityMove = "DOWN"
     elif arg1 == self.prHumidity:
       self.humidityMove = "STABIL"
+
+    print(self.humidityMove)
 
     self.prTemperature = self.temperature
     self.prHumidity = self.humidity
