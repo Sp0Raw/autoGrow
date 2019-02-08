@@ -385,7 +385,7 @@ class TemperatureSensor:
       print ("Object is olded - UPDATE HIM")
       self.setValue()
     else:
-      print ("Yang Object GO Out!!!")
+      print ("Yang Object GO Out!")
   def updateValue(self):
     self.setValue()
 
