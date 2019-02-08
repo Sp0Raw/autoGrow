@@ -189,7 +189,7 @@ class SensorAM2320:
   temperature = -85.5
   humidity = - 99.9
   prTemperature = -85.5
-  ptHumidity = - 99.9  
+  prHumidity = - 99.9
   lastUpdate = datetime.now()
   lastUpdateSec = -1
   temperatureMove = "None"
