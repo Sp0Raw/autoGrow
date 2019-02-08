@@ -796,6 +796,7 @@ def main():
     ## if pora to update
 
     mainBox.sensHome.printfc()
+    mainBox.sensBox.printfc()
     mainBox.getSensors()
     print("###################################")
     # print (mainBox.sensArrayXXX[0].temperatureC)
