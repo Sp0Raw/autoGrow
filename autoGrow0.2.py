@@ -428,11 +428,11 @@ class TemperatureSensor:
     humColor = 'white'
     if self.temperatureC <= 18:
       termColor = 'blue'
-    elif self.temperatureC > 18 and self.temperature <= 24:
+    elif self.temperatureC > 18 and self.temperatureC <= 24:
       termColor = 'cyan'
-    elif self.temperatureC > 24 and self.temperature <= 29:
+    elif self.temperatureC > 24 and self.temperatureC <= 29:
       termColor = 'green'
-    elif self.temperatureC > 29 and self.temperature <= 33:
+    elif self.temperatureC > 29 and self.temperatureC <= 33:
       termColor = 'yellow'
     elif self.temperatureC > 33:
       termColor = 'red'
