@@ -227,8 +227,6 @@ class SensorAM2320:
     self.lastUpdate = datetime.now()
     self.lastUpdateSec =  datetime.now() - self.lastUpdate
 
-
-
   def setName(self, arg0):
     self.name=arg0
 
@@ -722,7 +720,7 @@ def main():
     now = datetime.now()
     ## if pora to update
     mainBox.sensBox.update()
-
+    mainBox.sensHome.update()
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
