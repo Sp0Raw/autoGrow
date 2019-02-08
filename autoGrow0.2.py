@@ -740,6 +740,7 @@ def main():
     print("###################################")
     print (mainBox.sensArrayXXX[0].temperatureC)
     mainBox.updateOldSensors(120) ## update older 120 seconds
+    print mainBox.sensArrayXXX[0]
     print (mainBox.sensArrayXXX[0].temperatureC)
     #
     # mainBox.updateSensors()
