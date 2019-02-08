@@ -721,6 +721,7 @@ def main():
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
+    print mainBox.sensArrayXXX[0]
     #
     # mainBox.updateSensors()
     # mainBox.getSensor(0)
