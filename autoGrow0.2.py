@@ -808,8 +808,8 @@ def main():
     # print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     # mainBox.updateSensors()
     # mainBox.getSensors()
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    print(mainBox.sensBox.humidity)
+    print("@@@@@@   Box humidity control   @@@@@")
+
     if mainBox.sensBox.humidity<45:
         print(" Filter, cerculation FAN is OFF  is dry, less 45% now humidity =" + str(mainBox.sensBox.humidity))
         GPIO.output(6, True)
