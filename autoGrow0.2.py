@@ -424,32 +424,32 @@ class TemperatureSensor:
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  " + str(delta.seconds) + "  move:" + self.temperatureMove)
     print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperatureC) + "C    Temperature: " + str(self.temperature) + "F   Humidity: ")
 
-  def printfc(self):
+  def printfc(self,colorWarning=35,colorAlarm=40):
     termColor = 'white'
-    humColor = 'white'
-    if self.temperatureC <= 18:
-      termColor = 'blue'
-    elif self.temperatureC > 18 and self.temperatureC <= 24:
-      termColor = 'cyan'
-    elif self.temperatureC > 24 and self.temperatureC <= 29:
+    if self.temperatureC <= colorWarning:
       termColor = 'green'
-    elif self.temperatureC > 29 and self.temperatureC <= 33:
+    elif self.temperatureC > colorWarning and self.temperatureC <= colorAlarm:
       termColor = 'yellow'
-    elif self.temperatureC > 33:
+    elif self.temperatureC > colorAlarm:
       termColor = 'red'
     else:
       termColor = 'red'
 
+    #  remove in other proc
+    # def getColor(self, value=1, arg0=1, arg1=1):
+    #   if value < arg0:
+    #     return "green"
+    #   elif value > arg0 and value < art1:
+    #     return "yellow"
+    #   elif value > arg1:
+    #     return "red"
+
     prTermColor = 'white'
-    if self.prTemperatureC <= 18:
-      prTermColor = 'blue'
-    elif self.prTemperatureC > 18 and self.prTemperatureC <= 24:
-      prTermColor = 'cyan'
-    elif self.prTemperatureC > 24 and self.prTemperatureC <= 29:
+    if self.prTemperatureC <= colorWarning:
       prTermColor = 'green'
-    elif self.prTemperatureC > 29 and self.prTemperatureC <= 33:
+    elif self.prTemperatureC > colorWarning and self.prTemperatureC <= colorAlarm:
       prTermColor = 'yellow'
-    elif self.prTemperatureC > 33:
+    elif self.prTemperatureC > colorAlarm :
       prTermColor = 'red'
     else:
       prTermColor = 'red'
@@ -530,13 +530,13 @@ class BoxClimate:
     except:
       print("Error on parsing json" + self.sensArray)
 
-  def getSensors(self):
+  def getSensors(self,colorWarning=35,colorAlarm=40):
     for x in range(0, self.countSensor):
-      self.getSensor(x)
+      self.getSensor(x,colorWarning,colorAlarm)
 
-  def getSensor(self, sensNumber=0):
+  def getSensor(self, sensNumber=0,colorWarning=35,colorAlarm=40):
     print (str(sensNumber+1)+"/"+str(self.countSensor))
-    self.sensArrayXXX[sensNumber].printfc()
+    self.sensArrayXXX[sensNumber].printfc(colorWarning,colorAlarm)
     # obj = self.sensArrayXXX[sensNumber]
     # print obj
     # obj.
