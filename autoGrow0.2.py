@@ -440,7 +440,7 @@ class TemperatureSensor:
       termColor = 'red'
 
     prTermColor = 'white'
-    if self.temperatureC <= 18:
+    if self.prTemperatureC <= 18:
       prTermColor = 'blue'
     elif self.prTemperatureC > 18 and self.prTemperatureC <= 24:
       prTermColor = 'cyan'
@@ -534,7 +534,7 @@ class BoxClimate:
       self.getSensor(x)
 
   def getSensor(self, sensNumber=0):
-    print (str(sensNumber)+"/"+str(self.countSensor))
+    print (str(sensNumber+1)+"/"+str(self.countSensor))
     self.sensArrayXXX[sensNumber].printfc()
     # obj = self.sensArrayXXX[sensNumber]
     # print obj
