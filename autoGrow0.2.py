@@ -560,7 +560,15 @@ class BoxClimate:
     self.getMagneticSwitchStatus()
     self.lastReadState = datetime.now()
     time.sleep(5)
-      
+
+  def getColor(self, value=1,  arg0=1, arg1=1):
+    if value<arg0:
+      return "green"
+    elif value>arg0 and value<art1:
+      return "yellow"
+    elif value>arg1:
+      return "red"
+
   def setNeedState(self):
     print("Test lamp (HP0 connector)... ")
     now = datetime.now()
@@ -848,8 +856,8 @@ def main():
     print("                                                                          ")
     print("                                                                          ")
     print("                                                                          ")
-
-
+    color=mainBox.getColor(33.5, 40, 55)
+    print("                           color                                               ")
     time.sleep(5)
 
 
