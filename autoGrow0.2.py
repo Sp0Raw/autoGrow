@@ -720,7 +720,7 @@ def main():
     now = datetime.now()
     ## if pora to update
     mainBox.sensBox.update()
-    #mainBox.sensHome.update()
+    mainBox.sensHome.update()
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
     print("###################################")
