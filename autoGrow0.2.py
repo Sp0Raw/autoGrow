@@ -730,13 +730,13 @@ def main():
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     print(mainBox.sensBox.humidity)
     if mainBox.sensBox.humidity<45:
-        print(" Filter, cerculation FAN is OFF  is dry, less 45% now humidity =" + (mainBox.sensBox.humidity))
+        print(" Filter, cerculation FAN is OFF  is dry, less 45% now humidity =" + str(mainBox.sensBox.humidity))
         GPIO.output(6, True)
     elif mainBox.sensBox.humidity>55:
-        print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + (mainBox.sensBox.humidity))
+        print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + str(mainBox.sensBox.humidity))
         GPIO.output(6, False)
     else:
-        print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + (mainBox.sensBox.humidity))
+        print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + str(mainBox.sensBox.humidity))
 
     time.sleep(5)
 
