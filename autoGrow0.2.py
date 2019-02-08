@@ -450,7 +450,7 @@ class TemperatureSensor:
       timeColor = 'red'
 
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  " + colored(str(delta.seconds), timeColor))
-    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.temperatureC),termColor) + "C " + "  move:" + self.temperatureMove )
+    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.prTemperatureC),termColor) + "C -> "  + colored(str(self.temperatureC),termColor) + "C "  +"  move:" + self.temperatureMove )
 
 class BoxClimate:
   name = "MainBox"
