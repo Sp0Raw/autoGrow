@@ -857,7 +857,7 @@ def main():
     print("                                                                          ")
     print("                                                                          ")
     color=mainBox.getColor(33.5, 40, 55)
-    print("                           color                                               ")
+    print("                           "+color+"                                     ")
     time.sleep(5)
 
 
