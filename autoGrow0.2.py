@@ -830,7 +830,7 @@ def main():
         print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + str(mainBox.sensBox.humidity))
     print("###################################")
     print("%%%%%%%%  LAMP HEALTH  %%%%%%%%%%%%")
-    print("|# V  IN  V #|                                           |## ^  OUT ^ ##|")
+    print(u'|\u2588\u2193   IN   \u2193\u2588|                                           |\u2588\u2588\u2191   OUT  \u2191\u2588\u2588|')
     print("|#  "+colored(mainBox.sensArrayXXX[3].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[3].temperatureC, 30, 40)) +" C #|                                           |### "+colored(mainBox.sensArrayXXX[4].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 35, 40)) +" C ##|")
     print("|#############\_________________________________________/###############|")
     print("|#############|                                         |###############|")
