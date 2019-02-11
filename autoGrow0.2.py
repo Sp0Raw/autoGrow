@@ -828,44 +828,14 @@ def main():
         GPIO.output(6, False)
     else:
         print(" Filter, cerculation FAN is  ON  is wet, more 55% now humidity =" + str(mainBox.sensBox.humidity))
-    print("###################################")
-    print("%%%%%%%%  LAMP HEALTH  %%%%%%%%%%%%")
-
-    # print(u'|\u25BC\u25BC\u25BC IN \u25BC\u25BC\u25BC|                                          |\u2588\u2588\u25B2   OUT  \u25B2\u2588\u2588|')
-    # print(u'|\u2588\u2588  '+colored(str(mainBox.sensArrayXXX[3].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[3].temperatureC, 30, 40)) + u'C \u2588|                                          |\u2588\u2588\u2588 '+colored(mainBox.sensArrayXXX[4].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 35, 40)) + u' C \u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\_________________________________________/\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|                                         |\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|        /\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"|-------\\\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|   \u25BA   (   @=#======================@====| '+colored(mainBox.sensArrayXXX[0].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[0].temperatureC, 40, 55)) + u'C  |\u2588\u2588\u2588\u2588\u2588|')
-    # print(u' \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|        \________________________________|_______/\u2588\u2588\u2588\u2588\u2588\u2588/ ')
-    # print(u'  \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|_________________________________________|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588/  ')
-
-
-
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|                                            |\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|                                            |\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|                                            |\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588 \u25BC\u25BC IN \u25BC\u25BC \u2588|                                            |\u2588 \u25B2\u25B2 OUT  \u25B2\u25B2 \u2588|')
-    # print(u'|\u2588 '+colored(str(mainBox.sensArrayXXX[3].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[3].temperatureC, 30, 40)) + u'C\u00ba\u25BC \u2588|                                            |\u2588\u2588\u2588 ' + colored(str(mainBox.sensArrayXXX[4].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 35, 40)) + u'C\u00ba \u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\\\u2553\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2556/\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551     ___________________________________\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551 \u25BA  /  \u2554\u2550\u263c\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u263c\u2550\u2550\u2551\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\\\u2588\u2588\u2588\u2588\u2588|')
-    # print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551 \u25BA (   \u255a\u2550'+ colored(u'\u2591\u2592\u2593\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2593\u2592\u2591','yellow')+u'\u2550\u2550\u2551 '+colored(mainBox.sensArrayXXX[0].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[0].temperatureC, 40, 55)) + u'C\u00ba\u25B2 |\u2588\u2588\u2588\u2588\u2588|')
-    # print(u' \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551 \u25BA  \___________________________________\u2551\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500/\u2588\u2588\u2588\u2588/ ')
-    # print(u'  \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551                                        \u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588/  ')
-    # print(u'               \u2559\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u255c')
-
-    # print(u'|\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC|                                            |\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2|')
-    # print(u'|\u25BC  IN AIR  \u25BC|                                            |\u25B2  OUT AIR  \u25B2|')
-    # print(u'|\u25BC '+colored(str(mainBox.sensArrayXXX[1].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[1].temperatureC, 30, 40)) + u'C\u00ba\u25B2 \u25BC|                                            |\u25B2           \u25B2|')
-    # print(u'|\u2588          \u2588|                                            |\u2588           \u2588|')
-    # print(u'|\u2588\u25BC   IN   \u25BC\u2588|                                            |\u2588\u25B2\u25B2  OUT  \u25B2\u25B2\u2588|')
-    # print(u'|\u2588 '+colored(str(mainBox.sensArrayXXX[3].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[3].temperatureC, 30, 40)) + u'C\u00ba\u25BC \u2588|                                            |\u2588 '+colored(str(mainBox.sensArrayXXX[4].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 30, 40)) + u'C\u00ba\u25B2  \u2588|')
-
-    print(u'|\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC|  \u2551 \u2551 \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557         |\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2|')
-    print(u'|\u25BC  IN AIR  \u25BC|  \u2551 \u2551 \u2551\u2588\u2588\u2588\u2588\u2588 THROTTLE 250W \u2588 ON  \u2588\u2551         |\u25B2  OUT AIR  \u25B2|')
-    print(u'|\u25BC '+colored(str(mainBox.sensArrayXXX[1].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[1].temperatureC, 40, 50)) + u'C\u00ba\u25B2 \u25BC|  \u2551 \u255a\u2550\u2551\u25baIN  \u2588\u2588   '+colored(str(mainBox.sensArrayXXX[2].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 30, 40)) + u'C\u00ba\u25B2  \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551         |\u25B2           \u25B2|')
-    print(u'|\u2588          \u2588|  \u2551   \u2551220V \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 OUT\u25ba\u2551\u2550\u2550\u2550\u2550\u2550\u2550\u2557  |\u2588           \u2588|')
+    print("##########################################################################")
+    print("########################     LAMP HEALTH    ##############################")
+    print("##########################################################################")
+    print("")
+    print(u'|\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC|   \u2551\u2551 \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557         |\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2|')
+    print(u'|\u25BC  IN AIR  \u25BC|   \u2551\u2551 \u2551\u2588\u2588\u2588\u2588\u2588 THROTTLE 250W \u2588 ON  \u2588\u2551         |\u25B2  OUT AIR  \u25B2|')
+    print(u'|\u25BC '+colored(str(mainBox.sensArrayXXX[1].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[1].temperatureC, 40, 50)) + u'C\u00ba\u25B2 \u25BC|   \u2551\u255a\u2550\u2551\u25baIN  \u2588\u2588   '+colored(str(mainBox.sensArrayXXX[2].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 30, 40)) + u'C\u00ba\u25B2  \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551         |\u25B2           \u25B2|')
+    print(u'|\u2588          \u2588|   \u2551  \u2551220V \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 OUT\u25ba\u2551\u2550\u2550\u2550\u2550\u2550\u2550\u2557  |\u2588           \u2588|')
     print(u'|\u2588\u25BC   IN   \u25BC\u2588|  \u255a\u2550\u2550\u2550\u2551\u25baIN  \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 OUT\u25ba\u2551\u2550\u2550\u2550\u2550\u2550\u2557\u255a\u2550\u25BA|\u2588\u25B2\u25B2  OUT  \u25B2\u25B2\u2588|')
     print(u'|\u2588 '+colored(str(mainBox.sensArrayXXX[3].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[3].temperatureC, 30, 40)) + u'C\u00ba\u25BC \u2588|      \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d     \u255a\u2550\u2550\u25Ba|\u2588 '+colored(str(mainBox.sensArrayXXX[4].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 30, 40)) + u'C\u00ba\u25B2  \u2588|')
 
@@ -876,10 +846,8 @@ def main():
     print(u' \\\u2588            \u2551 \u25BA  \___________________________________\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D  \u2588/ ')
     print(u'  \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551                                        \u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588/  ')
     print(u'               \u2559\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u255c')
-
-
-
-    print("###################################")
+    print("")
+    print("##########################################################################")
     # print (mainBox.sensArrayXXX[0].temperatureC)
     mainBox.updateOldSensors(60) ## update older 120 seconds
     time.sleep(5)
