@@ -453,7 +453,7 @@ class TemperatureSensor:
       timeColor = 'red'
 
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  " + colored(str(delta.seconds), timeColor))
-    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.prTemperatureC),prTermColor) + "C -> "  + colored(str(self.temperatureC),termColor) + "C "  +"  move:" + self.temperatureMove )
+    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.prTemperatureC),prTermColor) + "C -> "  + colored(str(self.temperatureC),termColor) + "C " + self.temperatureMove )
 
 class BoxClimate:
   name = "MainBox"
@@ -831,10 +831,10 @@ def main():
     print("###################################")
     print("%%%%%%%%  LAMP HEALTH  %%%%%%%%%%%%")
     print(u'|\u2588\u2588\u21BC\u21BC  IN  \u21BC\u21BC\u2588|                                           |\u2588\u2588\u21B2   OUT  \u21B2\u2588\u2588|')
-    print(u'|\u2588\u2588  "+colored(mainBox.sensArrayXXX[3].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[3].temperatureC, 30, 40)) +" C #|                                           |### "+colored(mainBox.sensArrayXXX[4].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 35, 40)) +" C ##|')
+    print(u'|\u2588\u2588  '+colored(mainBox.sensArrayXXX[3].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[3].temperatureC, 30, 40)) + u' C \u2588|                                           |\u2588\u2588\u2588 '+colored(mainBox.sensArrayXXX[4].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[4].temperatureC, 35, 40)) +' C \u2588\u2588|')
     print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\_________________________________________/###############|')
     print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|                                         |###############|')
-    print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|        /\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"|-------\#######|')
+    print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|        /\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"|-------\\\u2588\u2588\u2588\u2588\u2588\u2588\u2588|')
     print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|   \u25BA   (   @=#======================@====| '+colored(mainBox.sensArrayXXX[0].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[0].temperatureC, 40, 55)) +'C  |\u2588\u2588\u2588\u2588\u2588|')
     print(u' \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|        \________________________________|_______/#######/ ')
     print(u'  \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|_________________________________________|EEEEEEEEEEEEEE/  ')
