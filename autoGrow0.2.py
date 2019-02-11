@@ -549,10 +549,10 @@ class BoxClimate:
     self.lastReadState = datetime.now()
     time.sleep(5)
 
-  def getColor(self, value=1,  arg0=1, arg1=1):
+  def getColor(self, value=1,  arg0 = 1, arg1 = 1):
     if value<arg0:
       return "green"
-    elif value>arg0 and value<art1:
+    elif value>arg0 and value<arg1:
       return "yellow"
     elif value>arg1:
       return "red"
