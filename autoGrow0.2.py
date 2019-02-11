@@ -808,7 +808,7 @@ def main():
 
     mainBox.sensHome.printfc()
     mainBox.sensBox.printfc()
-    mainBox.getSensors()
+########    #mainBox.getSensors()
 
     # print mainBox.sensArrayXXX[0]
 
