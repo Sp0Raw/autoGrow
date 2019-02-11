@@ -371,7 +371,7 @@ class TemperatureSensor:
     # print ("***************************   R"+str(self.numSens))
     # print (self.lastJson)
 
-    try:
+    # try:
       self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
       data = json.loads(self.lastJson)
       self.prTemperatureC=self.temperatureC
@@ -394,9 +394,9 @@ class TemperatureSensor:
       self.prLastUpdate = self.lastUpdate
       self.lastUpdate = datetime.now()
 
-    except:
-      print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
-      print("I get it :"+self.lastJson)
+    # except:
+    #   print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
+    #   print("I get it :"+self.lastJson)
 
   def updateOld(self, seconds = 60):
     delta = datetime.now() - self.lastUpdate
