@@ -201,20 +201,20 @@ class SensorAM2320:
   def setValue(self, arg0, arg1):
     # print("setValue   arg0:"+str(arg0)+" prTemperature:"+str(self.prTemperature)+"           arg1:"+str(arg1)+"    prHumidity:"+str(self.prHumidity))
     if arg0 > self.prTemperature:
-      self.temperatureMove=  "UP     "
+      self.temperatureMove=  "\u25b2 "
     elif arg0 < self.prTemperature:
-      self.temperatureMove = "DOWN   "
+      self.temperatureMove = "\u25bc "
     elif arg0 == self.prTemperature:
-      self.temperatureMove = "STABIL "
+      self.temperatureMove = "\u25ac "
 
     # print(self.temperatureMove)
 
     if arg1 > self.prHumidity:
-      self.humidityMove=  "UP     "
+      self.humidityMove=  "\u25b2 "
     elif arg1 < self.prHumidity:
-      self.humidityMove = "DOWN   "
+      self.humidityMove = "\u25bc "
     elif arg1 == self.prHumidity:
-      self.humidityMove = "STABIL "
+      self.humidityMove = "\u25ac "
 
     # print(self.humidityMove)
 
@@ -238,8 +238,8 @@ class SensorAM2320:
 
   def printf(self): 
     delta = datetime.now() - self.lastUpdate 
-    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(self.delta) + "  move:"+ self.temperatureMove)
-    print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ "C   Humidity: " + str(self.humidity)+ "%")
+    print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(self.delta) )
+    print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ "C" + self.temperatureMove +"  Humidity: " + str(self.humidity)+ "%"  + self.humidityMove)
 
   def printfc(self):
     termColor = 'white'
