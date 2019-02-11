@@ -380,7 +380,7 @@ class TemperatureSensor:
       self.temperatureF = data["sensors"][0]["temperatuteF"]
 
       if self.temperatureC > self.prTemperatureC:
-        self.temperatureMove=  "UP     "
+        self.temperatureMove=  "▲     "
       elif self.temperatureC < self.prTemperatureC:
         self.temperatureMove = "DOWN   "
       elif self.temperatureC == self.prTemperatureC:
