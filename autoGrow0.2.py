@@ -855,7 +855,7 @@ def main():
     # print(u'  \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551                                        \u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588/  ')
     # print(u'               \u2559\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u255c')
 
-
+    print(u'|\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC\u25BC|                                            |\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2\u25B2|')
     print(u'|\u25BC  IN AIR  \u25BC|                                            |\u25B2  OUT AIR  \u25B2|')
     print(u'|\u25BC '+colored(str(mainBox.sensArrayXXX[1].temperatureC),color=mainBox.getColor(mainBox.sensArrayXXX[1].temperatureC, 30, 40)) + u'C\u00ba\u25B2 \u25BC|                                            |\u25B2           \u25B2|')
     print(u'|\u2588          \u2588|                                            |\u2588           \u2588|')
