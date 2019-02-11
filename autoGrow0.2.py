@@ -438,34 +438,9 @@ class TemperatureSensor:
   def printfc(self,colorWarning=35,colorAlarm=40):
     termColor = 'white'
     termColor = self.getColor(self.temperatureC,colorWarning,colorAlarm)
-    # if self.temperatureC <= colorWarning:
-    #   termColor = 'green'
-    # elif self.temperatureC > colorWarning and self.temperatureC <= colorAlarm:
-    #   termColor = 'yellow'
-    # elif self.temperatureC > colorAlarm:
-    #   termColor = 'red'
-    # else:
-    #   termColor = 'red'
-
-    #  remove in other proc
-    # def getColor(self, value=1, arg0=1, arg1=1):
-    #   if value < arg0:
-    #     return "green"
-    #   elif value > arg0 and value < art1:
-    #     return "yellow"
-    #   elif value > arg1:
-    #     return "red"
 
     prTermColor = 'white'
     prTermColor = self.getColor(self.prTemperatureC, colorWarning, colorAlarm)
-    # if self.prTemperatureC <= colorWarning:
-    #   prTermColor = 'green'
-    # elif self.prTemperatureC > colorWarning and self.prTemperatureC <= colorAlarm:
-    #   prTermColor = 'yellow'
-    # elif self.prTemperatureC > colorAlarm :
-    #   prTermColor = 'red'
-    # else:
-    #   prTermColor = 'red'
 
     delta = datetime.now() - self.lastUpdate
     if delta.seconds < 60:
