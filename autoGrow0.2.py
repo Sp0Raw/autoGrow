@@ -205,7 +205,7 @@ class SensorAM2320:
     elif arg0 < self.prTemperature:
       self.temperatureMove = u'\u25bc'
     elif arg0 == self.prTemperature:
-      self.temperatureMove = u'\u25ac'
+      self.temperatureMove = u'\u25CF'
 
     # print(self.temperatureMove)
 
@@ -214,7 +214,7 @@ class SensorAM2320:
     elif arg1 < self.prHumidity:
       self.humidityMove = u'\u25bc'
     elif arg1 == self.prHumidity:
-      self.humidityMove = u'\u25ac'
+      self.humidityMove = u'\u25CF'
 
     # print(self.humidityMove)
 
@@ -384,7 +384,7 @@ class TemperatureSensor:
       elif self.temperatureC < self.prTemperatureC:
         self.temperatureMove = u'\u25bc   '
       elif self.temperatureC == self.prTemperatureC:
-        self.temperatureMove = u'\u25ac   '
+        self.temperatureMove = u'\u25CF   '
 
       #print("======================================")
       #print(data["sensors"][0])
@@ -835,7 +835,7 @@ def main():
     print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\_________________________________________/###############|')
     print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|                                         |###############|')
     print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|        /\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"|-------\#######|')
-    print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|  =>   (   @=#======================@====| '+colored(mainBox.sensArrayXXX[0].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[0].temperatureC, 40, 55)) +'C |######|')
+    print(u'|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|   \u25BA   (   @=#======================@====| '+colored(mainBox.sensArrayXXX[0].temperatureC,color=mainBox.getColor(mainBox.sensArrayXXX[0].temperatureC, 40, 55)) +'C  |\u2588\u2588\u2588\u2588\u2588|')
     print(u' \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|        \________________________________|_______/#######/ ')
     print(u'  \\\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588|_________________________________________|EEEEEEEEEEEEEE/  ')
 
