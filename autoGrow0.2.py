@@ -430,7 +430,7 @@ class TemperatureSensor:
 
   def printValue(self):
     print (self.temperatureC)
-    # return (self.temperature, self.humidity)
+    #return (self.temperature, self.humidity)
 
   def printf(self):
     delta = datetime.now() - self.lastUpdate
