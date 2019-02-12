@@ -415,6 +415,7 @@ class TemperatureSensor:
   def getValueF(self):
     return (self.temperatureF , self.prTemperatureF)
 
+  ### return formated temperature
   def getValueFF(self):
     val = u''
     if self.temperatureC>self.prTemperatureC:
