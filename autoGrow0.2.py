@@ -239,7 +239,7 @@ class SensorAM2320:
   def printf(self): 
     delta = datetime.now() - self.lastUpdate 
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(self.delta) )
-    print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ u'C\u00B0'' + self.temperatureMove +"  Humidity: " + str(self.humidity)+ "%"  + self.humidityMove)
+    print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ u'C\u00B0' + self.temperatureMove +"  Humidity: " + str(self.humidity)+ "%"  + self.humidityMove)
 
   def printfc(self):
     termColor = 'white'
