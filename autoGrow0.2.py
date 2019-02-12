@@ -416,14 +416,14 @@ class TemperatureSensor:
     return (self.temperatureF , self.prTemperatureF)
 
   def getValueFF(self):
-    val = ''
+    val = u''
     if self.temperatureC>self.prTemperatureC:
         moviVal = u'\u25B2'
     elif self.temperatureC<self.prTemperatureC:
         moviVal = u'\u25BC'
     elif self.temperatureC==self.prTemperatureC:
         moviVal = u'\u25CF'
-    val = str(self.temperatureC)+'C'+u'/u25E6'+moviVal
+    val = str(self.temperatureC)+'C'+moviVal
     return val.ljust(5)
 
 
