@@ -424,7 +424,7 @@ class TemperatureSensor:
         moviVal = u'\u25BC'
     elif self.temperatureC==self.prTemperatureC:
         moviVal = u'\u25CF'
-    val = str(self.temperatureC)+u'C\u25e6'+moviVal
+    val = str(self.temperatureC)+u'C\u00B0'+moviVal
     return val.ljust(5)
 
 
