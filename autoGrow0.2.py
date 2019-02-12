@@ -239,7 +239,7 @@ class SensorAM2320:
   def printf(self): 
     delta = datetime.now() - self.lastUpdate 
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ str(self.delta) )
-    print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ "C" + self.temperatureMove +"  Humidity: " + str(self.humidity)+ "%"  + self.humidityMove)
+    print ("Sensor name: " + self.name + "   Temperature: " + str(self.temperature)+ u'C\u00B0'' + self.temperatureMove +"  Humidity: " + str(self.humidity)+ "%"  + self.humidityMove)
 
   def printfc(self):
     termColor = 'white'
@@ -278,7 +278,7 @@ class SensorAM2320:
 
 
     print ("Sensor name: " + self.name + "   Last Update:" + str(self.lastUpdate) + "  At seconds:  "+ colored(str(delta.seconds),timeColor))
-    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.temperature),termColor)+ "C "+ self.temperatureMove+"  Humidity: " + colored(str(self.humidity),humColor)+ "%" + self.humidityMove)
+    print ("Sensor name: " + self.name + "   Temperature: " + colored(str(self.temperature)+ u'C\u00b0'+ self.temperatureMove,termColor)+ "  Humidity: " + colored(str(self.humidity)+ "%" + self.humidityMove,humColor))
     
 ##    print("Time update temperature & humidity: " + str(self.sensHome.lastUpdate) )
 ##    print (colored("HOME TEMPERATURE :" ,'white')+ colored(str(self.sensHome.temperature)+'C ', termColor) +  colored("HOME HUMIDITY :", 'white') + colored(str(self.sensHome.humidity)+'%', humColor))
