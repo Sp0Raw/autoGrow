@@ -61,6 +61,42 @@ GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 now = datetime.now()
 
+
+
+class Relay:
+  relNumber = 0
+  relName = "relay k1.1"
+  currentStage = 0
+  lastChange = datetime.now()
+  lastUpdateSec = -1
+
+  def __init__(self, relNumber=0, relName="relName", currentStage=0):
+    self.relNumber = relNumber
+    print("install relay " + str(self.relNumber))
+    self.relName = relName
+    self.lastChange = datetime.now()
+    self.lastUpdateSec =  datetime.now() - self.lastUpdate
+
+  def setStage (self, stage =0):
+    self.currentStage=stage
+    self.lastChange = datetime.now()
+
+  def getStage (self):
+    return self.currentStage
+
+  def getInfo(self):
+    delta = datetime.now() - self.lastChange
+    self.lastUpdateSec = delta.seconds
+
+    print ("Relay Name:"+self.relName+"    Relay Number:" + self.relNumber + "   Last Change:"+self.lastChange)
+
+  def __repr__(self):
+    delta = datetime.now() - self.lastUpdate
+    return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={}), lastUpdate={}, lastSecondAgo={}>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres,self.lastUpdate, str(delta.seconds))
+
+
+
+
 ########################
 ## FOR AM2320
 class AM2320:
@@ -373,7 +409,15 @@ class TemperatureSensor:
 
     try:
       self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
+    except:
+      print("Error on access to COM port")
+
+    try:
       data = json.loads(self.lastJson)
+    except:
+      print("Error on JSON parse")
+
+    try:
       self.prTemperatureC=self.temperatureC
       self.prTemperatureF=self.temperatureF
       self.temperatureC = data["sensors"][0]["temperatuteC"]
@@ -395,7 +439,7 @@ class TemperatureSensor:
       self.lastUpdate = datetime.now()
 
     except:
-      print(" if This Error - its critical. Can't found first sensor [NEED remove this excep on hard on vervion 1.1]")
+      print(" other ERROR")
       print("I get it :"+self.lastJson)
 
   def updateOld(self, seconds = 60):
