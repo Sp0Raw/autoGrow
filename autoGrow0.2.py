@@ -31,7 +31,7 @@ import configparser
 
 config = configparser.ConfigParser()
 config.sections()
-config.read('example.cfg')
+config.read('autoGrow1.1.cfg')
 
 ## GPIO INIT
 GPIO.setwarnings(False)
