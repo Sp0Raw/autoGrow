@@ -68,7 +68,7 @@ GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 now = datetime.now()
 
 def num2small(number = 12):
-  def decoder(num = 0):
+  def decode(num = 0):
     if num == 0:
       return u'\u00ba'
     elif num == 1:
