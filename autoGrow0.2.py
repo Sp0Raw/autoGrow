@@ -230,7 +230,7 @@ class ComPort:
 
   def __repr__(self):
     delta = datetime.now() - self.lastUpdate
-    jsonVal = self.read("")
+    jsonVal = self.read("V")
     return '<Comport connection (COM Port number={}, Last update COM Port ={}, lastSecondAgo={},testEcho={} >'.format(self.numComPort, self.lastUpdate, str(delta.seconds), jsonVal)
 
 
