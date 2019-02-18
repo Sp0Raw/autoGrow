@@ -160,7 +160,7 @@ class Relay:
     print ("Relay Name:"+self.relName+"    Relay Number:" + self.relNumber + "   Last Change:"+self.lastChange)
 
   def __repr__(self):
-    delta = datetime.now() - self.lastUpdate
+    delta = datetime.now() - self.lastChange
     return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={}), lastUpdate={}, lastSecondAgo={}>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres,self.lastUpdate, str(delta.seconds))
 
 class RelayBoard:
