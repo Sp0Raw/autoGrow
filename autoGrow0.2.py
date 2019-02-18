@@ -169,7 +169,7 @@ class RelayBoard:
 
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
     self.cntRelay = config['MAIN_SETINGS']['countRelay']
-    for x in range(0, int(self.cntRelay)):
+    for x in range(1, int(self.cntRelay)):
       # Read config
 
       obj = Relay(relNumber=int(x),
