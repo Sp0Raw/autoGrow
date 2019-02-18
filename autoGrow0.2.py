@@ -921,7 +921,7 @@ def main():
   print ("==========    Init Sensosrs    ===============")
   mainBox.initSensors()
   ## Creatr com port object
-  myComPort = ComPort()
+
 
 
   while True:
@@ -981,6 +981,7 @@ def main():
     time.sleep(5)
 
 
+myComPort = ComPort()
 
 if __name__ == '__main__':
   cls()
