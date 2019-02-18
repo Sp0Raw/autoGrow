@@ -61,6 +61,62 @@ GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 now = datetime.now()
 
+
+class ComPort:
+  numComPort  = 0
+  lastUpdate = datetime.now()
+
+  def __init__(self, arg0=0, arg1=datetime.now()):
+    self.numComPort=arg0
+    self.lastUpdate = arg1
+    self.__repr__()
+
+  def read(self, command="H"):
+    lnumPort = self.numComPort
+    s_port = '/dev/ttyACM' + str(lnumPort)
+    ##print(s_port)
+    ser = serial.Serial(
+      port=s_port,
+      baudrate=9600,
+      timeout=10,
+      parity=serial.PARITY_NONE,
+      stopbits=serial.STOPBITS_ONE,
+      bytesize=serial.EIGHTBITS
+    )
+    try:
+      if ser.isOpen() == True:
+        ser.close()
+        ser.open()
+
+      if ser.isOpen():
+        ser.write('?\r\n')
+        time.sleep(2)
+        out = ''
+        while ser.inWaiting() > 0:
+          out += ser.read(1)
+
+        ser.write(command + '\r\n')
+        time.sleep(3)
+        out = ''
+        while ser.inWaiting() > 0:
+          out += ser.read(1)
+      if ser.isOpen() == True:
+        ser.close()
+      return out
+    except:
+      print ("Error on object comPort   OLD Com = "+ str(self.numComPort) )
+      self.numComPort  = self.numComPort + 1
+      if self.numComPort>3:
+        self.numComPort = 0
+      self.lastUpdate = datetime.now()
+      print ("Error on object comPort   NEW Com = " + str(self.numComPort) )
+      return "{\"Error\":\"Com-port Error\"}"
+
+  def __repr__(self):
+    delta = datetime.now() - self.lastUpdate
+    jsonVal = self.read("V")
+    return '<Comport connection (COM Port number={}, Last update COM Port ={}, lastSecondAgo={},testEcho={} >'.format(self.numComPort, self.lastUpdate, str(delta.seconds), jsonVal)
+
 myComPort = ComPort()
 
 class Relay:
@@ -178,60 +234,7 @@ class AM2320:
     return (temp, humi)  
 
 
-class ComPort:
-  numComPort  = 0
-  lastUpdate = datetime.now()
 
-  def __init__(self, arg0=0, arg1=datetime.now()):
-    self.numComPort=arg0
-    self.lastUpdate = arg1
-    self.__repr__()
-
-  def read(self, command="H"):
-    lnumPort = self.numComPort
-    s_port = '/dev/ttyACM' + str(lnumPort)
-    ##print(s_port)
-    ser = serial.Serial(
-      port=s_port,
-      baudrate=9600,
-      timeout=10,
-      parity=serial.PARITY_NONE,
-      stopbits=serial.STOPBITS_ONE,
-      bytesize=serial.EIGHTBITS
-    )
-    try:
-      if ser.isOpen() == True:
-        ser.close()
-        ser.open()
-
-      if ser.isOpen():
-        ser.write('?\r\n')
-        time.sleep(2)
-        out = ''
-        while ser.inWaiting() > 0:
-          out += ser.read(1)
-
-        ser.write(command + '\r\n')
-        time.sleep(3)
-        out = ''
-        while ser.inWaiting() > 0:
-          out += ser.read(1)
-      if ser.isOpen() == True:
-        ser.close()
-      return out
-    except:
-      print ("Error on object comPort   OLD Com = "+ str(self.numComPort) )
-      self.numComPort  = self.numComPort + 1
-      if self.numComPort>3:
-        self.numComPort = 0
-      self.lastUpdate = datetime.now()
-      print ("Error on object comPort   NEW Com = " + str(self.numComPort) )
-      return "{\"Error\":\"Com-port Error\"}"
-
-  def __repr__(self):
-    delta = datetime.now() - self.lastUpdate
-    jsonVal = self.read("V")
-    return '<Comport connection (COM Port number={}, Last update COM Port ={}, lastSecondAgo={},testEcho={} >'.format(self.numComPort, self.lastUpdate, str(delta.seconds), jsonVal)
 
 
 ########################################################################################################################
