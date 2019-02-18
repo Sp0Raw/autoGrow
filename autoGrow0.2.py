@@ -182,7 +182,7 @@ class RelayBoard:
       self.realayArray.append(obj)
 
   def printRelay(self):
-    for x in range(0, self.cntRelay):
+    for x in range(1, self.cntRelay):
       print self.realayArray[x]
 
 
