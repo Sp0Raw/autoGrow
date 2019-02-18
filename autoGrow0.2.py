@@ -169,20 +169,20 @@ class RelayBoard:
 
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
     self.cntRelay = config['MAIN_SETINGS']['countRelay']
-    for x in range(1, int(self.cntRelay)):
+    for x in range(0, int(self.cntRelay)-1):
       # Read config
 
-      obj = Relay(relNumber=int(x),
-                  relName=config['relay_'+str(x)]['name'],
-                  invert=config['relay_'+str(x)]['invert'],
-                  currentStage=config['relay_'+str(x)]['DefaultState'],
-                  pin=config['relay_'+str(x)]['pin'],
-                  comment= config['relay_'+str(x)]['comment'],
+      obj = Relay(relNumber=int(x+1),
+                  relName=config['relay_'+str(x+1)]['name'],
+                  invert=config['relay_'+str(x+1)]['invert'],
+                  currentStage=config['relay_'+str(x+1)]['DefaultState'],
+                  pin=config['relay_'+str(x+1)]['pin'],
+                  comment= config['relay_'+str(x+1)]['comment'],
                   )
       self.realayArray.append(obj)
 
   def printRelay(self):
-    for x in range(1, int(self.cntRelay)):
+    for x in range(0, int(self.cntRelay)-1):
       print (self.realayArray[x])
 
 
