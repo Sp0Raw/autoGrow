@@ -161,15 +161,15 @@ class Relay:
 
   def __repr__(self):
     delta = datetime.now() - self.lastChange
-    return '<Relay Info (Number={}, Name={}, currentStage ={}, lastChange={}), pin={}, lastSecondAgo={}>'.format(self.relNumber, self.relName, self.currentStage, self.lastChange,self.pin, str(delta.seconds))
+    return '<Relay Info (Number={}, Name={}, currentStage ={}, lastChange={}, pin={}, lastSecondAgo={})>'.format(self.relNumber, self.relName, self.currentStage, self.lastChange,self.pin, str(delta.seconds))
 
 class RelayBoard:
   realayArray = []
   cntRelay = 0
 
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
-    self.cntRelay = config['MAIN_SETINGS']['countRelay']
-    for x in range(0, int(self.cntRelay)):
+    self.cntRelay = int(config['MAIN_SETINGS']['countRelay'])
+    for x in range(0, self.cntRelay):
       # Read config
 
       obj = Relay(relNumber=int(x+1),
@@ -182,7 +182,7 @@ class RelayBoard:
       self.realayArray.append(obj)
 
   def printRelay(self):
-    for x in range(0, int(self.cntRelay)-1):
+    for x in range(0, self.cntRelay):
       print (self.realayArray[x])
 
 
