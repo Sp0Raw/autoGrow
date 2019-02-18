@@ -123,7 +123,7 @@ class ComPort:
     jsonVal = self.read("V")
     return '<Comport connection (COM Port number={}, Last update COM Port ={}, lastSecondAgo={},testEcho={} >'.format(self.numComPort, self.lastUpdate, str(delta.seconds), jsonVal)
 
-#myComPort = ComPort()
+myComPort = ComPort()
 
 class Relay:
   relNumber = 0
@@ -843,7 +843,7 @@ def cls():
 
 def main():
   print ("==========    START MAIN    ===============")
-  myComPort = ComPort()
+  print(myComPort)
   fontdata1 = [
     [0b00000,
      0b00111,
