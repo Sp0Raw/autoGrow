@@ -140,7 +140,7 @@ class Relay:
     print("install relay " + str(self.relNumber))
     self.relName = relName
     self.lastChange = datetime.now()
-    self.lastUpdateSec =  datetime.now() - self.lastUpdate
+    self.lastUpdateSec =  datetime.now() - self.lastChange
     self.currentStage = currentStage
     self.pin =  pin
     self.invert = invert
