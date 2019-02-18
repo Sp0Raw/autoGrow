@@ -131,13 +131,20 @@ class Relay:
   currentStage = 0
   lastChange = datetime.now()
   lastUpdateSec = -1
+  pin = 0
+  invert = 0
+  comment = ""
 
-  def __init__(self, relNumber=0, relName="relName", currentStage=0):
+  def __init__(self, relNumber=0, relName="relName", currentStage=0, pin =0, invert = 0, comment ="" ):
     self.relNumber = relNumber
     print("install relay " + str(self.relNumber))
     self.relName = relName
     self.lastChange = datetime.now()
     self.lastUpdateSec =  datetime.now() - self.lastUpdate
+    self.currentStage = currentStage
+    self.pin =  pin
+    self.invert = invert
+    self.comment = comment
 
   def setStage (self, stage =0):
     self.currentStage=stage
@@ -155,6 +162,30 @@ class Relay:
   def __repr__(self):
     delta = datetime.now() - self.lastUpdate
     return '<TemperatureSensor (temperatureC={}, prTemperatureC={}, name ={}, sensor_addres={}), lastUpdate={}, lastSecondAgo={}>'.format(self.temperatureC, self.prTemperatureC, self.name, self.sensor_addres,self.lastUpdate, str(delta.seconds))
+
+class RelayBoard:
+  realayArray = []
+  cntRelay = 0
+
+  def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
+    self.cntRelay = config['MAIN_SETINGS']['countRelay']
+    for x in range(0, self.cntRelay):
+      # Read config
+
+      obj = Relay(relNumber=int(x),
+                  relName=config['relay_'+str(x)]['name'],
+                  invert=config['relay_'+str(x)]['invert'],
+                  currentStage=config['relay_'+str(x)]['DefaultState'],
+                  pin=config['relay_'+str(x)]['pin'],
+                  comment= config['relay_'+str(x)]['comment'],
+                  )
+      self.realayArray.append(obj)
+
+  def printRelay(self):
+    for x in range(0, self.cntRelay):
+      print self.realayArray[x]
+
+
 
 
 
@@ -930,6 +961,8 @@ def main():
   print ("==========    Init Sensosrs    ===============")
   mainBox.initSensors()
   ## Creatr com port object
+  relayMod = RelayBoard()
+
 
 
 
@@ -986,6 +1019,7 @@ def main():
     print("")
     print("##########################################################################")
     # print (mainBox.sensArrayXXX[0].temperatureC)
+    relayMod.printRelay()
     mainBox.updateOldSensors(60) ## update older 120 seconds
     time.sleep(5)
 
