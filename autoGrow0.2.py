@@ -69,6 +69,7 @@ now = datetime.now()
 
 def num2small(number = 12):
   def decode(num = 0):
+    print
     if num == 0:
       return u'\u00ba'
     elif num == 1:
@@ -95,9 +96,9 @@ def num2small(number = 12):
   if number>=99:
     return u'\u2079\u2079'
   elif number>=10 and number<99:
-    return decode(str(number)[0])+decode(str(number)[1])
+    return decode(int(str(number)[0]))+decode(int(str(number)[1]))
   elif number < 10 :
-    return decode(str(number)[0])
+    return decode(int(str(number)[0]))
 
 class ComPort:
   numComPort  = 0
