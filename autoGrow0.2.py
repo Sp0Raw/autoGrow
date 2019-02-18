@@ -910,6 +910,7 @@ def main():
   mainBox.initSensors()
   print ("==========    Init COM-Port    ===============")
   myComPort = ComPort()
+  time.sleep(5)
 
 
   while True:
