@@ -596,6 +596,12 @@ class BoxClimate:
                    0: "FAILURE ERROR is not avalible lamp status",
                    1: "LAMP IS ON"}
 
+  ##print ("==========    Init COM-Port    ===============")
+
+  myComPort = ComPort()
+  print(myComPort)
+  ##time.sleep(5)
+
   def updateSensors(self):
     if self.countSensor == 0:
       self.setCountSensors()
@@ -626,7 +632,8 @@ class BoxClimate:
 
   def setCountSensors(self, comPort = 0):
     try:
-      self.sensArray = openComPort(comPort, command="R")
+      # self.sensArray = openComPort(comPort, command="R")
+      self.sensArray = myComPort.read("R")
       data = json.loads(self.sensArray)
       self.countSensor = data["sens_count"]
       ##return self.countSensor
@@ -908,10 +915,7 @@ def main():
   mainBox = BoxClimate("mainBox")
   print ("==========    Init Sensosrs    ===============")
   mainBox.initSensors()
-  print ("==========    Init COM-Port    ===============")
-  myComPort = ComPort()
-  print(myComPort)
-  time.sleep(5)
+
 
 
   while True:
