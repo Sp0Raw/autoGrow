@@ -26,6 +26,12 @@ import serial
 ## For Json
 import json
 
+## for config file parsing
+import configparser
+
+config = configparser.ConfigParser()
+config.sections()
+config.read('example.cfg')
 
 ## GPIO INIT
 GPIO.setwarnings(False)
