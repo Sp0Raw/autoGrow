@@ -61,7 +61,7 @@ GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 now = datetime.now()
 
-
+myComPort = ComPort()
 
 class Relay:
   relNumber = 0
@@ -981,7 +981,7 @@ def main():
     time.sleep(5)
 
 
-myComPort = ComPort()
+
 
 if __name__ == '__main__':
   cls()
