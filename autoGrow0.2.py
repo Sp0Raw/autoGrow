@@ -510,7 +510,7 @@ class TemperatureSensor:
     # try:
       ##self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
     self.lastJson =myComPort.read("R" + str(self.numSens))
-    print("Request =\""+ "R" + str(self.numSens)+"\"    JSon = \""+ self.lastJson + "\"")
+    print("Answer =\""+ "R" + str(self.numSens)+"\" [ REQ JSon = \""+ self.lastJson + "\"]")
     # except:
     #   print("Error on access to COM port")
     #   print("COM port: ")
@@ -962,9 +962,7 @@ def main():
   mainBox.initSensors()
   ## Creatr com port object
   relayMod = RelayBoard()
-
-
-
+  relayMod.printRelay()
 
   while True:
     #cls()
@@ -1019,7 +1017,6 @@ def main():
     print("")
     print("##########################################################################")
     # print (mainBox.sensArrayXXX[0].temperatureC)
-    relayMod.printRelay()
     mainBox.updateOldSensors(60) ## update older 120 seconds
     time.sleep(5)
 
