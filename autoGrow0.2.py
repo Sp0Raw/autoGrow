@@ -406,6 +406,7 @@ class HomeAM2320(SensorAM2320):
 
 class BoxAM2320(SensorAM2320):
   boxSensValue = "{}"
+
   def readValue(self):
     try:
       self.boxSensValue = openComPort(0, command="G")
@@ -437,6 +438,8 @@ class TemperatureSensor:
   numSens = 0
   temperatureMove ="none"
 
+  # myComPort = ComPort()
+
   def __init__(self, numSens=0, sensor_addres="00:00:00:00:00:00:00:00", temperatureC = -77, temperatureF = -77):
     self.numSens = numSens
     print("install sensor " + str(self.numSens))
@@ -464,41 +467,43 @@ class TemperatureSensor:
     # print ("***************************   R"+str(self.numSens))
     # print (self.lastJson)
 
-    try:
-      self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
-    except:
-      print("Error on access to COM port")
-      print("COM port: ")
+    # try:
+      ##self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
+    self.lastJson =myComPort.read("R" + str(self.numSens))
+    # except:
+    #   print("Error on access to COM port")
+    #   print("COM port: ")
 
     try:
       data = json.loads(self.lastJson)
     except:
       print("Error on JSON parse")
 
-    try:
-      self.prTemperatureC=self.temperatureC
-      self.prTemperatureF=self.temperatureF
-      self.temperatureC = data["sensors"][0]["temperatuteC"]
-      self.temperatureF = data["sensors"][0]["temperatuteF"]
-
-      if self.temperatureC > self.prTemperatureC:
-        self.temperatureMove=  u'\u25b2     '
-      elif self.temperatureC < self.prTemperatureC:
-        self.temperatureMove = u'\u25bc   '
-      elif self.temperatureC == self.prTemperatureC:
-        self.temperatureMove = u'\u25CF   '
-
-      #print("======================================")
-      #print(data["sensors"][0])
-
-      self.sensor_addres = data["sensors"][0]["sensor_addres"]
-      #self.name = name
-      self.prLastUpdate = self.lastUpdate
-      self.lastUpdate = datetime.now()
-
-    except:
-      print(" other ERROR")
-      print("I get it :"+self.lastJson)
+    # hueta kakaeto, kak ono tut okazalos???
+    # try:
+    #   self.prTemperatureC=self.temperatureC
+    #   self.prTemperatureF=self.temperatureF
+    #   self.temperatureC = data["sensors"][0]["temperatuteC"]
+    #   self.temperatureF = data["sensors"][0]["temperatuteF"]
+    #
+    #   if self.temperatureC > self.prTemperatureC:
+    #     self.temperatureMove=  u'\u25b2     '
+    #   elif self.temperatureC < self.prTemperatureC:
+    #     self.temperatureMove = u'\u25bc   '
+    #   elif self.temperatureC == self.prTemperatureC:
+    #     self.temperatureMove = u'\u25CF   '
+    #
+    #   #print("======================================")
+    #   #print(data["sensors"][0])
+    #
+    #   self.sensor_addres = data["sensors"][0]["sensor_addres"]
+    #   #self.name = name
+    #   self.prLastUpdate = self.lastUpdate
+    #   self.lastUpdate = datetime.now()
+    #
+    # except:
+    #   print(" other ERROR")
+    #   print("I get it :"+self.lastJson)
 
   def updateOld(self, seconds = 60):
     delta = datetime.now() - self.lastUpdate
@@ -598,7 +603,7 @@ class BoxClimate:
 
   ##print ("==========    Init COM-Port    ===============")
 
-  myComPort = ComPort()
+  #myComPort = ComPort()
   print(myComPort)
   ##time.sleep(5)
 
@@ -633,7 +638,7 @@ class BoxClimate:
   def setCountSensors(self, comPort = 0):
     try:
       # self.sensArray = openComPort(comPort, command="R")
-      self.sensArray = self.myComPort.read("R")
+      self.sensArray = myComPort.read("R")
       data = json.loads(self.sensArray)
       self.countSensor = data["sens_count"]
       ##return self.countSensor
@@ -915,7 +920,8 @@ def main():
   mainBox = BoxClimate("mainBox")
   print ("==========    Init Sensosrs    ===============")
   mainBox.initSensors()
-
+  ## Creatr com port object
+  myComPort = ComPort()
 
 
   while True:
