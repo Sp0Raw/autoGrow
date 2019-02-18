@@ -633,7 +633,7 @@ class BoxClimate:
   def setCountSensors(self, comPort = 0):
     try:
       # self.sensArray = openComPort(comPort, command="R")
-      self.sensArray = myComPort.read("R")
+      self.sensArray = self.myComPort.read("R")
       data = json.loads(self.sensArray)
       self.countSensor = data["sens_count"]
       ##return self.countSensor
