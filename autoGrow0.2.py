@@ -473,6 +473,7 @@ class TemperatureSensor:
     # try:
       ##self.lastJson = openComPort(comPort, command="R" + str(self.numSens))
     self.lastJson =myComPort.read("R" + str(self.numSens))
+    print("Request =\""+ "R" + str(self.numSens)+"\"    JSon = \""+ self.lastJson + "\"")
     # except:
     #   print("Error on access to COM port")
     #   print("COM port: ")
