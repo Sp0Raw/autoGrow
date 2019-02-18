@@ -67,6 +67,37 @@ GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 now = datetime.now()
 
+def num2small(number = 12):
+  def decoder(num = 0):
+    if num == 0:
+      return u'\u00ba'
+    elif num == 1:
+      return u'\u00b9'
+    elif num == 2:
+      return u'\u00b2'
+    elif num == 3:
+      return u'\u00b3'
+    elif num == 4:
+      return u'\u2074'
+    elif num == 5:
+      return u'\u2075'
+    elif num == 6:
+      return u'\u2076'
+    elif num == 7:
+      return u'\u2077'
+    elif num == 8:
+      return u'\u2078'
+    elif num == 9:
+      return u'\u2079'
+    else:
+      return u'\u2093'
+
+  if number>=99:
+    return u'\u2079\u2079'
+  elif number>=10 and number<99:
+    return decode(str(number)[0])+decode(str(number)[1])
+  elif number < 10 :
+    return decode(str(number)[0])
 
 class ComPort:
   numComPort  = 0
@@ -564,6 +595,7 @@ class TemperatureSensor:
 
   ### return formated temperature
   def getValueFF(self):
+    delta = datetime.now() - self.lastUpdate
     val = u''
     if self.temperatureC>self.prTemperatureC:
         moviVal = u'\u25B2'
@@ -571,8 +603,8 @@ class TemperatureSensor:
         moviVal = u'\u25BC'
     elif self.temperatureC==self.prTemperatureC:
         moviVal = u'\u25CF'
-    val = str(self.temperatureC)+u'C\u00B0'+moviVal
-    return val.ljust(8)
+    val = str(self.temperatureC)+u'C\u00B0'+moviVal+num2small(delta)
+    return val.ljust(9)
 
 
   def printValue(self):
