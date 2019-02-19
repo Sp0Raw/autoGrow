@@ -321,8 +321,8 @@ def openComPort(numPort, command="H"):
               bytesize=serial.EIGHTBITS
           )
   try:
-    if ser.isOpen()== True :
-       ser.close()
+    if ser.isOpen()!= True :
+       #ser.close()
        ser.open()
       
     if ser.isOpen():
@@ -337,8 +337,8 @@ def openComPort(numPort, command="H"):
       out = ''
       while ser.inWaiting() > 0:
         out += ser.read(1)            
-    if ser.isOpen()== True :
-       ser.close()
+#    if ser.isOpen()== True :
+#       ser.close()
     return out 
   except:
     return "{\"Error\":\"Com-port Error\"}"
