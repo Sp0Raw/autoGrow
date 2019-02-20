@@ -102,44 +102,46 @@ def num2small(number = 12):
 class ComPort:
   numComPort  = 0
   lastUpdate = datetime.now()
+  lnumPort = numComPort
+  s_port = '/dev/ttyACM' + str(lnumPort)
 
+  ser = serial.Serial(
+    port=self.s_port,
+    baudrate=9600,
+    timeout=10,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS
+  )
   def __init__(self, arg0=0, arg1=datetime.now()):
     self.numComPort=arg0
     self.lastUpdate = arg1
     self.__repr__()
 
-  def read(self, command="H"):
-    lnumPort = self.numComPort
-    s_port = '/dev/ttyACM' + str(lnumPort)
-    ##print(s_port)
-    ser = serial.Serial(
-      port=s_port,
-      baudrate=9600,
-      timeout=10,
-      parity=serial.PARITY_NONE,
-      stopbits=serial.STOPBITS_ONE,
-      bytesize=serial.EIGHTBITS
-    )
-    try:
-      if ser.isOpen() != True:
-        #ser.close()
-        ser.open()
 
-      if ser.isOpen():
-        ser.write('?\r\n')
+  def read(self, command="H"):
+    ##print(s_port)
+
+    try:
+      if self.ser.isOpen() != True:
+        #ser.close()
+        self.ser.open()
+
+      if self.ser.isOpen():
+        self.ser.write('?\r\n')
         time.sleep(2)
         out = ''
-        while ser.inWaiting() > 0:
-          out += ser.read(1)
+        while self.ser.inWaiting() > 0:
+          out += self.ser.read(1)
 
-        ser.write(command + '\r\n')
+        self.ser.write(command + '\r\n')
         time.sleep(3)
         out = ''
-        while ser.inWaiting() > 0:
-          out += ser.read(1)
+        while self.ser.inWaiting() > 0:
+          out += self.ser.read(1)
       #if ser.isOpen() == True:
       #  ser.close()
-      ser.close()
+      self.ser.close()
       return out
     except:
       print ("Error on object comPort   OLD Com = "+ str(self.numComPort) )
