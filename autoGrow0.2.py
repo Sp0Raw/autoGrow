@@ -106,7 +106,7 @@ class ComPort:
   s_port = '/dev/ttyACM' + str(lnumPort)
 
   ser = serial.Serial(
-    port=self.s_port,
+    port=s_port,
     baudrate=9600,
     timeout=10,
     parity=serial.PARITY_NONE,
