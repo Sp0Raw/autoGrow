@@ -121,8 +121,8 @@ class ComPort:
       bytesize=serial.EIGHTBITS
     )
     try:
-      if ser.isOpen() == True:
-        ser.close()
+      if ser.isOpen() != True:
+        #ser.close()
         ser.open()
 
       if ser.isOpen():
@@ -137,8 +137,9 @@ class ComPort:
         out = ''
         while ser.inWaiting() > 0:
           out += ser.read(1)
-      if ser.isOpen() == True:
-        ser.close()
+      #if ser.isOpen() == True:
+      #  ser.close()
+      ser.close()
       return out
     except:
       print ("Error on object comPort   OLD Com = "+ str(self.numComPort) )
