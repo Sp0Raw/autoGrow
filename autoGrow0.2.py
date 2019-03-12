@@ -55,7 +55,7 @@ GPIO.output(27, True)   ## INIT TO OFF     LP3
 GPIO.setup(17, GPIO.OUT)
 GPIO.output(17, False)   ## INIT TO OFF     LP4
 ########################
-## This is smal relay module/ USE INVERT VALUE 
+## This is smal relay module/ USE INVERT VALUE
 GPIO.setup(18, GPIO.OUT)  
 GPIO.output(18, True)        ## INIT TO ON   # Cooller in MainBox
 GPIO.setup(23, GPIO.OUT)
