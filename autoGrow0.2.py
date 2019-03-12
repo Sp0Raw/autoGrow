@@ -113,7 +113,7 @@ class ComPort:
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS
   )
-  ser.c
+  ##ser.c
   def __init__(self, arg0=0, arg1=datetime.now()):
     self.numComPort=arg0
     self.lastUpdate = arg1
