@@ -39,21 +39,21 @@ GPIO.setmode(GPIO.BCM)
 ##########################
 ## Big Relay module
 GPIO.setup(26, GPIO.OUT)  
-GPIO.output(26, True)   ## INIT TO OFF
+GPIO.output(26, True)   ## INIT TO OFF     HP0  _Turn_Off
 GPIO.setup(19, GPIO.OUT) 
-GPIO.output(19, True)   ## INIT TO OFF
+GPIO.output(19, True)   ## INIT TO OFF     HP0  _Turn_On
 GPIO.setup(13, GPIO.OUT)
-GPIO.output(13, True)   ## INIT TO OFF    HP1
+GPIO.output(13, True)   ## INIT TO OFF     HP1
 GPIO.setup(6, GPIO.OUT)
-GPIO.output(6, True)   ## INIT TO OFF
-GPIO.setup(5, GPIO.OUT)
-GPIO.output(5, True)   ## INIT TO OFF
+GPIO.output(6, True)   ## INIT TO OFF      LP0
+GPIO.setup(5, GPIO.OUT )
+GPIO.output(5, True)   ## INIT TO OFF      LP1
 GPIO.setup(22, GPIO.OUT)
-GPIO.output(22, True)   ## INIT TO OFF
+GPIO.output(22, True)   ## INIT TO OFF     LP2
 GPIO.setup(27, GPIO.OUT)
-GPIO.output(27, True)   ## INIT TO OFF
+GPIO.output(27, True)   ## INIT TO OFF     LP3
 GPIO.setup(17, GPIO.OUT)
-GPIO.output(17, True)   ## INIT TO OFF
+GPIO.output(17, True)   ## INIT TO OFF     LP4
 ########################
 ## This is smal relay module/ USE INVERT VALUE 
 GPIO.setup(18, GPIO.OUT)  
