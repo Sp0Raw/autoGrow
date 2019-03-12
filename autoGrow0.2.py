@@ -57,7 +57,7 @@ GPIO.output(17, True)   ## INIT TO OFF     LP4    /* Add light LED REGISTER */
 ########################
 ## This is smal relay module/ USE INVERT VALUE
 GPIO.setup(18, GPIO.OUT)  
-GPIO.output(18, True)        ## INIT TO ON   # Cooller in MainBox
+GPIO.output(18, False)        ## INIT TO ON   # Cooller in MainBox
 GPIO.setup(23, GPIO.OUT)
 GPIO.output(23, False)   ## INIT TO OFF
 GPIO.setup(24, GPIO.OUT)
