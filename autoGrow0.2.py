@@ -43,7 +43,7 @@ GPIO.output(26, True)   ## INIT TO OFF
 GPIO.setup(19, GPIO.OUT) 
 GPIO.output(19, True)   ## INIT TO OFF
 GPIO.setup(13, GPIO.OUT)
-GPIO.output(13, True)   ## INIT TO OFF
+GPIO.output(13, False)   ## INIT TO OFF
 GPIO.setup(6, GPIO.OUT)
 GPIO.output(6, True)   ## INIT TO OFF
 GPIO.setup(5, GPIO.OUT)
@@ -113,6 +113,7 @@ class ComPort:
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS
   )
+  ser.c
   def __init__(self, arg0=0, arg1=datetime.now()):
     self.numComPort=arg0
     self.lastUpdate = arg1
