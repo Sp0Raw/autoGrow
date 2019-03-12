@@ -43,7 +43,7 @@ GPIO.output(26, True)   ## INIT TO OFF
 GPIO.setup(19, GPIO.OUT) 
 GPIO.output(19, True)   ## INIT TO OFF
 GPIO.setup(13, GPIO.OUT)
-GPIO.output(13, False)   ## INIT TO OFF
+GPIO.output(13, True)   ## INIT TO OFF    HP1
 GPIO.setup(6, GPIO.OUT)
 GPIO.output(6, True)   ## INIT TO OFF
 GPIO.setup(5, GPIO.OUT)
@@ -53,7 +53,7 @@ GPIO.output(22, True)   ## INIT TO OFF
 GPIO.setup(27, GPIO.OUT)
 GPIO.output(27, True)   ## INIT TO OFF
 GPIO.setup(17, GPIO.OUT)
-GPIO.output(17, True)   ## INIT TO OFF
+GPIO.output(17, False)   ## INIT TO OFF
 ########################
 ## This is smal relay module/ USE INVERT VALUE 
 GPIO.setup(18, GPIO.OUT)  
