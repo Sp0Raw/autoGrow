@@ -53,7 +53,7 @@ GPIO.output(22, True)   ## INIT TO OFF     LP2
 GPIO.setup(27, GPIO.OUT)
 GPIO.output(27, True)   ## INIT TO OFF     LP3
 GPIO.setup(17, GPIO.OUT)
-GPIO.output(17, False)   ## INIT TO OFF     LP4    /* Add light LED REGISTER */
+GPIO.output(17, True)   ## INIT TO OFF     LP4    /* Add light LED REGISTER */
 ########################
 ## This is smal relay module/ USE INVERT VALUE
 GPIO.setup(18, GPIO.OUT)  
