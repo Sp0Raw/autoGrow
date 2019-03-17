@@ -1011,6 +1011,7 @@ def main():
     print (nowTime)
     timeOn = datetime.strptime('06:30', '%H:%M')
     print (timeOn)
+    print (datetime.strptime(nowTime, '%H:%M'))
     if  datetime.strptime(nowTime, '%H:%M') > timeOn:
       ##  Turnt on
       GPIO.output(17, False)  ## INIT TO ON     LP4    /* Add light LED REGISTER */
