@@ -1012,16 +1012,14 @@ def main():
     timeOn = datetime.strptime('06:30', '%H:%M')
     print (timeOn)
     print (datetime.strptime(nowTime, '%H:%M'))
-    if  datetime.strptime(nowTime, '%H:%M') > timeOn:
+    if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:00', '%H:%M'):
       ##  Turnt on
       GPIO.output(17, False)  ## INIT TO ON     LP4    /* Add light LED REGISTER */
       print ("AddRegister in MainBox Turn ON")
       GPIO.output(18, True)  ## INIT TO ON   # Cooller in MainBox
       print ("Cooller in MainBox Turn ON")
-
-
-    if datetime.strptime(nowTime, '%H:%M') > datetime.strptime('23:00', '%H:%M'):
-      ##  Turnt on
+    else:
+      ##  Turnt OFF
       GPIO.output(17, True)  ## INIT TO OFF     LP4    /* Add light LED REGISTER */
       print ("AddRegister in MainBox Turn OFF")
       GPIO.output(18, False)  ## INIT TO OFF   # Cooller in MainBox
