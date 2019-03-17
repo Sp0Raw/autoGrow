@@ -59,9 +59,9 @@ GPIO.output(17, False)   ## INIT TO OFF     LP4    /* Add light LED REGISTER */
 GPIO.setup(18, GPIO.OUT)  
 GPIO.output(18, True)        ## INIT TO ON   # Cooller in MainBox
 GPIO.setup(23, GPIO.OUT)
-GPIO.output(23, False)   ## INIT TO OFF
+GPIO.output(23, False)   ## INIT TO OFF     k9 In Box Fan
 GPIO.setup(24, GPIO.OUT)
-GPIO.output(24, True)   ## INIT TO OFF
+GPIO.output(24, True)   ## INIT TO OFF     k8 Solid Fan
 ## Magnet Soid TEST Pin
 GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
@@ -1012,6 +1012,7 @@ def main():
     timeOn = datetime.strptime('06:30', '%H:%M')
     print (timeOn)
     print (datetime.strptime(nowTime, '%H:%M'))
+    ## ON OFF
     if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:00', '%H:%M'):
       ##  Turnt on
       GPIO.output(17, False)  ## INIT TO ON     LP4    /* Add light LED REGISTER */
@@ -1025,7 +1026,12 @@ def main():
       GPIO.output(18, False)  ## INIT TO OFF   # Cooller in MainBox
       print ("Cooller in MainBox Turn OFF")
 
+    GPIO.output(23, True)  ## INIT TO OFF     k9 In Box Fan
 
+    if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:55', '%H:%M'):
+      GPIO.output(24, True)  ## INIT TO OFF     k8 Solid Fan
+    else:
+      GPIO.output(24, False)  ## INIT TO OFF     k8 Solid Fan
 
     print ("==========    START While    ===============")
     now = datetime.now()
