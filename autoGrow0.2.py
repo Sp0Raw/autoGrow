@@ -1005,7 +1005,7 @@ def main():
     #cls()
     mainBox.sensBox.update()
     mainBox.sensHome.update()
-    nowTime = datetime.datetime.today().strftime("%H:%M")
+    nowTime = datetime.today().strftime("%H:%M")
     cls()
     datetime_object = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
 
