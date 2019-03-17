@@ -1006,24 +1006,27 @@ def main():
     mainBox.sensBox.update()
     mainBox.sensHome.update()
     nowTime = datetime.datetime.today().strftime("%H:%M")
-
+    cls()
     datetime_object = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
 
     timeOn = datetime.strptime('06:30', '%H:%M')
     if  datetime.strptime(nowTime, '%H:%M') > timeOn:
       ##  Turnt on
       GPIO.output(17, False)  ## INIT TO ON     LP4    /* Add light LED REGISTER */
+      print ("AddRegister in MainBox Turn ON")
       GPIO.output(18, True)  ## INIT TO ON   # Cooller in MainBox
+      print ("Cooller in MainBox Turn ON")
 
 
     if datetime.strptime(nowTime, '%H:%M') > datetime.strptime('23:00', '%H:%M'):
       ##  Turnt on
       GPIO.output(17, True)  ## INIT TO OFF     LP4    /* Add light LED REGISTER */
+      print ("AddRegister in MainBox Turn OFF")
       GPIO.output(18, False)  ## INIT TO OFF   # Cooller in MainBox
+      print ("Cooller in MainBox Turn OFF")
 
 
 
-    cls()
     print ("==========    START While    ===============")
     now = datetime.now()
     ## if pora to update
