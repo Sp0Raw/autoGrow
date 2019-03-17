@@ -1007,9 +1007,10 @@ def main():
     mainBox.sensHome.update()
     nowTime = datetime.today().strftime("%H:%M")
     cls()
-    datetime_object = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
 
+    print (nowTime)
     timeOn = datetime.strptime('06:30', '%H:%M')
+    print (timeOn)
     if  datetime.strptime(nowTime, '%H:%M') > timeOn:
       ##  Turnt on
       GPIO.output(17, False)  ## INIT TO ON     LP4    /* Add light LED REGISTER */
