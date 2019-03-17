@@ -61,7 +61,7 @@ GPIO.output(18, True)        ## INIT TO ON   # Cooller in MainBox
 GPIO.setup(23, GPIO.OUT)
 GPIO.output(23, False)   ## INIT TO OFF
 GPIO.setup(24, GPIO.OUT)
-GPIO.output(24, False)   ## INIT TO OFF
+GPIO.output(24, True)   ## INIT TO OFF
 ## Magnet Soid TEST Pin
 GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
