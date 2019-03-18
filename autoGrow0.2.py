@@ -53,7 +53,7 @@ GPIO.output(22, True)   ## INIT TO OFF     LP2
 GPIO.setup(27, GPIO.OUT)
 GPIO.output(27, True)   ## INIT TO OFF     LP3
 GPIO.setup(17, GPIO.OUT)
-GPIO.output(17, False)   ## INIT TO OFF     LP4    /* Add light LED REGISTER */
+GPIO.output(17, True)   ## INIT TO OFF     LP4    /* Add light LED REGISTER */
 ########################
 ## This is smal relay module/ USE INVERT VALUE
 GPIO.setup(18, GPIO.OUT)  
@@ -1013,16 +1013,21 @@ def main():
     print (timeOn)
     print (datetime.strptime(nowTime, '%H:%M'))
     ## ON OFF
-    if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:00', '%H:%M'):
-      ##  Turnt on
+    if  (datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('10:00', '%H:%M')) \
+            or (datetime.strptime(nowTime, '%H:%M') > datetime.strptime('20:00', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:20', '%H:%M')):
       GPIO.output(17, False)  ## INIT TO ON     LP4    /* Add light LED REGISTER */
       print ("AddRegister in MainBox Turn ON")
-      GPIO.output(18, True)  ## INIT TO ON   # Cooller in MainBox
-      print ("Cooller in MainBox Turn ON")
     else:
       ##  Turnt OFF
       GPIO.output(17, True)  ## INIT TO OFF     LP4    /* Add light LED REGISTER */
       print ("AddRegister in MainBox Turn OFF")
+
+    if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:00', '%H:%M'):
+      ##  Turnt on
+      GPIO.output(18, True)  ## INIT TO ON   # Cooller in MainBox
+      print ("Cooller in MainBox Turn ON")
+    else:
+      ##  Turnt OFF
       GPIO.output(18, False)  ## INIT TO OFF   # Cooller in MainBox
       print ("Cooller in MainBox Turn OFF")
 
