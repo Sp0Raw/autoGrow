@@ -1011,8 +1011,6 @@ def main():
     GPIO.output(23, True)  ## INIT TO OFF     k9 In Box Fan
 
     print (nowTime)
-    timeOn = datetime.strptime('06:30', '%H:%M')
-    print (timeOn)
     print (datetime.strptime(nowTime, '%H:%M'))
     ## ON OFF
 
