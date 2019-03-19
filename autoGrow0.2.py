@@ -1008,35 +1008,44 @@ def main():
     nowTime = datetime.today().strftime("%H:%M")
     cls()
 
+    GPIO.output(23, True)  ## INIT TO OFF     k9 In Box Fan
+
     print (nowTime)
     timeOn = datetime.strptime('06:30', '%H:%M')
     print (timeOn)
     print (datetime.strptime(nowTime, '%H:%M'))
     ## ON OFF
+
+    ## LED Register ON 6:30-10:00 and 20:00-23:20
     if  (datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('10:00', '%H:%M')) \
             or (datetime.strptime(nowTime, '%H:%M') > datetime.strptime('20:00', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:20', '%H:%M')):
       GPIO.output(17, False)  ## INIT TO ON     LP4    /* Add light LED REGISTER */
       print ("AddRegister in MainBox Turn ON")
     else:
-      ##  Turnt OFF
       GPIO.output(17, True)  ## INIT TO OFF     LP4    /* Add light LED REGISTER */
       print ("AddRegister in MainBox Turn OFF")
 
     if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:00', '%H:%M'):
-      ##  Turnt on
       GPIO.output(18, True)  ## INIT TO ON   # Cooller in MainBox
       print ("Cooller in MainBox Turn ON")
     else:
-      ##  Turnt OFF
       GPIO.output(18, False)  ## INIT TO OFF   # Cooller in MainBox
       print ("Cooller in MainBox Turn OFF")
-
-    GPIO.output(23, True)  ## INIT TO OFF     k9 In Box Fan
 
     if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:55', '%H:%M'):
       GPIO.output(24, True)  ## INIT TO OFF     k8 Solid Fan
     else:
       GPIO.output(24, False)  ## INIT TO OFF     k8 Solid Fan
+
+    ##  Add light Day+Grow ON 6:30-12:00 and 21:00-23:55
+    if  (datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('12:00', '%H:%M')) \
+            or (datetime.strptime(nowTime, '%H:%M') > datetime.strptime('21:00', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:55', '%H:%M')):
+      GPIO.output(13, False)  ## INIT TO ON     HP1   /* Add light Day+Grow */
+      print ("Add light Day+Grow Turn ON")
+    else:
+      GPIO.output(13, True)  ## INIT TO OFF     HP1   /* Add light Day+Grow */
+      print ("Add light Day+Grow Turn OFF")
+
 
     print ("==========    START While    ===============")
     now = datetime.now()
