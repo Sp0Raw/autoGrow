@@ -1023,6 +1023,7 @@ def main():
       GPIO.output(17, True)  ## INIT TO OFF     LP4    /* Add light LED REGISTER */
       print ("AddRegister in MainBox Turn OFF")
 
+    ## Cooller in MainBox
     if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:00', '%H:%M'):
       GPIO.output(18, True)  ## INIT TO ON   # Cooller in MainBox
       print ("Cooller in MainBox Turn ON")
@@ -1030,6 +1031,7 @@ def main():
       GPIO.output(18, False)  ## INIT TO OFF   # Cooller in MainBox
       print ("Cooller in MainBox Turn OFF")
 
+    ## k8 THROTTLE Fan
     if  datetime.strptime(nowTime, '%H:%M') > datetime.strptime('06:30', '%H:%M') and datetime.strptime(nowTime, '%H:%M') < datetime.strptime('23:55', '%H:%M'):
       GPIO.output(24, True)  ## INIT TO OFF     k8 Solid Fan
     else:
